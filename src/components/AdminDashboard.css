@@ -1,0 +1,90 @@
+/* General layout styling */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #C7FFD8; /* Light mint background */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.additional-information-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 18px;
+  color: #161D6F; /* Dark blue for labels */
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="file"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #0B2F9F; /* Medium blue for borders */
+  border-radius: 5px;
+  background-color: #98DED9; /* Aqua for input background */
+  color: #161D6F; /* Dark blue for input text */
+  font-size: 16px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #161D6F; /* Dark blue for focused input borders */
+  outline: none;
+}
+
+button {
+  background-color: #161D6F; /* Dark blue button */
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled {
+  background-color: #98DED9; /* Aqua for disabled button */
+  cursor: not-allowed;
+}
+
+button:hover:enabled {
+  background-color: #0B2F9F; /* Medium blue on hover */
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+a {
+  color: #161D6F; /* Dark blue for links */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #0B2F9F; /* Medium blue for link hover */
+  text-decoration: underline;
+}
+
+h3 {
+  color: #161D6F; /* Dark blue for headings */
+  font-size: 24px;
+  margin-bottom: 10px;
+}

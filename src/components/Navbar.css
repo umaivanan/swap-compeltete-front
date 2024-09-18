@@ -1,0 +1,49 @@
+/* Navbar.css */
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #973131; /* Deep Red */
+    position: fixed; /* Fixes the Navbar at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures the Navbar is above other content */
+  }
+  
+  .logo {
+    height: 50px; /* Adjust height as needed */
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+  }
+  
+  li {
+    color: white;
+  }
+  
+  .btn {
+    background-color: #e0a75e; /* Light Salmon */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #973131; /* Deep Red */
+  }
+  /* Navbar.css */
+
+.main {
+  background-color: #973131;
+  color: #000;
+}
