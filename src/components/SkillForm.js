@@ -20,7 +20,7 @@ const SkillForm = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8800/api/skills', formData, {
+      const response = await axios.post('http://localhost:8700/api/skills', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

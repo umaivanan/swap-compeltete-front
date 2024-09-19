@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './AdditionalInformation.css'; // Import the external CSS file
-import formimage from "/home/ukijaffna/Documents/swap pdf/swapSmartFrontend/src/assets/jotform-mobile-forms_still_2x.gif"
+import formimage from '/home/ukijaffna/Documents/swappdf/swapSmartFrontend/src/assets/jotform-mobile-forms_still_2x.gif';
 
 const AdditionalInformation = () => {
     const location = useLocation();
@@ -14,7 +14,17 @@ const AdditionalInformation = () => {
         work: '',
         languages: '',
         aboutMe: '',
-        pdfFiles: [],
+        roadmapIntroduction: null,
+        firstChapter: null,
+        secondChapter: null,
+        thirdChapter: null,
+        fourthChapter: null,
+        fifthChapter: null,
+        sixthChapter: null,
+        seventhChapter: null,
+        eighthChapter: null,
+        ninthChapter: null,
+        tenthChapter: null,
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -26,12 +36,7 @@ const AdditionalInformation = () => {
     };
 
     const handleFileChange = (e) => {
-        const files = Array.from(e.target.files);
-        if (files.length > 3) {
-            alert('You can only upload up to 3 PDF files.');
-        } else {
-            setFormData({ ...formData, pdfFiles: files });
-        }
+        setFormData({ ...formData, [e.target.name]: e.target.files[0] });
     };
 
     const validateForm = () => {
@@ -62,11 +67,20 @@ const AdditionalInformation = () => {
                 formDataObj.append('aboutMe', formData.aboutMe);
                 formDataObj.append('skillId', skillId);
 
-                formData.pdfFiles.forEach((file) => {
-                    formDataObj.append('pdfFiles', file);
-                });
+                // Append all the chapter files
+                formDataObj.append('roadmapIntroduction', formData.roadmapIntroduction);
+                formDataObj.append('firstChapter', formData.firstChapter);
+                formDataObj.append('secondChapter', formData.secondChapter);
+                formDataObj.append('thirdChapter', formData.thirdChapter);
+                formDataObj.append('fourthChapter', formData.fourthChapter);
+                formDataObj.append('fifthChapter', formData.fifthChapter);
+                formDataObj.append('sixthChapter', formData.sixthChapter);
+                formDataObj.append('seventhChapter', formData.seventhChapter);
+                formDataObj.append('eighthChapter', formData.eighthChapter);
+                formDataObj.append('ninthChapter', formData.ninthChapter);
+                formDataObj.append('tenthChapter', formData.tenthChapter);
 
-                const response = await axios.post('http://localhost:8800/api/formdata', formDataObj, {
+                const response = await axios.post('http://localhost:8700/api/formdata', formDataObj, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -74,9 +88,9 @@ const AdditionalInformation = () => {
 
                 const formDataId = response.data.formData._id;
 
-                await axios.patch(`http://localhost:8800/api/skills/${skillId}`, { formDataId });
+                await axios.patch(`http://localhost:8700/api/skills/${skillId}`, { formDataId });
 
-                setUploadedFiles(response.data.formData.pdfFiles);
+                setUploadedFiles(response.data.formData); // Update with the uploaded form data
 
                 alert('Successfully submitted your information!');
                 navigate('/list');
@@ -91,8 +105,7 @@ const AdditionalInformation = () => {
     return (
         <div className="full-page">
             <div className="image-container">
-                {/* Replace 'your-image-url-here' with your actual image link */}
-             <img src={formimage} alt="Side Image" className="side-image" />
+                <img src={formimage} alt="Side Image" className="side-image" />
             </div>
             <div className="form-container">
                 <form className="additional-information-form" onSubmit={handleSubmit}>
@@ -173,23 +186,126 @@ const AdditionalInformation = () => {
                         {errors.aboutMe && <span className="error">{errors.aboutMe}</span>}
                     </div>
 
+                    {/* File inputs for Roadmap and Chapters */}
                     <div className="form-group">
-                        <label htmlFor="pdfFiles">Upload up to 3 PDF files</label>
+                        <label htmlFor="roadmapIntroduction">Roadmap Introduction (PDF)</label>
                         <input
                             type="file"
-                            id="pdfFiles"
-                            name="pdfFiles"
+                            id="roadmapIntroduction"
+                            name="roadmapIntroduction"
                             accept="application/pdf"
-                            multiple
                             onChange={handleFileChange}
                         />
-                        {formData.pdfFiles.length > 0 && (
-                            <ul>
-                                {formData.pdfFiles.map((file, index) => (
-                                    <li key={index}>{file.name}</li>
-                                ))}
-                            </ul>
-                        )}
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="firstChapter">First Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="firstChapter"
+                            name="firstChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="secondChapter">Second Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="secondChapter"
+                            name="secondChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="thirdChapter">Third Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="thirdChapter"
+                            name="thirdChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="fourthChapter">Fourth Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="fourthChapter"
+                            name="fourthChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="fifthChapter">Fifth Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="fifthChapter"
+                            name="fifthChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="sixthChapter">Sixth Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="sixthChapter"
+                            name="sixthChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="seventhChapter">Seventh Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="seventhChapter"
+                            name="seventhChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="eighthChapter">Eighth Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="eighthChapter"
+                            name="eighthChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="ninthChapter">Ninth Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="ninthChapter"
+                            name="ninthChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="tenthChapter">Tenth Chapter (PDF)</label>
+                        <input
+                            type="file"
+                            id="tenthChapter"
+                            name="tenthChapter"
+                            accept="application/pdf"
+                            onChange={handleFileChange}
+                        />
                     </div>
 
                     <button type="submit" disabled={isLoading}>

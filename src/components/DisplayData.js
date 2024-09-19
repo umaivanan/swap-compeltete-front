@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import './DataDisplay.css'; // Import your custom CSS for styling
+import './DataDisplay.css'; // Custom CSS for card design
 
 const DisplayData = () => {
   const [data, setData] = useState({});
@@ -12,7 +12,7 @@ const DisplayData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/api/formdata/${id}`);
+        const response = await axios.get(`http://localhost:8700/api/formdata/${id}`);
         setData(response.data);  // Set data retrieved from the API
       } catch (error) {
         setError('Error fetching data');
@@ -33,63 +33,196 @@ const DisplayData = () => {
 
   return (
     <div className="data-display-container">
-      <h1>Form Data Display for User {id}</h1>
-      
-      {/* Profile Picture */}
-      {data.profilePicture ? (
-        <div className="profile-picture-container">
-          <img 
-            src={`http://localhost:8800${data.profilePicture}`} 
-            alt="Profile" 
-            className="profile-picture" 
-          />
-        </div>
-      ) : (
-        <p>No profile picture available</p>
-      )}
+      <h1 className="heading">Form Data Display for User {id}</h1>
 
-      <table className="data-table">
-        <thead>
-          <tr>
-            <th>Where I Live</th>
-            <th>Decade I Was Born</th>
-            <th>Time Spent</th>
-            <th>My Work</th>
-            <th>Languages I Speak</th>
-            <th>About Me</th>
-            <th>Uploaded PDF Files</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr key={data._id}>
-            <td>{data.whereILive}</td>
-            <td>{data.decadeBorn}</td>
-            <td>{data.timeSpent}</td>
-            <td>{data.work}</td>
-            <td>{data.languages}</td>
-            <td>{data.aboutMe}</td>
-            <td>
-              {data.pdfFiles && data.pdfFiles.length > 0 ? (
-                <ul>
-                  {data.pdfFiles.map((file, index) => (
-                    <li key={index}>
-                      <a
-                        href={`http://localhost:8800/pdfUploads/${file}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View PDF {index + 1}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No files uploaded</p>
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="card-grid">
+        {/* Roadmap Introduction */}
+        {data.roadmapIntroduction && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Roadmap Introduction</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.roadmapIntroduction}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Roadmap Introduction
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* First Chapter */}
+        {data.firstChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>First Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.firstChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View First Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Second Chapter */}
+        {data.secondChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Second Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.secondChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Second Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Third Chapter */}
+        {data.thirdChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Third Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.thirdChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Third Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Fourth Chapter */}
+        {data.fourthChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Fourth Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.fourthChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Fourth Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Fifth Chapter */}
+        {data.fifthChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Fifth Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.fifthChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Fifth Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Sixth Chapter */}
+        {data.sixthChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Sixth Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.sixthChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Sixth Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Seventh Chapter */}
+        {data.seventhChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Seventh Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.seventhChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Seventh Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Eighth Chapter */}
+        {data.eighthChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Eighth Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.eighthChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Eighth Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Ninth Chapter */}
+        {data.ninthChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Ninth Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.ninthChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Ninth Chapter
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Tenth Chapter */}
+        {data.tenthChapter && (
+          <div className="pdf-card">
+            <div className="pdf-content">
+              <h3>Tenth Chapter</h3>
+              <a
+                href={`http://localhost:8700/pdfUploads/${data.tenthChapter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="view-pdf-btn"
+              >
+                View Tenth Chapter
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
