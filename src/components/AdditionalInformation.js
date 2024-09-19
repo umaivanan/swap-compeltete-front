@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './AdditionalInformation.css'; // Import the external CSS file
+import formimage from "/home/ukijaffna/Documents/swap pdf/swapSmartFrontend/src/assets/jotform-mobile-forms_still_2x.gif"
 
 const AdditionalInformation = () => {
     const location = useLocation();
@@ -91,7 +92,7 @@ const AdditionalInformation = () => {
         <div className="full-page">
             <div className="image-container">
                 {/* Replace 'your-image-url-here' with your actual image link */}
-                {/* <img src="your-image-url-here" alt="Side Image" className="side-image" /> */}
+             <img src={formimage} alt="Side Image" className="side-image" />
             </div>
             <div className="form-container">
                 <form className="additional-information-form" onSubmit={handleSubmit}>

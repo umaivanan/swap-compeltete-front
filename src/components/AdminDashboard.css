@@ -1,90 +1,172 @@
-/* General layout styling */
-.form-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #C7FFD8; /* Light mint background */
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+/* AdminDashboard.css */
 
-.additional-information-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  font-size: 18px;
-  color: #161D6F; /* Dark blue for labels */
-  font-weight: bold;
-}
-
-input[type="text"],
-input[type="file"],
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #0B2F9F; /* Medium blue for borders */
-  border-radius: 5px;
-  background-color: #98DED9; /* Aqua for input background */
-  color: #161D6F; /* Dark blue for input text */
-  font-size: 16px;
-  margin-top: 5px;
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-input[type="text"]:focus,
-textarea:focus {
-  border-color: #161D6F; /* Dark blue for focused input borders */
-  outline: none;
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
 }
 
-button {
-  background-color: #161D6F; /* Dark blue button */
+/* Layout */
+.admin-dashboard-container {
+  display: flex;
+  height: 100vh;
+  background-color: #e0e0e0;
+}
+
+.sidebar {
+  background-color: #1e1e2f;
+  width: 250px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-right: 3px solid #6200ea;
+}
+
+.sidebar-button {
+  background-color: #3d3d5c;
   color: white;
-  padding: 10px 20px;
-  font-size: 18px;
   border: none;
-  border-radius: 5px;
+  padding: 15px;
+  width: 100%;
+  text-align: left;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
   cursor: pointer;
+  border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
-button:disabled {
-  background-color: #98DED9; /* Aqua for disabled button */
-  cursor: not-allowed;
+.sidebar-button:hover {
+  background-color: #5a5a89;
 }
 
-button:hover:enabled {
-  background-color: #0B2F9F; /* Medium blue on hover */
+.sidebar-button.active {
+  background-color: #6200ea;
+  color: #fff;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.dashboard-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
 }
 
-li {
-  margin-bottom: 10px;
+.admin-header {
+  background-color: #6200ea;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
 }
 
-a {
-  color: #161D6F; /* Dark blue for links */
-  text-decoration: none;
-  font-weight: bold;
+.admin-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
 }
 
-a:hover {
-  color: #0B2F9F; /* Medium blue for link hover */
-  text-decoration: underline;
+.dashboard-section {
+  margin-top: 40px;
 }
 
-h3 {
-  color: #161D6F; /* Dark blue for headings */
-  font-size: 24px;
-  margin-bottom: 10px;
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #6200ea;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table thead tr {
+  background-color: #6200ea;
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.styled-table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.profile-picture {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.styled-table th {
+  font-weight: 600;
+}
+
+.styled-table td {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #333;
+}
+
+/* Graph Container */
+.chart-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .sidebar-button {
+    width: auto;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .dashboard-content {
+    padding: 15px;
+  }
+
+  .admin-header h1 {
+    font-size: 2rem;
+  }
 }
