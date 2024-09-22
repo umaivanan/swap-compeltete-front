@@ -35,6 +35,18 @@ const DisplayData = () => {
     <div className="data-display-container">
       <h1 className="heading">Form Data Display for User {id}</h1>
 
+      {/* Display User Information */}
+      <div className="user-info">
+        <h2>User Information</h2>
+        <p><strong>Where Live:</strong> {data.whereILive}</p>
+        <p><strong>Decade Born:</strong> {data.decadeBorn}</p>
+        <p><strong>Time Spent:</strong> {data.timeSpent}</p>
+        <p><strong>Work:</strong> {data.work}</p>
+        <p><strong>Languages:</strong> {data.languages}</p>
+        <p><strong>About Me:</strong> {data.aboutMe}</p>
+      </div>
+
+      {/* Display PDF Links */}
       <div className="card-grid">
         {/* Roadmap Introduction */}
         {data.roadmapIntroduction && (

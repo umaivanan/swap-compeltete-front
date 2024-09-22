@@ -8,7 +8,6 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the user is logged in by checking the token in localStorage
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
@@ -16,10 +15,14 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Clear the token from localStorage and update state
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     navigate('/');
+  };
+
+  const handleCreateProfile = () => {
+    // Navigate to PayPalButton component for payment
+    navigate('/paypal-button');
   };
 
   return (
@@ -35,12 +38,14 @@ const Navbar = () => {
         ) : (
           <>
             <li>
-              <Link to="/skill-form">
-                <button className="btn">Create Profile</button>
-              </Link>
+              <button className="btn" onClick={handleCreateProfile}>
+                Create Profile
+              </button>
             </li>
             <li>
-              <button className="btn" onClick={handleLogout}>Logout</button>
+              <button className="btn" onClick={handleLogout}>
+                Logout
+              </button>
             </li>
           </>
         )}
@@ -49,4 +54,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

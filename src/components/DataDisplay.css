@@ -1,6 +1,6 @@
 .data-display-container {
   padding: 20px;
-  background-color: #121212;
+  background-color: #121212;  /* Keeps the dark background */
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
 }
@@ -10,6 +10,24 @@
   color: #ffffff;
   font-size: 24px;
   margin-bottom: 30px;
+}
+
+.user-info {
+  background-color: #2c2c2c;  /* Slightly lighter background to distinguish user info */
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  color: #b3b3b3;  /* Lighter gray text color */
+}
+
+.user-info h2 {
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.user-info p {
+  margin: 5px 0;
+  color: #e0e0e0;  /* Lighter gray for text */
 }
 
 .card-grid {
@@ -42,7 +60,7 @@
 }
 
 .pdf-content h3 {
-  color: #fff;
+  color: #ffffff;  /* Ensures text is visible */
   font-size: 18px;
   margin-bottom: 10px;
 }
