@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './AdditionalInformation.css'; // Import the external CSS file
-import formimage from '/home/ukijaffna/Documents/swappdf/swapSmartFrontend/src/assets/jotform-mobile-forms_still_2x.gif';
+// import formimage from '/home/ukijaffna/Documents/swappdf/swapSmartFrontend/src/assets/jotform-mobile-forms_still_2x.gif';
 
 const AdditionalInformation = () => {
     const location = useLocation();
@@ -80,7 +80,7 @@ const AdditionalInformation = () => {
                 formDataObj.append('ninthChapter', formData.ninthChapter);
                 formDataObj.append('tenthChapter', formData.tenthChapter);
 
-                const response = await axios.post('http://localhost:8700/api/formdata', formDataObj, {
+                const response = await axios.post('http://localhost:8702/api/formdata', formDataObj, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -88,7 +88,7 @@ const AdditionalInformation = () => {
 
                 const formDataId = response.data.formData._id;
 
-                await axios.patch(`http://localhost:8700/api/skills/${skillId}`, { formDataId });
+                await axios.patch(`http://localhost:8702/api/skills/${skillId}`, { formDataId });
 
                 setUploadedFiles(response.data.formData); // Update with the uploaded form data
 
@@ -105,7 +105,7 @@ const AdditionalInformation = () => {
     return (
         <div className="full-page">
             <div className="image-container">
-                <img src={formimage} alt="Side Image" className="side-image" />
+                {/* <img src={formimage} alt="Side Image" className="side-image" /> */}
             </div>
             <div className="form-container">
                 <form className="additional-information-form" onSubmit={handleSubmit}>

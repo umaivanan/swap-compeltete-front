@@ -12,7 +12,7 @@ const DisplayData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8700/api/formdata/${id}`);
+        const response = await axios.get(`http://localhost:8702/api/formdata/${id}`);
         setData(response.data);  // Set data retrieved from the API
       } catch (error) {
         setError('Error fetching data');
@@ -54,7 +54,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Roadmap Introduction</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.roadmapIntroduction}`}
+                href={`http://localhost:8702/pdfUploads/${data.roadmapIntroduction}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -71,7 +71,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>First Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.firstChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.firstChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -88,7 +88,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Second Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.secondChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.secondChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -105,7 +105,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Third Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.thirdChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.thirdChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -122,7 +122,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Fourth Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.fourthChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.fourthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -139,7 +139,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Fifth Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.fifthChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.fifthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -156,7 +156,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Sixth Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.sixthChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.sixthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -173,7 +173,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Seventh Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.seventhChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.seventhChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -190,7 +190,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Eighth Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.eighthChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.eighthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -207,7 +207,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Ninth Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.ninthChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.ninthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"
@@ -224,7 +224,7 @@ const DisplayData = () => {
             <div className="pdf-content">
               <h3>Tenth Chapter</h3>
               <a
-                href={`http://localhost:8700/pdfUploads/${data.tenthChapter}`}
+                href={`http://localhost:8702/pdfUploads/${data.tenthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="view-pdf-btn"

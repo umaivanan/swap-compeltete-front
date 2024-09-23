@@ -44,7 +44,7 @@ const LoginPage = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8700/api/auth/login', {
+            const response = await fetch('http://localhost:8702/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -55,6 +55,8 @@ const LoginPage = () => {
             const data = await response.json();
 
             if (response.ok) {
+                // sessionStorage-ல் email ஐ சேமிக்கிறது
+                sessionStorage.setItem('userEmail', inputs.email);
                 localStorage.setItem('token', data.token); // Store token in localStorage
                 console.log("User logged in successfully:", data);
 

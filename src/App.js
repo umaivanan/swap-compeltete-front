@@ -9,7 +9,7 @@ import SkillForm from './components/SkillForm';
 import SkillList from './components/SkillList';
 import AdditionalInformation from './components/AdditionalInformation';
 import DisplayData from './components/DisplayData';
-import PayPalButton from './components/PaypalButton';
+import PayPalButton from './components/PayPalButton';
 import PaymentSuccess from './components/PaymentSuccess';  // Import the success component
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -28,7 +28,7 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/blank" element={<Blank />} />
           <Route path="/skill-form" element={<SkillForm />} />
-          <Route path="/list" element={<SkillList />} />
+          <Route path="/List" element={<SkillList />} />
           <Route path="/additionalInformation" element={<AdditionalInformation />} />
           {/* Route for the PayPal button page */}
           <Route path="/paypal-button" element={<PayPalButton />} />

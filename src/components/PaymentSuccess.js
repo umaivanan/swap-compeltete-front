@@ -16,7 +16,7 @@ const PaymentSuccess = () => {
     useEffect(() => {
         if (orderID) {
             // Capture the payment by sending the orderID to the backend
-            axios.get(`http://localhost:8700/api/paypal/capture/${orderID}`)  // Pass orderID as a URL parameter
+            axios.get(`http://localhost:8702/api/paypal/capture/${orderID}`)  // Pass orderID as a URL parameter
                 .then(response => {
                     console.log('Payment successful:', response.data);
                     setStatus('Payment successful!');

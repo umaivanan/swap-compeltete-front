@@ -5,3 +5,18 @@
     align-items: center;       /* Center vertically */
     height: 100vh;             /* Make the container take full viewport height */
 }
+
+.become-instructor-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.become-instructor-btn:hover {
+    background-color: #45a049;
+}

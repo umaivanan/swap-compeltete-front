@@ -12,15 +12,24 @@ const SkillForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Retrieve the user email from session storage
+    const userEmail = sessionStorage.getItem('userEmail');
+    if (!userEmail) {
+      console.error('No user email found in session storage');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('profileName', profileName);
     formData.append('skillCategory', skillCategory);
+    formData.append('email', userEmail);  // Add the email to formData
+
     if (profilePicture) {
       formData.append('profilePicture', profilePicture);
     }
 
     try {
-      const response = await axios.post('http://localhost:8700/api/skills', formData, {
+      const response = await axios.post('http://localhost:8702/api/skills', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
