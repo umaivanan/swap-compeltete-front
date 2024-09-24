@@ -13,18 +13,26 @@ import PayPalButton from './components/PayPalButton';
 import PaymentSuccess from './components/PaymentSuccess';  // Import the success component
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'; // Import PayPalScriptProvider globally
 
 function App() {
+  // State for handling login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <PayPalScriptProvider options={{ "client-id": "AdlRdq2-MwJR3ReJYwBHkEZAUqS1yiEEpU3nzmn1jO9-C9JK_t810a2QAp6vCK8Kkt06Zbpzdjhp1XxS", currency: "USD" }}>
       {/* Wrap your app with PayPalScriptProvider */}
       <Router>
-        <Navbar />
+        {/* Pass isLoggedIn and setIsLoggedIn to Navbar */}
+        <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Routes>
           <Route path="/" element={<Hero />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          
+          {/* Pass setIsLoggedIn to RegisterPage and LoginPage */}
+          <Route path="/register" element={<RegisterPage setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/login" element={<LoginPage setIsLoggedIn={setIsLoggedIn} />} />
+          
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/blank" element={<Blank />} />
           <Route path="/skill-form" element={<SkillForm />} />
@@ -35,8 +43,6 @@ function App() {
           {/* Route for displaying data with a dynamic ID */}
           <Route path="/display-data/:id" element={<DisplayData />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />  {/* Route for PaymentSuccess */}
-
-
         </Routes>
       </Router>
     </PayPalScriptProvider>

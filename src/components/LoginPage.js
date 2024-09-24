@@ -27,6 +27,7 @@ const LoginPage = () => {
         let errors = { ...initialStateErrors };
         let hasError = false;
 
+        // Validate inputs
         if (inputs.email === "") {
             errors.email.required = true;
             hasError = true;
@@ -36,12 +37,13 @@ const LoginPage = () => {
             hasError = true;
         }
 
+        // If validation fails, show errors
         if (hasError) {
             setErrors(errors);
             return;
         }
 
-        setLoading(true);
+        setLoading(true); // Start loading indicator
 
         try {
             const response = await fetch('http://localhost:8702/api/auth/login', {
@@ -55,25 +57,27 @@ const LoginPage = () => {
             const data = await response.json();
 
             if (response.ok) {
-                // sessionStorage-ல் email ஐ சேமிக்கிறது
+                // Store token in localStorage and email in sessionStorage
                 sessionStorage.setItem('userEmail', inputs.email);
-                localStorage.setItem('token', data.token); // Store token in localStorage
+                localStorage.setItem('token', data.token); 
                 console.log("User logged in successfully:", data);
 
-                // Navigate to the dashboard based on role
+                // Navigate to the dashboard or user list based on role
                 if (data.role === 'admin') {
                     navigate('/admin-dashboard');
                 } else {
                     navigate('/list');
                 }
             } else {
+                // Display custom error message from server
                 setErrors({ ...errors, custom_error: data.error || 'Something went wrong' });
             }
         } catch (error) {
+            // Handle unexpected errors
             console.error("Error occurred:", error);
             setErrors({ ...errors, custom_error: 'An unexpected error occurred' });
         } finally {
-            setLoading(false);
+            setLoading(false); // Stop loading indicator
         }
     };
 
@@ -109,16 +113,22 @@ const LoginPage = () => {
                                 {errors.password.required && <span className="text-danger">Password is required.</span>}
                             </div>
                             <div className="form-group">
+                                {/* Display custom error if it exists */}
                                 {errors.custom_error && <span className="text-danger"><p>{errors.custom_error}</p></span>}
-                                {loading && <div className="text-center">
-                                    <div className="spinner-border text-primary" role="status">
-                                        <span className="sr-only">Loading...</span>
+                                
+                                {/* Show loading spinner while logging in */}
+                                {loading && (
+                                    <div className="text-center">
+                                        <div className="spinner-border text-primary" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </div>
                                     </div>
-                                </div>}
+                                )}
+
                                 <input
                                     type="submit"
                                     className="btn btn-login float-right"
-                                    disabled={loading}
+                                    disabled={loading} // Disable the button during loading
                                     value="Login"
                                 />
                             </div>

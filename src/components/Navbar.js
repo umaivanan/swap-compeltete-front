@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-// import logo from '/home/ukijaffna/Documents/swappdf/swapSmartFrontend/src/assets/lo.jpg';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Check for token in localStorage
     const token = localStorage.getItem('token');
     if (token) {
-      setIsLoggedIn(true);
+      setIsLoggedIn(true); // User is logged in if token is found
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-    navigate('/');
+    localStorage.removeItem('token'); // Remove token from localStorage
+    setIsLoggedIn(false); // Update state to reflect logout
+    navigate('/'); // Redirect to home page
   };
 
   const handleCreateProfile = () => {
-    // Navigate to PayPalButton component for payment
-    navigate('/paypal-button');
+    navigate('/paypal-button'); // Navigate to the profile creation page
   };
 
   return (
     <nav className="main">
-      {/* <img src={logo} alt="Smart Swap Logo" className="logo" /> */}
       <ul>
         {!isLoggedIn ? (
           <li>

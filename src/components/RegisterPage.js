@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 
-const RegisterPage = () => {
+const RegisterPage = ({ setIsLoggedIn }) => {  // Accept setIsLoggedIn as a prop
     const initialStateErrors = {
         email: { required: false },
         name: { required: false },
@@ -20,34 +20,37 @@ const RegisterPage = () => {
 
     const navigate = useNavigate();
 
+    // Handle input changes
     const handleInput = (event) => {
         setInputs({ ...inputs, [event.target.name]: event.target.value });
     };
 
+    // Handle form submission
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        let errors = { ...initialStateErrors };
+        event.preventDefault();  // Prevent form reload
+        let errors = { ...initialStateErrors };  // Reset errors state
         let hasError = false;
-
+    
+        // Check for empty fields
         if (inputs.name === "") {
-            errors.name.required = true;
+            errors.name.required = true;  // Mark name as required
             hasError = true;
         }
         if (inputs.email === "") {
-            errors.email.required = true;
+            errors.email.required = true;  // Mark email as required
             hasError = true;
         }
         if (inputs.password === "") {
-            errors.password.required = true;
+            errors.password.required = true;  // Mark password as required
             hasError = true;
         }
-
+    
         if (hasError) {
-            setErrors(errors);
-            return;
+            setErrors(errors);  // Display errors for required fields
+            return;  // Stop form submission if there are errors
         }
-
-        setLoading(true);
+    
+        setLoading(true);  // Set loading state to true while making API request
 
         try {
             const response = await fetch('http://localhost:8702/api/auth/register', {
@@ -55,14 +58,23 @@ const RegisterPage = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(inputs),
+                body: JSON.stringify(inputs),  // Send the input data in JSON format
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                console.log("User registered successfully:", data);
-                navigate('/list'); // Redirect to SkillList page after successful registration
+                // Save token to localStorage
+                localStorage.setItem('token', data.token);
+                
+                // Update isLoggedIn state in Navbar
+                setIsLoggedIn(true);
+
+                // **New Code**: Store user's email in sessionStorage after registration
+                sessionStorage.setItem('userEmail', inputs.email);
+
+                // Redirect to SkillList page after successful registration
+                navigate('/list');
             } else {
                 setErrors({ ...errors, custom_error: data.error || 'Something went wrong' });
             }
@@ -70,7 +82,7 @@ const RegisterPage = () => {
             console.error("Error occurred:", error);
             setErrors({ ...errors, custom_error: 'An unexpected error occurred' });
         } finally {
-            setLoading(false);
+            setLoading(false);  // Set loading state to false after API response
         }
     };
 
@@ -89,7 +101,7 @@ const RegisterPage = () => {
                                     onChange={handleInput}
                                     name="name"
                                     id="name"
-                                    value={inputs.name}
+                                    value={inputs.name}  // Bind input value to state
                                 />
                                 {errors.name.required && <span className="text-danger">Name is required.</span>}
                             </div>
@@ -101,7 +113,7 @@ const RegisterPage = () => {
                                     onChange={handleInput}
                                     name="email"
                                     id="email"
-                                    value={inputs.email}
+                                    value={inputs.email}  // Bind input value to state
                                 />
                                 {errors.email.required && <span className="text-danger">Email is required.</span>}
                             </div>
@@ -113,7 +125,7 @@ const RegisterPage = () => {
                                     onChange={handleInput}
                                     name="password"
                                     id="password"
-                                    value={inputs.password}
+                                    value={inputs.password}  // Bind input value to state
                                 />
                                 {errors.password.required && <span className="text-danger">Password is required.</span>}
                             </div>
@@ -127,7 +139,7 @@ const RegisterPage = () => {
                                 <input
                                     type="submit"
                                     className="btn btn-login float-right"
-                                    disabled={loading}
+                                    disabled={loading}  // Disable button while loading
                                     value="Register"
                                 />
                             </div>
