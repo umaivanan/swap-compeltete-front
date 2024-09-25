@@ -3,23 +3,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initial state for login status
   const navigate = useNavigate();
 
+  // Check login status when the component mounts
   useEffect(() => {
-    // Check for token in localStorage
+    // Check for the token in localStorage
     const token = localStorage.getItem('token');
     if (token) {
-      setIsLoggedIn(true); // User is logged in if token is found
+      setIsLoggedIn(true); // If token is found, user is logged in
     }
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once on mount
 
+  // Handle logout functionality
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove token from localStorage
-    setIsLoggedIn(false); // Update state to reflect logout
-    navigate('/'); // Redirect to home page
+    localStorage.removeItem('token'); // Remove the token from localStorage
+    setIsLoggedIn(false); // Update the state to reflect logout
+    navigate('/'); // Redirect the user to the home page after logout
   };
 
+  // Handle navigation to profile creation page
   const handleCreateProfile = () => {
     navigate('/paypal-button'); // Navigate to the profile creation page
   };
@@ -27,6 +30,7 @@ const Navbar = () => {
   return (
     <nav className="main">
       <ul>
+        {/* Check if the user is not logged in */}
         {!isLoggedIn ? (
           <li>
             <Link to="/register">
@@ -35,6 +39,7 @@ const Navbar = () => {
           </li>
         ) : (
           <>
+            {/* Show Create Profile and Logout buttons when the user is logged in */}
             <li>
               <button className="btn" onClick={handleCreateProfile}>
                 Create Profile

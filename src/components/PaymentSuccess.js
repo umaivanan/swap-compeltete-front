@@ -4,60 +4,65 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 
 const PaymentSuccess = () => {
     const [searchParams] = useSearchParams();
-    const orderID = searchParams.get('orderID');  // URL இல் இருந்து orderID ஐ பெறுகிறோம்
-    const [loading, setLoading] = useState(true);  // UI யில் loading message காட்ட
-    const [status, setStatus] = useState('Processing your payment...');  // நிலையை கையாள
-    const [paymentDetails, setPaymentDetails] = useState(null);  // payment பற்றிய தகவல்கள்
-    const [errorMessage, setErrorMessage] = useState('');  // பிழைகளை கையாள
+    const orderID = searchParams.get('orderID');  // Extract orderID from the URL
+    const [loading, setLoading] = useState(true);  // UI loading state
+    const [status, setStatus] = useState('Processing your payment...');  // Payment status
+    const [paymentDetails, setPaymentDetails] = useState(null);  // Payment information
+    const [errorMessage, setErrorMessage] = useState('');  // Error handling
 
-    const navigate = useNavigate();  // React Router மூலம் வழிமுறை
+    const navigate = useNavigate();  // To navigate to other pages
 
     useEffect(() => {
+        console.log("Order ID:", orderID); // Debugging purpose to check the orderID
         if (orderID) {
-            // Backend க்கு orderID ஐ அனுப்பி payment capture செய்கிறோம்
-            axios.get(`http://localhost:8702/api/paypal/capture/${orderID}`)  // backend API க்கு orderID அனுப்புகிறோம்
+            axios.get(`http://localhost:8702/api/paypal/capture/${orderID}`)
                 .then(response => {
                     console.log('Payment successful:', response.data);
-                    setStatus('Payment successful!');  // நிலையை 'Payment successful!' என்று மாற்றுகிறோம்
-                    setPaymentDetails(response.data);  // payment தகவல்களை state இல் சேமிக்கிறோம்
-                    setErrorMessage('');  // பிழை இல்லை என்பதால் இப்போது empty message
-                    setLoading(false);  // loading முடிந்தது
+                    setStatus('Payment successful!');
+                    setPaymentDetails(response.data);  // Store payment details
+                    setErrorMessage('');
+                    setLoading(false);  // Stop loading
                 })
                 .catch(error => {
                     console.error('Error capturing payment:', error);
-                    setStatus('Payment capture failed. Please contact support.');  // பிழை இருந்தால்
-                    setErrorMessage('There was an issue capturing your payment. Please try again.');  // பிழை தகவலைக் காட்டுங்கள்
-                    setLoading(false);  // loading முடிந்தது
+                    setStatus('Payment capture failed. Please contact support.');  // Update status message
+                    setErrorMessage('There was an issue capturing your payment. Please try again.');
+                    setLoading(false);  // Stop loading
                 });
         } else {
             setStatus('No orderID found.');
-            setLoading(false);
+            setLoading(false);  // Stop loading
         }
     }, [orderID]);
 
-    // SkillForm பக்கம் செல்ல handleSkip method
+    // Navigate to SkillForm page
     const handleSkip = () => {
-        navigate('/skill-form');  // SkillForm பக்கத்திற்கு வழிமாற்றம் செய்க
+        navigate('/skill-form');
     };
 
     if (loading) {
-        return <p>Processing your payment... Please wait.</p>;  // loading சமயத்தில் message
+        return <p>Processing your payment... Please wait.</p>;  // Loading message
     }
+
+    // Ensure paymentDetails and nested data are available before rendering details
+    const purchaseUnit = paymentDetails?.purchase_units?.[0];
+    const payer = paymentDetails?.payer;
 
     return (
         <div>
-            <h2>{status}</h2>  {/* Payment status */}
-            {errorMessage && <h2>{errorMessage}</h2>}  {/* Error message */}
-            {paymentDetails && (  // Payment details
+            <h2>{status}</h2>  {/* Display payment status */}
+            {errorMessage && <h2>{errorMessage}</h2>}  {/* Display error message if available */}
+            {paymentDetails && purchaseUnit && payer && (  // Conditionally render payment details
                 <div>
                     <h3>Transaction Details</h3>
                     <p>Order ID: {paymentDetails.id}</p>
                     <p>Status: {paymentDetails.status}</p>
-                    <p>Amount: {paymentDetails.purchase_units[0].amount.value} {paymentDetails.purchase_units[0].amount.currency_code}</p>
-                    <p>Payer Name: {paymentDetails.payer.name.given_name} {paymentDetails.payer.name.surname}</p>
-                    <p>Payer Email: {paymentDetails.payer.email_address}</p>
+                    <p>Amount: {purchaseUnit.amount.value} {purchaseUnit.amount.currency_code}</p>
+                    <p>Payer Name: {payer.name.given_name} {payer.name.surname}</p>
+                    <p>Payer Email: {payer.email_address}</p>
                 </div>
             )}
+            {!paymentDetails && <p>Unable to fetch payment details.</p>}  {/* Fallback message */}
             <button onClick={handleSkip} style={{ marginTop: '20px', padding: '10px', fontSize: '16px' }}>
                 Skip and Go to Skill Form
             </button>

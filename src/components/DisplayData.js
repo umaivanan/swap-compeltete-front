@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './DataDisplay.css'; // Custom CSS for card design
+import { SkillContext } from '../context/SkillContext';
 
 const DisplayData = () => {
   const [data, setData] = useState({});
@@ -9,6 +10,11 @@ const DisplayData = () => {
   const [error, setError] = useState('');
   const { id } = useParams();  // Extract user ID from the URL
   
+  const { skills } = useContext(SkillContext); // Get skills from context
+
+  const userSkill = skills.find(skill => skill.user === id);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,6 +40,21 @@ const DisplayData = () => {
   return (
     <div className="data-display-container">
       <h1 className="heading">Form Data Display for User {id}</h1>
+      {/* Display Skill Information from Context */}
+      {userSkill && (
+        <div className="user-skill">
+          <h2>Skill Information from Context</h2>
+          <p><strong>Profile Name:</strong> {userSkill.profileName}</p>
+          <p><strong>Skill Category:</strong> {userSkill.skillCategory}</p>
+          {userSkill.profilePicture && (
+            <img
+              src={`http://localhost:8702${userSkill.profilePicture}`}
+              alt={userSkill.profileName}
+              className="profile-picture"
+            />
+          )}
+        </div>
+      )}
 
       {/* Display User Information */}
       <div className="user-info">

@@ -8,6 +8,11 @@ const PayPalButton = () => {
     const [loading, setLoading] = useState(false);  // Loading state to manage order creation
     const navigate = useNavigate();  // React Router's useNavigate hook
 
+    // Function to handle successful payment, navigate to success page with orderID
+    const handlePaymentSuccess = (orderID) => {
+        navigate(`/payment-success?orderID=${orderID}`);
+    };
+
     // Function to create the PayPal order
     const createOrder = async (data, actions) => {
         setLoading(true);  // Set loading state when creating the order
@@ -48,9 +53,9 @@ const PayPalButton = () => {
             }).then(() => {
                 console.log('Payment details saved successfully');
     
-                // After successful payment, navigate to the PaymentSuccess page
-                console.log('Navigating to /payment-success');  // Add a log before navigation
-                navigate('/payment-success');  // Redirect to the payment success page
+                // After successful payment, navigate to the PaymentSuccess page with orderID
+                console.log('Navigating to /payment-success with orderID:', data.orderID);  // Add a log before navigation
+                handlePaymentSuccess(data.orderID);  // Navigate with the orderID
             }).catch(error => {
                 console.error('Error saving payment details:', error);
             });
