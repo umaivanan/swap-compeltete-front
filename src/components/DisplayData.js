@@ -1,19 +1,17 @@
-import React, { useState, useEffect,useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './DataDisplay.css'; // Custom CSS for card design
 import { SkillContext } from '../context/SkillContext';
+import logo from '/home/ukijaffna/Documents/git updatebutton/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
 
 const DisplayData = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const { id } = useParams();  // Extract user ID from the URL
-  
   const { skills } = useContext(SkillContext); // Get skills from context
-
   const userSkill = skills.find(skill => skill.user === id);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,221 +38,172 @@ const DisplayData = () => {
   return (
     <div className="data-display-container">
       <h1 className="heading">Form Data Display for User {id}</h1>
-      {/* Display Skill Information from Context */}
-      {userSkill && (
-        <div className="user-skill">
-          <h2>Skill Information from Context</h2>
-          <p><strong>Profile Name:</strong> {userSkill.profileName}</p>
-          <p><strong>Skill Category:</strong> {userSkill.skillCategory}</p>
-          {userSkill.profilePicture && (
-            <img
-              src={`http://localhost:8702${userSkill.profilePicture}`}
-              alt={userSkill.profileName}
-              className="profile-picture"
-            />
-          )}
+
+      <div className="three-section-container">
+        {/* Profile Information */}
+        {userSkill && (
+          <div className="profile-section">
+            <h2>Profile Information</h2>
+            <p><strong>Profile Name:</strong> {userSkill.profileName}</p>
+            <p><strong>Skill Category:</strong> {userSkill.skillCategory}</p>
+            {userSkill.profilePicture && (
+              <img
+                src={`http://localhost:8702${userSkill.profilePicture}`}
+                alt={userSkill.profileName}
+                className="profile-picture"
+              />
+            )}
+            {/* Removed Clickable Logo */}
+            <Link to={`/update-info/${id}`}>
+                <img src={logo} alt="Update Info" className="update-logo" />
+              </Link>
+          </div>
+        )}
+
+        {/* User Information */}
+        <div className="user-info-section">
+          <h2>User Information</h2>
+          <p><strong>Where Live:</strong> {data.whereILive}</p>
+          <p><strong>Decade Born:</strong> {data.decadeBorn}</p>
+          <p><strong>Time Spent:</strong> {data.timeSpent}</p>
+          <p><strong>Work:</strong> {data.work}</p>
+          <p><strong>Languages:</strong> {data.languages}</p>
+          <p><strong>About Me:</strong> {data.aboutMe}</p>
+          {/* Removed Clickable Logo */}
+          <Link to={`/update-info/${id}`}>
+                <img src={logo} alt="Update Info" className="update-logo" />
+              </Link>
         </div>
-      )}
 
-      {/* Display User Information */}
-      <div className="user-info">
-        <h2>User Information</h2>
-        <p><strong>Where Live:</strong> {data.whereILive}</p>
-        <p><strong>Decade Born:</strong> {data.decadeBorn}</p>
-        <p><strong>Time Spent:</strong> {data.timeSpent}</p>
-        <p><strong>Work:</strong> {data.work}</p>
-        <p><strong>Languages:</strong> {data.languages}</p>
-        <p><strong>About Me:</strong> {data.aboutMe}</p>
-      </div>
-
-      {/* Display PDF Links */}
-      <div className="card-grid">
-        {/* Roadmap Introduction */}
-        {data.roadmapIntroduction && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Roadmap Introduction</h3>
+        {/* PDF Links */}
+        <div className="pdf-links-section">
+          <h2>PDF Links</h2>
+          {data.roadmapIntroduction && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.roadmapIntroduction}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Roadmap Introduction
               </a>
             </div>
-          </div>
-        )}
-
-        {/* First Chapter */}
-        {data.firstChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>First Chapter</h3>
+          )}
+          {data.firstChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.firstChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View First Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Second Chapter */}
-        {data.secondChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Second Chapter</h3>
+          )}
+          {data.secondChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.secondChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Second Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Third Chapter */}
-        {data.thirdChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Third Chapter</h3>
+          )}
+          {data.thirdChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.thirdChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Third Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Fourth Chapter */}
-        {data.fourthChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Fourth Chapter</h3>
+          )}
+          {data.fourthChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.fourthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Fourth Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Fifth Chapter */}
-        {data.fifthChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Fifth Chapter</h3>
+          )}
+          {data.fifthChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.fifthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Fifth Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Sixth Chapter */}
-        {data.sixthChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Sixth Chapter</h3>
+          )}
+          {data.sixthChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.sixthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Sixth Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Seventh Chapter */}
-        {data.seventhChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Seventh Chapter</h3>
+          )}
+          {data.seventhChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.seventhChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Seventh Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Eighth Chapter */}
-        {data.eighthChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Eighth Chapter</h3>
+          )}
+          {data.eighthChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.eighthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Eighth Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Ninth Chapter */}
-        {data.ninthChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Ninth Chapter</h3>
+          )}
+          {data.ninthChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.ninthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Ninth Chapter
               </a>
             </div>
-          </div>
-        )}
-
-        {/* Tenth Chapter */}
-        {data.tenthChapter && (
-          <div className="pdf-card">
-            <div className="pdf-content">
-              <h3>Tenth Chapter</h3>
+          )}
+          {data.tenthChapter && (
+            <div className="pdf-card">
               <a
                 href={`http://localhost:8702/pdfUploads/${data.tenthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="view-pdf-btn"
               >
                 View Tenth Chapter
               </a>
             </div>
-          </div>
-        )}
+            
+          )}
+          <Link to={`/update-info/${id}`}>
+                <img src={logo} alt="Update Info" className="update-logo" />
+              </Link>
+        </div>
       </div>
     </div>
   );

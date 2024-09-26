@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'; // PayPalScriptProvider for PayPal integration
 import { SkillProvider } from './context/SkillContext'; // Import SkillProvider
+import UpdateInfo from './components/UpdateInfo'; // Adjust path if necessary
+
+
 
 import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
@@ -32,6 +35,9 @@ function App() {
           <Routes>
             {/* Main route to Hero page */}
             <Route path="/" element={<Hero />} />
+            <Route path="/update-info/:id" element={<UpdateInfo />} />  {/* UpdateInfo route */}
+
+
             
             {/* Register and Login pages - passing setIsLoggedIn */}
             <Route path="/register" element={<RegisterPage setIsLoggedIn={setIsLoggedIn} />} />

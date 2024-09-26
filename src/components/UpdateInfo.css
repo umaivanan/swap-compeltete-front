@@ -1,0 +1,64 @@
+.update-info-container {
+  display: flex;
+  flex-direction: row; /* Side by side layout */
+  justify-content: center; /* Center cards horizontally */
+  align-items: flex-start; /* Align cards at the top */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove padding to avoid gaps */
+  width: 100vw; /* Full viewport width */
+  height: calc(100vh - 60px); /* Full viewport height minus navbar height */
+  background-color: #f0f0f0; /* Optional: background color for the page */
+}
+
+.card {
+  flex: 1; /* Each card takes full width available */
+  width: 800px; /* Set a larger fixed width for each card */
+  margin: 10px; /* Space between cards */
+  padding: 20px; /* Padding inside each card */
+  box-sizing: border-box; /* Include padding in width/height */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for card effect */
+  background-color: #ffffff; /* White background for cards */
+}
+
+.form-section {
+  background-color: #f9f9f9; /* Light background for form section */
+  padding: 20px; /* Consistent padding for the entire card */
+}
+
+.pdf-upload-section {
+  background-color: #e9ecef; /* Light background for PDF section */
+  padding: 20px; /* Consistent padding for the entire card */
+}
+
+h1 {
+  margin: 0 0 20px 0; /* Margin only on bottom */
+  font-size: 1.5rem; /* Font size for headings */
+}
+
+.form-group {
+  margin-bottom: 15px; /* Space between form groups */
+}
+
+input, textarea {
+  width: 100%; /* Full width inputs */
+  padding: 10px; /* Increased padding inside inputs for comfort */
+  margin-top: 5px; /* Space above inputs */
+  border: 1px solid #ccc; /* Basic border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 1rem; /* Normal font size for inputs */
+}
+
+.submit-button {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white; /* Text color */
+  padding: 10px 20px; /* Padding for the button */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer on hover */
+  margin-top: 20px; /* Space above button */
+}
+
+.submit-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
