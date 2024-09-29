@@ -1,12 +1,14 @@
 .data-display-container {
   padding: 20px;
   font-family: 'Arial', sans-serif;
+  background-color: #e6f7ff; /* Optional: light background for the container */
 }
 
 .heading {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
+  color: blue; /* Set heading color to blue */
 }
 
 .three-section-container {
@@ -21,7 +23,7 @@
   position: relative; /* Ensure the logo can be positioned absolutely */
   width: 30%;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid blue; /* Blue border */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -62,7 +64,7 @@
   display: block;
   padding: 10px 15px;
   background-color: #4CAF50;
-  color: white;
+  color: white; /* Text color for buttons */
   text-decoration: none;
   border-radius: 4px;
   text-align: center;
@@ -90,4 +92,15 @@
   .pdf-links-section {
     width: 100%;
   }
+}
+
+/* Additional styles for text within sections */
+.profile-section h2,
+.user-info-section h2 {
+  color: blue; /* Set the section title color to blue */
+}
+
+.profile-section p,
+.user-info-section p {
+  color: blue; /* Set the paragraph text color to blue */
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import './DataDisplay.css'; // Custom CSS for card design
 import { SkillContext } from '../context/SkillContext';
-import logo from '/home/ukijaffna/Documents/git updatebutton/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
+import logo from '/home/ukijaffna/Documents/git Home.js and Navbar.js/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
 
 const DisplayData = () => {
   const [data, setData] = useState({});

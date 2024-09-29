@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import logo from '/home/ukijaffna/Documents/git Home.js and Navbar.js/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
+
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Initial state for login status
@@ -29,6 +31,12 @@ const Navbar = () => {
 
   return (
     <nav className="main">
+       <div className="navbar-logo">
+        <Link to="/">
+          <img src={logo} alt="Logo" className="logo" /> {/* Add logo */}
+        </Link>
+      </div>
+
       <ul>
         {/* Check if the user is not logged in */}
         {!isLoggedIn ? (

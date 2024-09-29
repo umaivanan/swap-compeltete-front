@@ -1,49 +1,69 @@
 /* Navbar.css */
 
 .main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #973131; /* Deep Red */
-    position: fixed; /* Fixes the Navbar at the top */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Ensures the Navbar is above other content */
-  }
-  
-  .logo {
-    height: 50px; /* Adjust height as needed */
-  }
-  
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 20px;
-  }
-  
-  li {
-    color: white;
-  }
-  
-  .btn {
-    background-color: #e0a75e; /* Light Salmon */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn:hover {
-    background-color: #973131; /* Deep Red */
-  }
-  /* Navbar.css */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #00274d 40%, #ffffff 80%); /* Dark blue to white to dark orange */
 
-.main {
-  background-color: #973131;
-  color: #000;
+  position: fixed; /* Fixes the Navbar at the top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensures the Navbar is above other content */
 }
+
+.logo {
+  height: 50px; /* Adjust height as needed */
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+li {
+  color: white;
+}
+
+.btn {
+  background-color: #ff4500; /* Light Salmon */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.btn:hover {
+  background-color:  #ff4500; /* Change to a different shade on hover */
+  animation: bulb-animation 0.6s ease forwards; /* Apply the bulb animation */
+}
+
+/* Bulb animation effect */
+@keyframes bulb-animation {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0); /* No shadow */
+  }
+  50% {
+    transform: scale(1.1); /* Slightly enlarge */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Bright glow */
+  }
+  100% {
+    transform: scale(1); /* Return to normal size */
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0); /* No shadow */
+  }
+}
+
+/* Additional button hover effect */
+.btn:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); /* Custom focus outline */
+}
+

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.css';
+import './LoginPage.css'; // Make sure to use the same CSS styles as RegisterPage
+import BackgroundImage from  '/home/ukijaffna/Documents/git Home.js and Navbar.js/swapSmartFrontend/src/assets/our-first-word-puzzle-game-on-ios-v0-zCOlv9_kElzL6cCchIIj0uZhloFvsvSr3IiMaf7RqaY.webp';  // Import the image
+
 
 const LoginPage = () => {
     const initialStateErrors = {
@@ -16,7 +18,7 @@ const LoginPage = () => {
         password: ""
     });
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handleInput = (event) => {
         setInputs({ ...inputs, [event.target.name]: event.target.value });
@@ -59,21 +61,18 @@ const LoginPage = () => {
             if (response.ok) {
                 // Store token in localStorage and email in sessionStorage
                 sessionStorage.setItem('userEmail', inputs.email);
-                localStorage.setItem('token', data.token); 
-                console.log("User logged in successfully:", data);
+                localStorage.setItem('token', data.token);
 
-                // Navigate to the dashboard or user list based on role
+                // Navigate based on role
                 if (data.role === 'admin') {
                     navigate('/admin-dashboard');
                 } else {
                     navigate('/list');
                 }
             } else {
-                // Display custom error message from server
                 setErrors({ ...errors, custom_error: data.error || 'Something went wrong' });
             }
         } catch (error) {
-            // Handle unexpected errors
             console.error("Error occurred:", error);
             setErrors({ ...errors, custom_error: 'An unexpected error occurred' });
         } finally {
@@ -82,63 +81,62 @@ const LoginPage = () => {
     };
 
     return (
-        <section className="login-block">
-            <div className="container">
-                <div className="row">
-                    <div className="col login-sec">
-                        <h2 className="text-center">Login</h2>
-                        <form className="login-form" onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="email" className="text-uppercase">Email</label>
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    onChange={handleInput}
-                                    name="email"
-                                    id="email"
-                                    value={inputs.email}
-                                />
-                                {errors.email.required && <span className="text-danger">Email is required.</span>}
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password" className="text-uppercase">Password</label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    onChange={handleInput}
-                                    name="password"
-                                    id="password"
-                                    value={inputs.password}
-                                />
-                                {errors.password.required && <span className="text-danger">Password is required.</span>}
-                            </div>
-                            <div className="form-group">
-                                {/* Display custom error if it exists */}
-                                {errors.custom_error && <span className="text-danger"><p>{errors.custom_error}</p></span>}
-                                
-                                {/* Show loading spinner while logging in */}
-                                {loading && (
-                                    <div className="text-center">
-                                        <div className="spinner-border text-primary" role="status">
-                                            <span className="sr-only">Loading...</span>
-                                        </div>
-                                    </div>
-                                )}
-
-                                <input
-                                    type="submit"
-                                    className="btn btn-login float-right"
-                                    disabled={loading} // Disable the button during loading
-                                    value="Login"
-                                />
-                            </div>
-                            <div className="clearfix"></div>
-                            <div className="form-group">
-                                Don't have an account? Please <a href="/register">Register</a>
-                            </div>
-                        </form>
+        <section className="login-section">
+            <div className="left-half">
+                <img src={BackgroundImage} alt="Background" className="bg-image" />
+            </div>
+            <div className="right-half">
+                <h2 className="text-center">Login</h2>
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="email" className="text-uppercase">Email</label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            onChange={handleInput}
+                            name="email"
+                            id="email"
+                            value={inputs.email}
+                        />
+                        {errors.email.required && <span className="text-danger">Email is required.</span>}
                     </div>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="text-uppercase">Password</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            onChange={handleInput}
+                            name="password"
+                            id="password"
+                            value={inputs.password}
+                        />
+                        {errors.password.required && <span className="text-danger">Password is required.</span>}
+                    </div>
+                    <div className="form-group">
+                        {/* Display custom error if it exists */}
+                        {errors.custom_error && <span className="text-danger"><p>{errors.custom_error}</p></span>}
+                        
+                        {/* Show loading spinner while logging in */}
+                        {loading && (
+                            <div className="text-center">
+                                <div className="spinner-border text-primary" role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        )}
+
+                        <input
+                            type="submit"
+                            className="btn btn-login float-right"
+                            disabled={loading} // Disable the button during loading
+                            value="Login"
+                        />
+                    </div>
+                    <div className="clearfix"></div>
+                    <div className="form-group">
+                        Don't have an account? Please <a href="/register">Register</a>
+                    </div>
+                </form>
             </div>
         </section>
     );

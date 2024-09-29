@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RegisterPage.css';
+import './RegisterPage.css';  // Ensure that your CSS file is styled properly
+import BackgroundImage from  '/home/ukijaffna/Documents/git Home.js and Navbar.js/swapSmartFrontend/src/assets/our-first-word-puzzle-game-on-ios-v0-zCOlv9_kElzL6cCchIIj0uZhloFvsvSr3IiMaf7RqaY.webp';  // Import the image
 
-const RegisterPage = ({ setIsLoggedIn }) => {  // Accept setIsLoggedIn as a prop
+const RegisterPage = ({ setIsLoggedIn }) => {
     const initialStateErrors = {
         email: { required: false },
         name: { required: false },
@@ -20,37 +21,34 @@ const RegisterPage = ({ setIsLoggedIn }) => {  // Accept setIsLoggedIn as a prop
 
     const navigate = useNavigate();
 
-    // Handle input changes
     const handleInput = (event) => {
         setInputs({ ...inputs, [event.target.name]: event.target.value });
     };
 
-    // Handle form submission
     const handleSubmit = async (event) => {
-        event.preventDefault();  // Prevent form reload
-        let errors = { ...initialStateErrors };  // Reset errors state
+        event.preventDefault();
+        let errors = { ...initialStateErrors };
         let hasError = false;
-    
-        // Check for empty fields
+
         if (inputs.name === "") {
-            errors.name.required = true;  // Mark name as required
+            errors.name.required = true;
             hasError = true;
         }
         if (inputs.email === "") {
-            errors.email.required = true;  // Mark email as required
+            errors.email.required = true;
             hasError = true;
         }
         if (inputs.password === "") {
-            errors.password.required = true;  // Mark password as required
+            errors.password.required = true;
             hasError = true;
         }
-    
+
         if (hasError) {
-            setErrors(errors);  // Display errors for required fields
-            return;  // Stop form submission if there are errors
+            setErrors(errors);
+            return;
         }
-    
-        setLoading(true);  // Set loading state to true while making API request
+
+        setLoading(true);
 
         try {
             const response = await fetch('http://localhost:8702/api/auth/register', {
@@ -58,98 +56,92 @@ const RegisterPage = ({ setIsLoggedIn }) => {  // Accept setIsLoggedIn as a prop
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(inputs),  // Send the input data in JSON format
+                body: JSON.stringify(inputs),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                // Save token to localStorage
                 localStorage.setItem('token', data.token);
-                
-                // Update isLoggedIn state in Navbar
                 setIsLoggedIn(true);
-
-                // **New Code**: Store user's email in sessionStorage after registration
                 sessionStorage.setItem('userEmail', inputs.email);
-
-                // Redirect to SkillList page after successful registration
                 navigate('/list');
             } else {
                 setErrors({ ...errors, custom_error: data.error || 'Something went wrong' });
             }
         } catch (error) {
-            console.error("Error occurred:", error);
             setErrors({ ...errors, custom_error: 'An unexpected error occurred' });
         } finally {
-            setLoading(false);  // Set loading state to false after API response
+            setLoading(false);
         }
     };
 
     return (
-        <section className="register-block">
-            <div className="container">
-                <div className="row">
-                    <div className="col register-sec">
-                        <h2 className="text-center">Register</h2>
-                        <form className="register-form" onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="name" className="text-uppercase">Name</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    onChange={handleInput}
-                                    name="name"
-                                    id="name"
-                                    value={inputs.name}  // Bind input value to state
-                                />
-                                {errors.name.required && <span className="text-danger">Name is required.</span>}
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="email" className="text-uppercase">Email</label>
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    onChange={handleInput}
-                                    name="email"
-                                    id="email"
-                                    value={inputs.email}  // Bind input value to state
-                                />
-                                {errors.email.required && <span className="text-danger">Email is required.</span>}
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password" className="text-uppercase">Password</label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    onChange={handleInput}
-                                    name="password"
-                                    id="password"
-                                    value={inputs.password}  // Bind input value to state
-                                />
-                                {errors.password.required && <span className="text-danger">Password is required.</span>}
-                            </div>
-                            <div className="form-group">
-                                {errors.custom_error && <span className="text-danger"><p>{errors.custom_error}</p></span>}
-                                {loading && <div className="text-center">
-                                    <div className="spinner-border text-primary" role="status">
-                                        <span className="sr-only">Loading...</span>
-                                    </div>
-                                </div>}
-                                <input
-                                    type="submit"
-                                    className="btn btn-login float-right"
-                                    disabled={loading}  // Disable button while loading
-                                    value="Register"
-                                />
-                            </div>
-                            <div className="clearfix"></div>
-                            <div className="form-group">
-                                Already have an account? Please <a href="/login">Login</a>
-                            </div>
-                        </form>
+        <section className="register-section">
+            {/* Left half for the image */}
+            <div className="left-half">
+                <img src={BackgroundImage} alt="Background" className="bg-image" />
+            </div>
+
+            {/* Right half for the form */}
+            <div className="right-half">
+                <h2 className="text-center">Register</h2>
+                <form className="register-form" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="name" className="text-uppercase">Name</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            onChange={handleInput}
+                            name="name"
+                            id="name"
+                            value={inputs.name}
+                        />
+                        {errors.name.required && <span className="text-danger">Name is required.</span>}
                     </div>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="email" className="text-uppercase">Email</label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            onChange={handleInput}
+                            name="email"
+                            id="email"
+                            value={inputs.email}
+                        />
+                        {errors.email.required && <span className="text-danger">Email is required.</span>}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="text-uppercase">Password</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            onChange={handleInput}
+                            name="password"
+                            id="password"
+                            value={inputs.password}
+                        />
+                        {errors.password.required && <span className="text-danger">Password is required.</span>}
+                    </div>
+                    <div className="form-group">
+                        {errors.custom_error && <span className="text-danger"><p>{errors.custom_error}</p></span>}
+                        {loading && <div className="text-center">
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                        </div>}
+                        <input
+                            type="submit"
+                            className="btn btn-login float-right"
+                            disabled={loading}
+                            value="Register"
+                        />
+                    </div>
+                    <div className="clearfix"></div>
+                    <div className="form-group">
+                        Already have an account? Please <a href="/login">Login</a>
+                    </div>
+                </form>
             </div>
         </section>
     );
