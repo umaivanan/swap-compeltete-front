@@ -48,7 +48,7 @@ const LoginPage = () => {
         setLoading(true); // Start loading indicator
 
         try {
-            const response = await fetch('http://localhost:8702/api/auth/login', {
+            const response = await fetch('http://localhost:8703/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

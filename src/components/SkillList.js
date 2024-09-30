@@ -11,7 +11,7 @@ const SkillList = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get('http://localhost:8702/api/skills'); // Fetch skills from the backend
+        const response = await axios.get('http://localhost:8703/api/skills'); // Fetch skills from the backend
         setSkills(response.data);
       } catch (error) {
         console.error('Error fetching skills:', error);
@@ -35,7 +35,7 @@ const SkillList = () => {
             <p className="skill-category">{skill.skillCategory}</p>
             {skill.profilePicture && (
               <img
-                src={`http://localhost:8702${skill.profilePicture}`}
+                src={`http://localhost:8703${skill.profilePicture}`}
                 alt={skill.profileName}
                 className="profile-picture"
               />

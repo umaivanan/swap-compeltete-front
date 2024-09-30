@@ -13,8 +13,8 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const skillsResponse = await axios.get('http://localhost:8702/api/skills');
-        const usersResponse = await axios.get('http://localhost:8702/api/auth/admin/users');
+        const skillsResponse = await axios.get('http://localhost:8703/api/skills');
+        const usersResponse = await axios.get('http://localhost:8703/api/auth/admin/users');
         setSkills(skillsResponse.data);
         setUsers(usersResponse.data);
       } catch (error) {
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
                         <td>
                           {skill.profilePicture ? (
                             <img
-                              src={`http://localhost:8702${skill.profilePicture}`}
+                              src={`http://localhost:8703${skill.profilePicture}`}
                               alt="Profile"
                               className="profile-picture"
                             />

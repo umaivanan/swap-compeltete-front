@@ -9,9 +9,11 @@
   margin-top: 80px; /* Ensures no overlap with navbar */
   padding: 40px 20px;
   /* background-color: #00274d; Dark blue background */
-  background: linear-gradient(135deg, #00274d 50%, #ff4500 100%); 
+  /* background: linear-gradient(135deg, #00274d 50%, #ff4500 100%);  */
   color: #ffffff; /* White text for contrast */
   margin-top: 650px;
+  background: linear-gradient(135deg, #001f3f 50%, #4682b4 60%);
+
 }
 
 .hero-content {
@@ -140,7 +142,9 @@ p {
   /* background-color: #001f3f; Dark blue background */
   text-align: center;
   margin-top: 50px;
-  background: linear-gradient(135deg, #00274d 50%, #ff4500 100%); 
+  /* background: linear-gradient(135deg, #00274d 50%, #ff4500 100%);  */
+  background: linear-gradient(135deg, #001f3f 40%, #4682b4 60%);
+
 }
 
 .about h2 {
@@ -189,7 +193,9 @@ footer {
   /* background-color: #001f3f; Dark blue footer */
   color: white;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #00274d 50%, #ff4500 100%); 
+  /* background: linear-gradient(135deg, #00274d 50%, #ff4500 100%);  */
+  background: linear-gradient(135deg, #001f3f 50%, #4682b4 60%);
+
 }
 
 .footer-links {

@@ -16,7 +16,7 @@ const DisplayData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8702/api/formdata/${id}`);
+        const response = await axios.get(`http://localhost:8703/api/formdata/${id}`);
         setData(response.data);  // Set data retrieved from the API
       } catch (error) {
         setError('Error fetching data');
@@ -48,7 +48,7 @@ const DisplayData = () => {
             <p><strong>Skill Category:</strong> {userSkill.skillCategory}</p>
             {userSkill.profilePicture && (
               <img
-                src={`http://localhost:8702${userSkill.profilePicture}`}
+                src={`http://localhost:8703${userSkill.profilePicture}`}
                 alt={userSkill.profileName}
                 className="profile-picture"
               />
@@ -81,7 +81,7 @@ const DisplayData = () => {
           {data.roadmapIntroduction && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.roadmapIntroduction}`}
+                href={`http://localhost:8703/pdfUploads/${data.roadmapIntroduction}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -92,7 +92,7 @@ const DisplayData = () => {
           {data.firstChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.firstChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.firstChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -103,7 +103,7 @@ const DisplayData = () => {
           {data.secondChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.secondChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.secondChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -114,7 +114,7 @@ const DisplayData = () => {
           {data.thirdChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.thirdChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.thirdChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -125,7 +125,7 @@ const DisplayData = () => {
           {data.fourthChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.fourthChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.fourthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -136,7 +136,7 @@ const DisplayData = () => {
           {data.fifthChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.fifthChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.fifthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -147,7 +147,7 @@ const DisplayData = () => {
           {data.sixthChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.sixthChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.sixthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -158,7 +158,7 @@ const DisplayData = () => {
           {data.seventhChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.seventhChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.seventhChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -169,7 +169,7 @@ const DisplayData = () => {
           {data.eighthChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.eighthChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.eighthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -180,7 +180,7 @@ const DisplayData = () => {
           {data.ninthChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.ninthChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.ninthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -191,7 +191,7 @@ const DisplayData = () => {
           {data.tenthChapter && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8702/pdfUploads/${data.tenthChapter}`}
+                href={`http://localhost:8703/pdfUploads/${data.tenthChapter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

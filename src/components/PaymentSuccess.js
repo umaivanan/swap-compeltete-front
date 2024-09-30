@@ -15,7 +15,7 @@ const PaymentSuccess = () => {
     useEffect(() => {
         console.log("Order ID:", orderID); // Debugging purpose to check the orderID
         if (orderID) {
-            axios.get(`http://localhost:8702/api/paypal/capture/${orderID}`)
+            axios.get(`http://localhost:8703/api/paypal/capture/${orderID}`)
                 .then(response => {
                     console.log('Payment successful:', response.data);
                     setStatus('Payment successful!');

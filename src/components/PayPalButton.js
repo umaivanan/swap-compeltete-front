@@ -26,7 +26,7 @@ const PayPalButton = () => {
 
         try {
             // Make a request to your backend PayPal API endpoint and include the user email
-            const response = await axios.post('http://localhost:8702/api/paypal/pay', { email: userEmail });  // Pass the email along with the request
+            const response = await axios.post('http://localhost:8703/api/paypal/pay', { email: userEmail });  // Pass the email along with the request
 
             setLoading(false);  // Reset loading state after order creation
             return response.data.orderID;  // Return order ID from backend
@@ -47,7 +47,7 @@ const PayPalButton = () => {
             const userEmail = sessionStorage.getItem('userEmail');  
     
             // After successful payment, send the details to backend for saving
-            axios.post('http://localhost:8702/api/paypal/success', {
+            axios.post('http://localhost:8703/api/paypal/success', {
                 email: userEmail,  // Include the user's email
                 paymentDetails: details,  // Include payment details from PayPal
             }).then(() => {

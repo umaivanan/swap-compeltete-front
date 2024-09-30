@@ -51,7 +51,7 @@ const RegisterPage = ({ setIsLoggedIn }) => {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8702/api/auth/register', {
+            const response = await fetch('http://localhost:8703/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
