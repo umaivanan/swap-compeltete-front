@@ -16,6 +16,8 @@ import AdditionalInformation from './components/AdditionalInformation';
 import DisplayData from './components/DisplayData';
 import PayPalButton from './components/PayPalButton';
 import PaymentSuccess from './components/PaymentSuccess'; 
+import FormDataDetails from './components/FormDataDetails'; // Import FormDataDetails component
+
 
 
 function App() {
@@ -40,6 +42,8 @@ function App() {
             <Route path="/display-data/:id" element={<DisplayData />} />
             <Route path="/paypal-button" element={<PayPalButton />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/formdata/:id" component={<FormDataDetails/>} />
+
           </Routes>
         </Router>
       </PayPalScriptProvider>

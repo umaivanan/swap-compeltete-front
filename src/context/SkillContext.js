@@ -28,7 +28,7 @@ export const SkillProvider = ({ children }) => {
   }, []);
 
   return (
-    <SkillContext.Provider value={{ skills, loading, error }}>
+    <SkillContext.Provider value={{ skills,setSkills, loading, error }}>
       {children}
     </SkillContext.Provider>
   );

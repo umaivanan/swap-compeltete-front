@@ -3,17 +3,18 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import './DataDisplay.css'; // Custom CSS for card design
 import { SkillContext } from '../context/SkillContext';
-import logo from '/home/ukijaffna/Documents/git Home.js and Navbar.js/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
+import logo from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
 
 const DisplayData = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const { id } = useParams();  // Extract user ID from the URL
-  const { skills } = useContext(SkillContext); // Get skills from context
+  const { skills, setSkills } = useContext(SkillContext); // Get and set skills from context
   const userSkill = skills.find(skill => skill.user === id);
 
   useEffect(() => {
+    // Fetch data from the backend
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:8703/api/formdata/${id}`);
@@ -28,6 +29,20 @@ const DisplayData = () => {
 
     fetchData();
   }, [id]);
+
+  // Fetch skills data
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const response = await axios.get('http://localhost:8703/api/skills'); // Fetch skills from the backend
+        setSkills(response.data);  // Update skills in context
+      } catch (error) {
+        console.error('Error fetching skills:', error);
+      }
+    };
+
+    fetchSkills();
+  }, [setSkills]);
 
   // If the data is loading, show a loading message
   if (loading) return <p className="loading">Loading...</p>;
@@ -53,10 +68,9 @@ const DisplayData = () => {
                 className="profile-picture"
               />
             )}
-            {/* Removed Clickable Logo */}
             <Link to={`/update-info/${id}`}>
-                <img src={logo} alt="Update Info" className="update-logo" />
-              </Link>
+              <img src={logo} alt="Update Info" className="update-logo" />
+            </Link>
           </div>
         )}
 
@@ -69,10 +83,9 @@ const DisplayData = () => {
           <p><strong>Work:</strong> {data.work}</p>
           <p><strong>Languages:</strong> {data.languages}</p>
           <p><strong>About Me:</strong> {data.aboutMe}</p>
-          {/* Removed Clickable Logo */}
           <Link to={`/update-info/${id}`}>
-                <img src={logo} alt="Update Info" className="update-logo" />
-              </Link>
+            <img src={logo} alt="Update Info" className="update-logo" />
+          </Link>
         </div>
 
         {/* PDF Links */}
@@ -198,11 +211,10 @@ const DisplayData = () => {
                 View Tenth Chapter
               </a>
             </div>
-            
           )}
           <Link to={`/update-info/${id}`}>
-                <img src={logo} alt="Update Info" className="update-logo" />
-              </Link>
+            <img src={logo} alt="Update Info" className="update-logo" />
+          </Link>
         </div>
       </div>
     </div>

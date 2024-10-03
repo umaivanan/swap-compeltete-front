@@ -21,7 +21,7 @@ const UpdateInfo = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8702/api/formdata/${id}`);
+        const response = await axios.get(`http://localhost:8703/api/formdata/${id}`);
         setData(response.data);
       } catch (error) {
         setError('Error fetching data');
@@ -86,7 +86,7 @@ const UpdateInfo = () => {
 
       if (userSkill) {
         const formDataId = response.data.formData._id;
-        await axios.patch(`http://localhost:8702/api/skills/${userSkill._id}`, { formDataId });
+        await axios.patch(`http://localhost:8703/api/skills/${userSkill._id}`, { formDataId });
       }
 
       alert('Data updated successfully!');

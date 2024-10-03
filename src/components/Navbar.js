@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import logo from '/home/ukijaffna/Documents/git Home.js and Navbar.js/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
+import logo from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
 
 
 const Navbar = () => {
@@ -26,7 +26,7 @@ const Navbar = () => {
 
   // Handle navigation to profile creation page
   const handleCreateProfile = () => {
-    navigate('/paypal-button'); // Navigate to the profile creation page
+    navigate('/skill-form'); // Navigate to the profile creation page
   };
 
   return (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';  // Ensure that your CSS file is styled properly
-import BackgroundImage from  '/home/ukijaffna/Documents/git Home.js and Navbar.js/swapSmartFrontend/src/assets/our-first-word-puzzle-game-on-ios-v0-zCOlv9_kElzL6cCchIIj0uZhloFvsvSr3IiMaf7RqaY.webp';  // Import the image
+import BackgroundImage from  '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/our-first-word-puzzle-game-on-ios-v0-zCOlv9_kElzL6cCchIIj0uZhloFvsvSr3IiMaf7RqaY.webp';  // Import the image
 
 const RegisterPage = ({ setIsLoggedIn }) => {
     const initialStateErrors = {
