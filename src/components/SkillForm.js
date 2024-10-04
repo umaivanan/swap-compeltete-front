@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './SkillForm.css';
@@ -8,6 +8,17 @@ const SkillForm = () => {
   const [skillCategory, setSkillCategory] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if the user has already submitted the form
+    const isFormSubmitted = sessionStorage.getItem('formSubmitted');
+    
+    if (isFormSubmitted) {
+      // Remove previous skillId to ensure fresh submission
+      sessionStorage.removeItem('skillId');
+      navigate('/list');  // Remove or replace with your appropriate route
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,8 +47,10 @@ const SkillForm = () => {
       });
 
       const skillId = response.data._id;
+      sessionStorage.setItem('formSubmitted', 'true');  // Update form submission status
+      sessionStorage.setItem('skillId', skillId);  // Store the new skillId
 
-      // Navigate to AdditionalInformation and pass the skillId
+      // Navigate to AdditionalInformation with the new skillId
       navigate('/additionalInformation', { state: { skillId } });
     } catch (error) {
       console.error('Error uploading skill', error);

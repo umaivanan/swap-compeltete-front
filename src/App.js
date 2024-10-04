@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+// import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { SkillProvider } from './context/SkillContext'; // Import SkillProvider
 import UpdateInfo from './components/UpdateInfo'; 
 import RegisterPage from './components/RegisterPage';
@@ -14,9 +14,9 @@ import SkillForm from './components/SkillForm';
 import SkillList from './components/SkillList';
 import AdditionalInformation from './components/AdditionalInformation';
 import DisplayData from './components/DisplayData';
-import PayPalButton from './components/PayPalButton';
-import PaymentSuccess from './components/PaymentSuccess'; 
-import FormDataDetails from './components/FormDataDetails'; // Import FormDataDetails component
+// import PayPalButton from './components/PayPalButton';
+// import PaymentSuccess from './components/PaymentSuccess'; 
+import FormDataDetails from './components/FormDataDetails'; 
 
 
 
@@ -25,7 +25,7 @@ function App() {
 
   return (
     <SkillProvider>
-      <PayPalScriptProvider options={{ "client-id": "YOUR_CLIENT_ID", currency: "USD" }}>
+      {/* <PayPalScriptProvider options={{ "client-id": "YOUR_CLIENT_ID", currency: "USD" }}> */}
         <Router>
           {/* Pass isLoggedIn and setIsLoggedIn to Navbar */}
           <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
@@ -40,13 +40,13 @@ function App() {
             <Route path="/additionalInformation" element={<AdditionalInformation />} />
             <Route path="/list" element={<SkillList />} />
             <Route path="/display-data/:id" element={<DisplayData />} />
-            <Route path="/paypal-button" element={<PayPalButton />} />
-            <Route path="/payment-success" element={<PaymentSuccess />} />
+            {/* <Route path="/paypal-button" element={<PayPalButton />} /> */}
+            {/* <Route path="/payment-success" element={<PaymentSuccess />} /> */}
             <Route path="/formdata/:id" component={<FormDataDetails/>} />
 
           </Routes>
         </Router>
-      </PayPalScriptProvider>
+      {/* </PayPalScriptProvider> */}
     </SkillProvider>
   );
 }
