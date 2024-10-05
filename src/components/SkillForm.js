@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,33 +8,45 @@ const SkillForm = () => {
   const [profileName, setProfileName] = useState('');
   const [skillCategory, setSkillCategory] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
+  const [currentUserEmail, setCurrentUserEmail] = useState(''); // Track the current user email
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the user has already submitted the form
-    const isFormSubmitted = sessionStorage.getItem('formSubmitted');
+    // Retrieve the current user email from localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    console.log('Current user email:', userEmail);  // Check the email value
     
-    if (isFormSubmitted) {
-      // Remove previous skillId to ensure fresh submission
-      sessionStorage.removeItem('skillId');
-      navigate('/list');  // Remove or replace with your appropriate route
+    if (!userEmail) {
+      console.error('No user email found in localStorage');
+      return;
+    }
+
+    // Set the currentUserEmail state with the value from localStorage
+    setCurrentUserEmail(userEmail);  // Update currentUserEmail state
+
+    // Check if this user has already submitted the form
+    const formSubmittedForUser = localStorage.getItem(`formSubmitted_${userEmail}`);
+    console.log('Form submission status:', formSubmittedForUser);  // Check the form submission status
+    
+    if (formSubmittedForUser === 'true') {
+      // If the form is already submitted by this user, navigate to the list page
+      navigate('/list');
     }
   }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Retrieve the user email from session storage
-    const userEmail = sessionStorage.getItem('userEmail');
-    if (!userEmail) {
-      console.error('No user email found in session storage');
+    // Ensure user email is set
+    if (!currentUserEmail) {
+      console.error('No user email available to submit the form');
       return;
     }
 
     const formData = new FormData();
     formData.append('profileName', profileName);
     formData.append('skillCategory', skillCategory);
-    formData.append('email', userEmail);  // Add the email to formData
+    formData.append('email', currentUserEmail);  // Add the email to formData
 
     if (profilePicture) {
       formData.append('profilePicture', profilePicture);
@@ -47,11 +60,13 @@ const SkillForm = () => {
       });
 
       const skillId = response.data._id;
-      sessionStorage.setItem('formSubmitted', 'true');  // Update form submission status
-      sessionStorage.setItem('skillId', skillId);  // Store the new skillId
 
-      // Navigate to AdditionalInformation with the new skillId
-      navigate('/additionalInformation', { state: { skillId } });
+      // Save form submission status and skillId for this specific user in localStorage
+      localStorage.setItem(`formSubmitted_${currentUserEmail}`, 'true');
+      localStorage.setItem(`skillId_${currentUserEmail}`, skillId);
+
+      // Navigate to the AdditionalInformation page after successful submission
+      navigate('/additionalInformation', { state: { skillId } }); // Pass skillId to AdditionalInformation
     } catch (error) {
       console.error('Error uploading skill', error);
     }
@@ -91,3 +106,5 @@ const SkillForm = () => {
 };
 
 export default SkillForm;
+
+

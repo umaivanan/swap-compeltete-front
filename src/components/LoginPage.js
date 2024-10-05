@@ -59,9 +59,14 @@ const LoginPage = () => {
             const data = await response.json();
 
             if (response.ok) {
+                localStorage.removeItem('token');     // Remove old token
+    
+
+
                 // Store token in localStorage and email in sessionStorage
-                sessionStorage.setItem('userEmail', inputs.email);
+                localStorage.setItem('userEmail', inputs.email);
                 localStorage.setItem('token', data.token);
+
 
                 // Navigate based on role
                 if (data.role === 'admin') {

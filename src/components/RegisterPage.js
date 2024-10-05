@@ -62,9 +62,13 @@ const RegisterPage = ({ setIsLoggedIn }) => {
             const data = await response.json();
 
             if (response.ok) {
+                localStorage.removeItem('token');     // Remove old token
+
+
                 localStorage.setItem('token', data.token);
                 setIsLoggedIn(true);
-                sessionStorage.setItem('userEmail', inputs.email);
+
+                localStorage.setItem('userEmail', inputs.email);
                 navigate('/list');
             } else {
                 setErrors({ ...errors, custom_error: data.error || 'Something went wrong' });
