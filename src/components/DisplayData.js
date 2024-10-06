@@ -3,31 +3,41 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import './DataDisplay.css'; // Custom CSS for card design
 import { SkillContext } from '../context/SkillContext';
-import logo from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
+import logo from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
 
 const DisplayData = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { id } = useParams();  // Extract user ID from the URL
+  const { id } = useParams();  // URL-ல் இருந்து :id பாகத்தை பெறுகிறது
+ // Extract user ID from the URL
+  console.log("Fetched ID from URL:", id);
+  
+
   const { skills, setSkills } = useContext(SkillContext); // Get and set skills from context
-  const userSkill = skills.find(skill => skill.user === id);
+  // const userSkill = skills.find(skill => skill.user === id);
+  const userSkill = skills ? skills.find(skill => skill.formDataId === id) : null;
+
 
   useEffect(() => {
-    // Fetch data from the backend
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8703/api/formdata/${id}`);
-        setData(response.data);  // Set data retrieved from the API
-      } catch (error) {
-        setError('Error fetching data');
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    if (id) {  // Check if id is not undefined
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8703/api/formdata/${id}`);
+          setData(response.data);  // Set data retrieved from the API
+        } catch (error) {
+          setError('Error fetching data');
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      
+      fetchData();
+    } else {
+      console.log("ID is undefined");
+      setError("Invalid ID or ID not found");
+    }
   }, [id]);
 
   // Fetch skills data

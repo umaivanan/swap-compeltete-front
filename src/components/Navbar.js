@@ -1,19 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import logo from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
-
+import axios from 'axios'; // For making API requests
+import logo from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Initial state for login status
+  const [formSubmitted, setFormSubmitted] = useState(false); // Track if the form is already submitted
   const navigate = useNavigate();
 
   // Check login status when the component mounts
   useEffect(() => {
     // Check for the token in localStorage
     const token = localStorage.getItem('token');
-    if (token) {
+    const userEmail = localStorage.getItem('userEmail'); // Assuming email is stored in localStorage
+
+    if (token && userEmail) {
       setIsLoggedIn(true); // If token is found, user is logged in
+
+      // Check if the form is already submitted
+      const checkFormSubmissionStatus = async () => {
+        try {
+          const response = await axios.post('http://localhost:8703/api/skills/check-form', { email: userEmail });
+          if (response.data.formSubmitted) {
+            setFormSubmitted(true); // If form is already submitted, set formSubmitted to true
+          }
+        } catch (error) {
+          console.error('Error checking form submission status:', error);
+        }
+      };
+      checkFormSubmissionStatus();
     }
   }, []); // Empty dependency array ensures this runs only once on mount
 
@@ -47,12 +63,14 @@ const Navbar = () => {
           </li>
         ) : (
           <>
-            {/* Show Create Profile and Logout buttons when the user is logged in */}
-            <li>
-              <button className="btn" onClick={handleCreateProfile}>
-                Create Profile
-              </button>
-            </li>
+            {/* Show Create Profile button only if form is NOT submitted */}
+            {!formSubmitted && (
+              <li>
+                <button className="btn" onClick={handleCreateProfile}>
+                  Create Profile
+                </button>
+              </li>
+            )}
             <li>
               <button className="btn" onClick={handleLogout}>
                 Logout

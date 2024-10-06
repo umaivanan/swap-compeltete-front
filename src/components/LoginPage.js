@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CryptoJS from 'crypto-js';  // Import CryptoJS for encryption and decryption
 import './LoginPage.css'; // Make sure to use the same CSS styles as RegisterPage
-import BackgroundImage from  '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/our-first-word-puzzle-game-on-ios-v0-zCOlv9_kElzL6cCchIIj0uZhloFvsvSr3IiMaf7RqaY.webp';  // Import the image
-
+import BackgroundImage from  '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/our-first-word-puzzle-game-on-ios-v0-zCOlv9_kElzL6cCchIIj0uZhloFvsvSr3IiMaf7RqaY.webp';  // Import the image
 
 const LoginPage = () => {
     const initialStateErrors = {
@@ -60,13 +60,23 @@ const LoginPage = () => {
 
             if (response.ok) {
                 localStorage.removeItem('token');     // Remove old token
-    
 
+                // **Encrypting email and token before saving to localStorage**
+                const secretKey = '12345';  // Use a secure key for encryption
+                
+                // Encrypt email
+                const encryptedEmail = CryptoJS.AES.encrypt(inputs.email, secretKey).toString();
+                localStorage.setItem('userEmail', encryptedEmail);
 
-                // Store token in localStorage and email in sessionStorage
-                localStorage.setItem('userEmail', inputs.email);
-                localStorage.setItem('token', data.token);
+                // Encrypt token
+                const encryptedToken = CryptoJS.AES.encrypt(data.token, secretKey).toString();
+                localStorage.setItem('token', encryptedToken);
 
+                // Decrypt email for usage (e.g., for verification or showing the user's email)
+                const storedEncryptedEmail = localStorage.getItem('userEmail');
+                const decryptedEmail = CryptoJS.AES.decrypt(storedEncryptedEmail, secretKey).toString(CryptoJS.enc.Utf8);
+
+                console.log('Decrypted Email:', decryptedEmail);
 
                 // Navigate based on role
                 if (data.role === 'admin') {

@@ -1,43 +1,47 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './SkillForm.css';
+import CryptoJS from 'crypto-js';
 
 const SkillForm = () => {
   const [profileName, setProfileName] = useState('');
   const [skillCategory, setSkillCategory] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
-  const [currentUserEmail, setCurrentUserEmail] = useState(''); // Track the current user email
+  const [currentUserEmail, setCurrentUserEmail] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Retrieve the current user email from localStorage
-    const userEmail = localStorage.getItem('userEmail');
-    console.log('Current user email:', userEmail);  // Check the email value
+    const encryptedUserEmail = localStorage.getItem('userEmail');
     
-    if (!userEmail) {
-      console.error('No user email found in localStorage');
-      return;
-    }
+    if (encryptedUserEmail) {
+      const secretKey = '12345'; // Decryption key
+      const decryptedEmail = CryptoJS.AES.decrypt(encryptedUserEmail, secretKey).toString(CryptoJS.enc.Utf8);
+      
+      if (decryptedEmail) {
+        setCurrentUserEmail(decryptedEmail); // Decrypted email ஐ state-ல் set செய்க
 
-    // Set the currentUserEmail state with the value from localStorage
-    setCurrentUserEmail(userEmail);  // Update currentUserEmail state
-
-    // Check if this user has already submitted the form
-    const formSubmittedForUser = localStorage.getItem(`formSubmitted_${userEmail}`);
-    console.log('Form submission status:', formSubmittedForUser);  // Check the form submission status
-    
-    if (formSubmittedForUser === 'true') {
-      // If the form is already submitted by this user, navigate to the list page
-      navigate('/list');
+        const checkFormSubmissionStatus = async () => {
+          try {
+            // Backend-க்கு request அனுப்புதல்
+            const response = await axios.post('http://localhost:8703/api/skills/check-form', { email: decryptedEmail });
+            console.log('Backend Response:', response.data); // Response ஐ console-ல் log செய்து சரிபார்க்க
+            if (response.data.formSubmitted) {
+              // Form ஏற்கனவே submit செய்யப்பட்டால்
+              navigate('/list'); // Redirect user to list page
+            }
+          } catch (error) {
+            console.error('Error checking form submission status:', error);
+          }
+        };
+        checkFormSubmissionStatus(); // Function call
+      }
     }
   }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ensure user email is set
     if (!currentUserEmail) {
       console.error('No user email available to submit the form');
       return;
@@ -46,7 +50,7 @@ const SkillForm = () => {
     const formData = new FormData();
     formData.append('profileName', profileName);
     formData.append('skillCategory', skillCategory);
-    formData.append('email', currentUserEmail);  // Add the email to formData
+    formData.append('email', currentUserEmail);  // Add email to formData
 
     if (profilePicture) {
       formData.append('profilePicture', profilePicture);
@@ -61,12 +65,14 @@ const SkillForm = () => {
 
       const skillId = response.data._id;
 
-      // Save form submission status and skillId for this specific user in localStorage
-      localStorage.setItem(`formSubmitted_${currentUserEmail}`, 'true');
-      localStorage.setItem(`skillId_${currentUserEmail}`, skillId);
+      // Backend-ல் submittedStatus ஐ true ஆக update செய்யும் patch request
+      // await axios.patch(`http://localhost:8703/api/skills/${skillId}`, { submittedStatus: true });
+      await axios.patch(`http://localhost:8703/api/skills/${skillId}`, { submittedStatus: true });
 
-      // Navigate to the AdditionalInformation page after successful submission
-      navigate('/additionalInformation', { state: { skillId } }); // Pass skillId to AdditionalInformation
+
+      // Form submit செய்த பிறகு, List page-க்கு redirect
+      navigate('/additionalInformation', { state: { skillId: skillId } });
+
     } catch (error) {
       console.error('Error uploading skill', error);
     }
@@ -100,11 +106,9 @@ const SkillForm = () => {
           onChange={(e) => setProfilePicture(e.target.files[0])}
         />
       </div>
-      <button type="submit">Continue</button>
+      <button type="submit">Submit</button>
     </form>
   );
 };
 
 export default SkillForm;
-
-

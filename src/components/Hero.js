@@ -1,12 +1,12 @@
 import React from 'react';
 import './Hero.css'; // Ensure the custom styles are loaded correctly
-import mainPerson from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg'
-import googleAdsIcon from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/maxresdefault.jpg';
-import twoPlusUsers from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/PDF Summarizer (3).png';
-import returnCustomers from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/0-roadmap-infographics___media_library_original_655_368.webp';
-import second from "/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/pexels-photo-814544.webp";
-import third from "/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/pexels-photo-814544.webp";
-import fourth from '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
+import mainPerson from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg'
+import googleAdsIcon from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/maxresdefault.jpg';
+import twoPlusUsers from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/PDF Summarizer (3).png';
+import returnCustomers from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/0-roadmap-infographics___media_library_original_655_368.webp';
+import second from "/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/pexels-photo-814544.webp";
+import third from "/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/pexels-photo-814544.webp";
+import fourth from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
 
 const Hero = () => {
   return (

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';  // Ensure that your CSS file is styled properly
-import BackgroundImage from  '/home/ukijaffna/Documents/october 1/swapSmartFrontend/src/assets/our-first-word-puzzle-game-on-ios-v0-zCOlv9_kElzL6cCchIIj0uZhloFvsvSr3IiMaf7RqaY.webp';  // Import the image
+import CryptoJS from 'crypto-js';  // Import CryptoJS for encryption and decryption
+import BackgroundImage from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/our-first-word-puzzle-game-on-ios-v0-zCOlv9_kElzL6cCchIIj0uZhloFvsvSr3IiMaf7RqaY.webp';  // Import the image
 
 const RegisterPage = ({ setIsLoggedIn }) => {
     const initialStateErrors = {
@@ -64,11 +65,27 @@ const RegisterPage = ({ setIsLoggedIn }) => {
             if (response.ok) {
                 localStorage.removeItem('token');     // Remove old token
 
+                const secretKey = '12345';  // Use a secure key for encryption
+                
+                // **Encrypting email and token before saving to localStorage**
+                
+                // Encrypt email
+                const encryptedEmail = CryptoJS.AES.encrypt(inputs.email, secretKey).toString();
+                localStorage.setItem('userEmail', encryptedEmail);
 
-                localStorage.setItem('token', data.token);
-                setIsLoggedIn(true);
+                // Encrypt token
+                const encryptedToken = CryptoJS.AES.encrypt(data.token, secretKey).toString();
+                localStorage.setItem('token', encryptedToken);
 
-                localStorage.setItem('userEmail', inputs.email);
+                // Decrypt email for verification or usage (just like in the login)
+                const storedEncryptedEmail = localStorage.getItem('userEmail');
+                const decryptedEmail = CryptoJS.AES.decrypt(storedEncryptedEmail, secretKey).toString(CryptoJS.enc.Utf8);
+
+                console.log('Decrypted Email:', decryptedEmail);  // This can be used for debugging or verification
+
+                setIsLoggedIn(true);  // Set login status
+
+                // Redirect to list page or dashboard based on role
                 navigate('/list');
             } else {
                 setErrors({ ...errors, custom_error: data.error || 'Something went wrong' });

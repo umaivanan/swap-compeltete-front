@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import './SkillList.css'; // Custom styling
 
 const SkillList = () => {
@@ -40,12 +40,18 @@ const SkillList = () => {
                 className="profile-picture"
               />
             )}
-            <button
+            {/* <button
               className="show-more-button"
               onClick={() => handleShowMore(skill.user)}
             >
               Show More
-            </button>
+            </button> */} 
+            {skill._id && (
+  <Link to={`/display-data/${skill.formDataId}`}>
+    <button className="show-more-button">Show More</button>
+  </Link>
+)}
+            
           </div>
         ))
       ) : (
