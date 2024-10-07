@@ -104,3 +104,140 @@
 .user-info-section p {
   color: blue; /* Set the paragraph text color to blue */
 }
+
+.data-display-container {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #e6f7ff; /* Optional: light background for the container */
+}
+
+.heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: blue; /* Set heading color to blue */
+}
+
+.three-section-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.profile-section,
+.user-info-section,
+.pdf-links-section {
+  position: relative; /* Ensure the logo can be positioned absolutely */
+  width: 30%;
+  padding: 20px;
+  border: 1px solid blue; /* Blue border */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section img.profile-picture {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+/* Styling for the logo */
+.update-logo {
+  position: absolute;
+  bottom: 10px; /* Position it at the bottom */
+  right: 10px;  /* Align it to the right */
+  width: 40px;  /* Logo width */
+  height: 40px; /* Logo height */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.update-logo:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.pdf-links-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-card {
+  margin-bottom: 10px;
+  position: relative; /* Allow positioning of logo within each card */
+}
+
+.pdf-card a {
+  display: block;
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white; /* Text color for buttons */
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.pdf-card a:hover {
+  background-color: #45a049;
+}
+
+.locked-chapter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  background-color: #ccc; /* Grey background for locked chapters */
+  border-radius: 4px;
+  text-align: center;
+}
+
+.lock-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.payment-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.payment-button:hover {
+  background-color: #45a049;
+}
+
+@media (max-width: 900px) {
+  .three-section-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .profile-section,
+  .user-info-section,
+  .pdf-links-section {
+    width: 100%;
+  }
+}
+
+/* Additional styles for text within sections */
+.profile-section h2,
+.user-info-section h2 {
+  color: blue; /* Set the section title color to blue */
+}
+
+.profile-section p,
+.user-info-section p {
+  color: blue; /* Set the paragraph text color to blue */
+}
