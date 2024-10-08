@@ -1,134 +1,99 @@
-/* General body styling */
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #e0f7fa; /* Light cyan background */
-  font-family: 'Roboto', sans-serif;
-}
-
-/* Main container */
-.container {
-  width: 80%; /* Adjust width for larger gap on left and right */
-  max-width: 1200px;
-  margin: 50px auto; /* Large gap for top and bottom */
-  padding: 40px; /* Added padding to ensure large gaps around content */
-  box-sizing: border-box;
-}
-
-/* Center the heading */
-h1 {
-  text-align: center;
-  color: #00796b;
-  margin-bottom: 30px;
-}
-
-/* Skills Grid - For All Cards */
+/* Main container for the skills */
 .skills-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px; /* Increased gap between cards */
-  justify-content: center; /* Center the content */
-  padding: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Responsive grid for dynamic columns */
+  gap: 10px; /* Gap between cards */
+  margin: 0; /* Remove margin around the container */
+  padding: 0 10px; /* Adjust padding to remove side gaps */
+  width: 100vw; /* Use full viewport width */
+  box-sizing: border-box; /* Include padding in the width */
+  background-color: #f4f4f4; /* Light background */
 }
 
-/* Individual Skill Card */
+/* Individual skill card */
 .skill-card {
-  border: 1px solid #b2dfdb; /* Light teal border */
-  border-radius: 12px;
-  padding: 15px;
-  width: 180px;
-  height: 320px; /* Ensure uniform height for all cards */
-  text-align: center;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transition effect for hover */
-  margin-top: 150px;
-  cursor: pointer;
+  background: linear-gradient(to bottom, #0a1128 60%, #ffffff 90%); /* 60% dark blue, 40% white */
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+  width: 350px; /* Horizontal size fixed */
+  /* No fixed height, so height auto-adjusts */
 }
 
-/* Card Hover Effect - Glow */
+/* Hover effect */
 .skill-card:hover {
-  transform: scale(1.05); /* Slight scale-up on hover */
-  box-shadow: 0 8px 16px rgba(0, 150, 136, 0.6); /* Bulb effect (teal glow) */
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Enlarged card */
-.skill-card.enlarged {
-  transform: scale(1.2); /* Enlarge the card */
-  z-index: 2; /* Bring the card on top of others */
-  transition: all 0.5s ease; /* Smooth transition for the scale */
+/* Profile picture container */
+.profile-picture-container {
+  width: 100%;
+  margin-bottom: 15px;
 }
 
-/* Blurred effect for other cards */
-.skill-card.blurred {
-  filter: blur(4px); /* Blur effect */
-  transition: all 0.3s ease; /* Smooth transition for the blur */
-}
-
-/* Skill Name Styling */
-.skill-name {
-  font-size: 1.3em;
-  color: #00796b;
-  margin: 10px 0;
-}
-
-/* Skill Category Styling */
-.skill-category {
-  color: #00796b;
-  margin-bottom: 10px;
-}
-
-/* Profile Picture Styling */
+/* Profile picture styling */
 .profile-picture {
   width: 100%;
-  height: 140px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  transition: transform 0.5s ease; /* Transition effect for profile hover */
+  border-radius: 8px;
 }
 
-/* Show More Button */
-.show-more-btn {
+/* Skill info section */
+.skill-info {
+  flex: 1;
+}
+
+/* Skill name */
+.skill-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #00796b;
+  margin-bottom: 5px; /* Reduced margin for tighter layout */
+}
+
+/* Skill category */
+.skill-category {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 10px; /* Reduced margin for tighter layout */
+}
+
+/* Show more button */
+.show-more-button {
   background-color: #00796b;
   color: white;
+  padding: 10px;
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
   width: 100%;
-  align-self: flex-end;
-  margin-top: auto;
 }
 
-.show-more-btn:hover {
+.show-more-button:hover {
   background-color: #004d40;
 }
 
-/* Alignment for the header and logout buttons */
-.header-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-  margin-top: 10px;
+/* Responsive styles */
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr); /* Three cards side by side on smaller screens */
+    gap: 10px; /* Reduce gap between cards */
+  }
 }
 
-.header-buttons button {
-  background-color: #ff5722; /* Bright orange button */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.header-buttons button:hover {
-  background-color: #e64a19; /* Darker orange on hover */
+/* No skills message */
+.no-skills-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 50px;
 }

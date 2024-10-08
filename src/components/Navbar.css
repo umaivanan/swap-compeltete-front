@@ -1,23 +1,23 @@
-/* Navbar.css */
-
+/* Navbar container */
 .main {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background: linear-gradient(90deg, #00274d 40%, #ffffff 80%); /* Dark blue to white to dark orange */
-
-  position: fixed; /* Fixes the Navbar at the top */
+  background: linear-gradient(90deg, #00274d 80%, #ffffff 100%);
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000; /* Ensures the Navbar is above other content */
+  z-index: 1000; /* Ensures the Navbar stays above other content */
 }
 
+/* Logo styling */
 .logo {
-  height: 50px; /* Adjust height as needed */
+  height: 50px;
 }
 
+/* Navbar items */
 ul {
   list-style: none;
   margin: 0;
@@ -30,40 +30,40 @@ li {
   color: white;
 }
 
+/* Button styling */
 .btn {
-  background-color: #ff4500; /* Light Salmon */
+  background-color: #ff4500;
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .btn:hover {
-  background-color:  #ff4500; /* Change to a different shade on hover */
-  animation: bulb-animation 0.6s ease forwards; /* Apply the bulb animation */
+  background-color: #ff4500;
+  animation: bulb-animation 0.6s ease forwards;
 }
 
 /* Bulb animation effect */
 @keyframes bulb-animation {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 rgba(255, 255, 255, 0); /* No shadow */
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
   }
   50% {
-    transform: scale(1.1); /* Slightly enlarge */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Bright glow */
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
   }
   100% {
-    transform: scale(1); /* Return to normal size */
-    box-shadow: 0 0 0 rgba(255, 255, 255, 0); /* No shadow */
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
   }
 }
 
-/* Additional button hover effect */
+/* Focus outline for buttons */
 .btn:focus {
-  outline: none; /* Remove default focus outline */
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); /* Custom focus outline */
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
 }
-

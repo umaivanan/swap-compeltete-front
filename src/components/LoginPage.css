@@ -1,115 +1,121 @@
 /* General body styling */
 body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    /* background: linear-gradient(135deg, #001f3f 40%, #ff5722 100%); Dark Blue to Orange gradient */
-    color: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #001f3f 50%, #4682b4 60%);
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #001f3f 50%, #4682b4 10%);
+}
 
-  }
-  
-  /* Container for the two halves */
+/* Container for the login section */
+.login-section {
+  display: flex;
+  width: 100%; /* Increased width */
+  max-width: 900px; /* Limit max width for better presentation */
+  height: 80vh; /* Increased height */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: linear-gradient(135deg, #001f3f 90%, #4682b4 60%);
+/* Add white background around form */
+}
+
+/* Right half for the form */
+.right-half {
+  flex: 1;
+  padding: 60px; /* Increased padding */
+  background-color: #00274d; /* Dark Blue background */
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Title styling for Login */
+h2 {
+  font-size: 32px; /* Increased font size */
+  color: blue;
+  text-align: center;
+  margin-bottom: 30px;
+  animation: fadeInText 2s ease-in-out;
+}
+
+/* Form container styling */
+.login-form {
+  width: 100%; /* Expanded width */
+  max-width: 400px; /* Limit max width for better presentation */
+  background-color: #ffffff; /* White background inside form */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 15px; /* Increased padding */
+  font-size: 16px; /* Increased font size */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f0f0f0; /* Light background inside form */
+  color: #001f3f;
+}
+
+/* Login button styling */
+.btn-login {
+  width: 100%;
+  background-color: #ff5722;
+  color: #ffffff;
+  padding: 15px; /* Increased padding */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px; /* Increased font size */
+  transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #e64a19;
+}
+
+/* Link styling */
+a {
+  color: #ff5722;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeInText {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Extra styling for responsiveness */
+@media (max-width: 768px) {
   .login-section {
-    display: flex;
-    width: 80%;
-    height: 70vh;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  /* Left half for the image */
-  .left-half {
-    flex: 1;
-    background-color: #001f3f; /* Dark Blue background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  /* Background image styling */
-  .bg-image {
-    width: 80%; /* Reduced image size */
-    height: auto;
-    border-radius: 10px;
-  }
-  
-  /* Right half for the form */
-  .right-half {
-    flex: 1;
-    padding: 40px;
-    background-color: #001f3f; /* Dark Blue background */
-    color: #ffffff; /* White text for better contrast */
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height: auto;
   }
-  
-  /* Title styling for Login */
-  h2 {
-    font-size: 28px;
-    color: #f2f2f2; /* White text for the heading */
-    text-align: center;
-    margin-bottom: 20px;
-    animation: fadeInText 2s ease-in-out;
+
+  .right-half {
+    padding: 40px;
   }
-  
-  /* Form container styling */
+
   .login-form {
-    width: 80%; /* Adjust form width */
-  }
-  
-  /* Form group styling */
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-control {
     width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #ffffff; /* White background for inputs */
-    color: #001f3f; /* Dark Blue text inside the inputs */
+    max-width: none;
   }
-  
-  /* Login button styling */
-  .btn-login {
-    width: 100%;
-    background-color: #ff5722; /* Bright Orange for button */
-    color: #ffffff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-login:hover {
-    background-color: #e64a19;
-  }
-  
-  /* Text styling for register link */
-  a {
-    color: #ffffff; /* White text for links */
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Animations */
-  @keyframes fadeInText {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
+}

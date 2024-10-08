@@ -1,11 +1,9 @@
-
-
-
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon component
+import { faHome, faCalendar, faClock, faBriefcase, faLanguage, faUser } from '@fortawesome/free-solid-svg-icons'; // Import required icons
 import './AdditionalInformation.css'; // Import the external CSS file
-// import formimage from '/home/ukijaffna/Documents/swappdf/swapSmartFrontend/src/assets/jotform-mobile-forms_still_2x.gif';
 
 const AdditionalInformation = () => {
     const location = useLocation();
@@ -29,9 +27,9 @@ const AdditionalInformation = () => {
         ninthChapter: null,
         tenthChapter: null,
     });
+    const [fileNames, setFileNames] = useState({}); // Keep track of uploaded file names
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [uploadedFiles, setUploadedFiles] = useState([]); // State for uploaded files
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -39,7 +37,10 @@ const AdditionalInformation = () => {
     };
 
     const handleFileChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+        const { name, files } = e.target;
+        const selectedFile = files[0];
+        setFormData({ ...formData, [name]: selectedFile });
+        setFileNames({ ...fileNames, [name]: selectedFile.name });
     };
 
     const validateForm = () => {
@@ -70,18 +71,12 @@ const AdditionalInformation = () => {
                 formDataObj.append('aboutMe', formData.aboutMe);
                 formDataObj.append('skillId', skillId);
 
-                // Append all the chapter files
-                formDataObj.append('roadmapIntroduction', formData.roadmapIntroduction);
-                formDataObj.append('firstChapter', formData.firstChapter);
-                formDataObj.append('secondChapter', formData.secondChapter);
-                formDataObj.append('thirdChapter', formData.thirdChapter);
-                formDataObj.append('fourthChapter', formData.fourthChapter);
-                formDataObj.append('fifthChapter', formData.fifthChapter);
-                formDataObj.append('sixthChapter', formData.sixthChapter);
-                formDataObj.append('seventhChapter', formData.seventhChapter);
-                formDataObj.append('eighthChapter', formData.eighthChapter);
-                formDataObj.append('ninthChapter', formData.ninthChapter);
-                formDataObj.append('tenthChapter', formData.tenthChapter);
+                // Append all the chapter files and roadmap introduction
+                Object.keys(formData).forEach(key => {
+                    if (formData[key] instanceof File) {
+                        formDataObj.append(key, formData[key]);
+                    }
+                });
 
                 const response = await axios.post('http://localhost:8703/api/formdata', formDataObj, {
                     headers: {
@@ -107,13 +102,12 @@ const AdditionalInformation = () => {
 
     return (
         <div className="full-page">
-            <div className="image-container">
-                {/* <img src={formimage} alt="Side Image" className="side-image" /> */}
-            </div>
             <div className="form-container">
                 <form className="additional-information-form" onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="whereILive">Where I Live</label>
+                        <label htmlFor="whereILive">
+                            <FontAwesomeIcon icon={faHome} /> Where I Live
+                        </label>
                         <input
                             type="text"
                             id="whereILive"
@@ -126,7 +120,9 @@ const AdditionalInformation = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="decadeBorn">Decade I Was Born</label>
+                        <label htmlFor="decadeBorn">
+                            <FontAwesomeIcon icon={faCalendar} /> Decade I Was Born
+                        </label>
                         <input
                             type="text"
                             id="decadeBorn"
@@ -139,7 +135,9 @@ const AdditionalInformation = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="timeSpent">I Spend Too Much Time</label>
+                        <label htmlFor="timeSpent">
+                            <FontAwesomeIcon icon={faClock} /> I Spend Too Much Time
+                        </label>
                         <input
                             type="text"
                             id="timeSpent"
@@ -152,7 +150,9 @@ const AdditionalInformation = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="work">My Work</label>
+                        <label htmlFor="work">
+                            <FontAwesomeIcon icon={faBriefcase} /> My Work
+                        </label>
                         <input
                             type="text"
                             id="work"
@@ -165,7 +165,9 @@ const AdditionalInformation = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="languages">Languages I Speak</label>
+                        <label htmlFor="languages">
+                            <FontAwesomeIcon icon={faLanguage} /> Languages I Speak
+                        </label>
                         <input
                             type="text"
                             id="languages"
@@ -178,7 +180,9 @@ const AdditionalInformation = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="aboutMe">About Me</label>
+                        <label htmlFor="aboutMe">
+                            <FontAwesomeIcon icon={faUser} /> About Me
+                        </label>
                         <textarea
                             id="aboutMe"
                             name="aboutMe"
@@ -199,6 +203,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.roadmapIntroduction && (
+                            <span className="success-message">
+                                {fileNames.roadmapIntroduction} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -210,6 +219,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.firstChapter && (
+                            <span className="success-message">
+                                {fileNames.firstChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -221,6 +235,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.secondChapter && (
+                            <span className="success-message">
+                                {fileNames.secondChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -232,6 +251,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.thirdChapter && (
+                            <span className="success-message">
+                                {fileNames.thirdChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -243,6 +267,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.fourthChapter && (
+                            <span className="success-message">
+                                {fileNames.fourthChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -254,6 +283,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.fifthChapter && (
+                            <span className="success-message">
+                                {fileNames.fifthChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -265,6 +299,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.sixthChapter && (
+                            <span className="success-message">
+                                {fileNames.sixthChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -276,6 +315,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.seventhChapter && (
+                            <span className="success-message">
+                                {fileNames.seventhChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -287,6 +331,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.eighthChapter && (
+                            <span className="success-message">
+                                {fileNames.eighthChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -298,6 +347,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.ninthChapter && (
+                            <span className="success-message">
+                                {fileNames.ninthChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
@@ -309,6 +363,11 @@ const AdditionalInformation = () => {
                             accept="application/pdf"
                             onChange={handleFileChange}
                         />
+                        {fileNames.tenthChapter && (
+                            <span className="success-message">
+                                {fileNames.tenthChapter} uploaded successfully!
+                            </span>
+                        )}
                     </div>
 
                     <button type="submit" disabled={isLoading}>
