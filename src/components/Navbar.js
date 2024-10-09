@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import axios from 'axios';
-import logo from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
+import logo from '/home/ukijaffna/Documents/october9/swapSmartFrontend/src/assets/pexels-photo-3183197 (1).jpeg';
 import Popup from './Popup';  // Importing the Popup component
 
 const Navbar = () => {

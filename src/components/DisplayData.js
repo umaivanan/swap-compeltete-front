@@ -471,8 +471,8 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import './DataDisplay.css'; // Custom CSS for card design
 import { SkillContext } from '../context/SkillContext';
-import logo from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
-import lockIcon from '/home/ukijaffna/Documents/october5/swapSmartFrontend/src/assets/lo2.jpg'; // Add your lock icon image path here
+import logo from '/home/ukijaffna/Documents/october9/swapSmartFrontend/src/assets/lo2.jpg';  // Import the logo image
+import lockIcon from '/home/ukijaffna/Documents/october9/swapSmartFrontend/src/assets/lo2.jpg'; // Add your lock icon image path here
 import CryptoJS from 'crypto-js';
 import StripeCheckout from "react-stripe-checkout";
 
@@ -483,38 +483,41 @@ const DisplayData = () => {
   const { id } = useParams();  // Extract user ID from the URL
   const [loggedInEmail, setLoggedInEmail] = useState("");  // Save logged-in email
   
-
   const { skills, setSkills } = useContext(SkillContext); // Get and set skills from context
   const userSkill = skills ? skills.find(skill => skill.formDataId === id) : null;
 
-  const [product,setProduct] = useState({
+  const [product, setProduct] = useState({
     name: "buying pdf",
     price: 0,
     productBy: "instructors"
   });
 
-  const makePayment=(token)=>{
-    const body={
+  const makePayment = (token) => {
+    const body = {
       token,
-      product
+      product,
+      payer: loggedInEmail,  // Current logged-in user's email (payer)
+      payingTo: userSkill ? userSkill.email : "Unknown",  // Instructor's email (payingTo)
+    };
 
-    }
+    const headers = {
+      "Content-Type": "application/json"
+    };
 
-    const headers={
-      "Content-Type":"application/json"
-    }
-    return fetch("http://localhost:8703/payment",{
-      method:"POST",
+    return fetch("http://localhost:8703/payment", {
+      method: "POST",
       headers,
-      body:JSON.stringify(body)
-    }).then((response)=>{
-      console.log(response);
+      body: JSON.stringify(body)
     })
-    .catch((err)=>{
-      console.log(err);
-    })
-
-  }
+      .then((response) => {
+        console.log("Payment response:", response);
+        console.log("Payer (User):", loggedInEmail);  // Display payer's email
+        console.log("Paying To (Instructor):", userSkill ? userSkill.email : "No Instructor email found");
+      })
+      .catch((err) => {
+        console.log("Payment error:", err);
+      });
+  };
 
   // Current logged-in user's email logic (from authentication system)
   useEffect(() => {
@@ -674,10 +677,9 @@ const DisplayData = () => {
             amount={product.price}
             stripeKey="pk_test_51Q0z3OIDR6fHncujf4V778OtQb2gJHqfP54FvBGnuvugIcT4fSmXMDSn4qIkkKJ5pw6aGRdwyluYJsGGsH1kLN9s00c1SapMSi"
             token={makePayment}
-
           >
             <button className="payment-button">
-            Make Payment to Unlock PDFs ${data.pdfPrice}
+              Make Payment to Unlock PDFs ${data.pdfPrice}
             </button>
           </StripeCheckout>
         </div>
