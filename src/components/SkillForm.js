@@ -8,6 +8,8 @@ const SkillForm = () => {
   const [profileName, setProfileName] = useState('');
   const [skillCategory, setSkillCategory] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
+  const [preferredLanguage, setPreferredLanguage] = useState(''); // New state for Preferred Language
+  const [educationalBackground, setEducationalBackground] = useState(''); // New state for Educational Background
   const [currentUserEmail, setCurrentUserEmail] = useState('');
   const navigate = useNavigate();
 
@@ -19,16 +21,16 @@ const SkillForm = () => {
       const decryptedEmail = CryptoJS.AES.decrypt(encryptedUserEmail, secretKey).toString(CryptoJS.enc.Utf8);
       
       if (decryptedEmail) {
-        setCurrentUserEmail(decryptedEmail); // Decrypted email ஐ state-ல் set செய்க
+        setCurrentUserEmail(decryptedEmail); // Decrypted email is set in the state
 
         const checkFormSubmissionStatus = async () => {
           try {
-            // Backend-க்கு request அனுப்புதல்
+            // Send request to backend to check submission status
             const response = await axios.post('http://localhost:8703/api/skills/check-form', { email: decryptedEmail });
-            console.log('Backend Response:', response.data); // Response ஐ console-ல் log செய்து சரிபார்க்க
+            console.log('Backend Response:', response.data);
             if (response.data.formSubmitted) {
-              // Form ஏற்கனவே submit செய்யப்பட்டால்
-              navigate('/list'); // Redirect user to list page
+              // If form is already submitted
+              navigate('/list'); // Redirect to the list page
             }
           } catch (error) {
             console.error('Error checking form submission status:', error);
@@ -51,6 +53,8 @@ const SkillForm = () => {
     formData.append('profileName', profileName);
     formData.append('skillCategory', skillCategory);
     formData.append('email', currentUserEmail);  // Add email to formData
+    formData.append('preferredLanguage', preferredLanguage); // Add Preferred Language
+    formData.append('educationalBackground', educationalBackground); // Add Educational Background
 
     if (profilePicture) {
       formData.append('profilePicture', profilePicture);
@@ -65,12 +69,10 @@ const SkillForm = () => {
 
       const skillId = response.data._id;
 
-      // Backend-ல் submittedStatus ஐ true ஆக update செய்யும் patch request
-      // await axios.patch(`http://localhost:8703/api/skills/${skillId}`, { submittedStatus: true });
+      // Backend update for submittedStatus
       await axios.patch(`http://localhost:8703/api/skills/${skillId}`, { submittedStatus: true });
 
-
-      // Form submit செய்த பிறகு, List page-க்கு redirect
+      // Redirect after form submission
       navigate('/additionalInformation', { state: { skillId: skillId } });
 
     } catch (error) {
@@ -79,8 +81,8 @@ const SkillForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form onSubmit={handleSubmit} className="skill-form">
+      <div className="form-group">
         <label htmlFor="profileName">Profile Name</label>
         <input
           type="text"
@@ -89,7 +91,7 @@ const SkillForm = () => {
           onChange={(e) => setProfileName(e.target.value)}
         />
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="skillCategory">Skill Category</label>
         <input
           type="text"
@@ -98,12 +100,30 @@ const SkillForm = () => {
           onChange={(e) => setSkillCategory(e.target.value)}
         />
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="profilePicture">Profile Picture (Optional)</label>
         <input
           type="file"
           id="profilePicture"
           onChange={(e) => setProfilePicture(e.target.files[0])}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="preferredLanguage">Preferred Language</label>
+        <input
+          type="text"
+          id="preferredLanguage"
+          value={preferredLanguage}
+          onChange={(e) => setPreferredLanguage(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="educationalBackground">Educational Background</label>
+        <input
+          type="text"
+          id="educationalBackground"
+          value={educationalBackground}
+          onChange={(e) => setEducationalBackground(e.target.value)}
         />
       </div>
       <button type="submit">Submit</button>
