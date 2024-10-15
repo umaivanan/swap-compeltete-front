@@ -81,7 +81,7 @@ const AdditionalInformation = () => {
                 formDataObj.append('courseCategory', formData.courseCategory);
                 formDataObj.append('languages', formData.languages);
                 formDataObj.append('pdfPrice', formData.pdfPrice); // Add the PDF price
-                formDataObj.append('skillId', skillId);
+                formDataObj.append('skilId', skillId);
 
                 // Append all the chapter files and roadmap introduction
                 Object.keys(formData).forEach(key => {

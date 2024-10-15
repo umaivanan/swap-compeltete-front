@@ -1,69 +1,73 @@
 /* Navbar container */
 .main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background: linear-gradient(90deg, #00274d 80%, #ffffff 100%);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000; /* Ensures the Navbar stays above other content */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #00bcd4 900%, #ffffff 90%); /* Cyan to white gradient */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures the Navbar stays above other content */
 }
 
 /* Logo styling */
 .logo {
-  height: 50px;
+    height: 50px;
 }
 
 /* Navbar items */
 ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
 }
 
 li {
-  color: white;
+    color: #ffffff; /* White text */
 }
 
-/* Button styling */
+/* Button styling with black and white scheme */
 .btn {
-  background-color: #ff4500;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
+    background-color: #000; /* Black background */
+    color: #ffffff; /* White text */
+    border: 2px solid #ffffff; /* White border */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
+/* Button hover effect */
 .btn:hover {
-  background-color: #ff4500;
-  animation: bulb-animation 0.6s ease forwards;
+    background-color: #ffffff; /* White background */
+    color: #000; /* Black text */
+    border: 2px solid #000; /* Black border */
+    animation: bulb-animation 0.6s ease forwards;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow on hover */
 }
 
 /* Bulb animation effect */
 @keyframes bulb-animation {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
-  }
-  50% {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
-  }
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
 }
 
 /* Focus outline for buttons */
 .btn:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
 }

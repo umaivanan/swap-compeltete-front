@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CryptoJS from 'crypto-js';  // For encryption
-import './RegisterPage.css';  // Include your custom styles
+import CryptoJS from 'crypto-js';
+import { motion } from 'framer-motion';
 
-const RegisterPage = ({ onSuccess }) => {  // Add onSuccess prop for closing the popup
+const RegisterPage = ({ onSuccess }) => {
   const initialStateErrors = {
     email: { required: false },
     name: { required: false },
@@ -13,7 +13,7 @@ const RegisterPage = ({ onSuccess }) => {  // Add onSuccess prop for closing the
 
   const [errors, setErrors] = useState(initialStateErrors);
   const [loading, setLoading] = useState(false);
-  const [inputs, setInputs] = useState({ name: "", email: "", password: "" });
+  const [inputs, setInputs] = useState({ name: '', email: '', password: '' });
   const navigate = useNavigate();
 
   const handleInput = (event) => {
@@ -25,15 +25,16 @@ const RegisterPage = ({ onSuccess }) => {  // Add onSuccess prop for closing the
     let errors = { ...initialStateErrors };
     let hasError = false;
 
-    if (inputs.name === "") {
+    // Basic validation
+    if (inputs.name === '') {
       errors.name.required = true;
       hasError = true;
     }
-    if (inputs.email === "") {
+    if (inputs.email === '') {
       errors.email.required = true;
       hasError = true;
     }
-    if (inputs.password === "") {
+    if (inputs.password === '') {
       errors.password.required = true;
       hasError = true;
     }
@@ -55,16 +56,14 @@ const RegisterPage = ({ onSuccess }) => {  // Add onSuccess prop for closing the
       const data = await response.json();
 
       if (response.ok) {
-        const secretKey = '12345';
+        const secretKey = '12345'; // Secure your secret key in production
         const encryptedEmail = CryptoJS.AES.encrypt(inputs.email, secretKey).toString();
         localStorage.setItem('userEmail', encryptedEmail);
 
         const encryptedToken = CryptoJS.AES.encrypt(data.token, secretKey).toString();
         localStorage.setItem('token', encryptedToken);
 
-        // Call the onSuccess function to close the popup after successful registration
-        onSuccess();  // Close the popup modal
-
+        onSuccess(); // Close modal
         navigate('/list');
       } else {
         setErrors({ ...errors, custom_error: data.error || 'Something went wrong' });
@@ -77,31 +76,61 @@ const RegisterPage = ({ onSuccess }) => {  // Add onSuccess prop for closing the
   };
 
   return (
-    <div className="register-form-container">
-      <h2 className="text-center">Register</h2>
-      <form className="register-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Name</label>
-          <input type="text" name="name" value={inputs.name} onChange={handleInput} />
-          {errors.name.required && <span className="error-text">Name is required.</span>}
-        </div>
-        <div className="form-group">
-          <label>Email</label>
-          <input type="email" name="email" value={inputs.email} onChange={handleInput} />
-          {errors.email.required && <span className="error-text">Email is required.</span>}
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input type="password" name="password" value={inputs.password} onChange={handleInput} />
-          {errors.password.required && <span className="error-text">Password is required.</span>}
-        </div>
-        <div className="form-group">
-          {errors.custom_error && <span className="error-text">{errors.custom_error}</span>}
-          {loading ? <div className="loading-spinner">Loading...</div> : null}
-          <button type="submit" disabled={loading}>Register</button>
-        </div>
-      </form>
-    </div>
+    <motion.div
+      className="flex justify-center items-center h-auto bg-white" // Changed h-screen to h-auto
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="max-w-lg w-full h-auto  p-6 rounded-xl shadow-lg">
+        <h2 className="text-10xl text-cyan-500 mb-6 text-center">Register</h2>
+        <form className="w-full" onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-cyan-500">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={inputs.name}
+              onChange={handleInput}
+              className="form-control w-full p-3 border rounded border-gray-300"
+            />
+            {errors.name.required && <span className="text-red-500">Name is required.</span>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-cyan-500">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={inputs.email}
+              onChange={handleInput}
+              className="form-control w-full p-3 border rounded border-gray-300"
+            />
+            {errors.email.required && <span className="text-red-500">Email is required.</span>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-cyan-500">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={inputs.password}
+              onChange={handleInput}
+              className="form-control w-full p-3 border rounded border-gray-300"
+            />
+            {errors.password.required && <span className="text-red-500">Password is required.</span>}
+          </div>
+          {errors.custom_error && <span className="text-red-500">{errors.custom_error}</span>}
+          {loading ? <div className="text-center">Loading...</div> : null}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-cyan-500 text-white py-2 mt-4 rounded-lg hover:bg-cyan-600 transition duration-300"
+          >
+            Register
+          </button>
+        </form>
+      </div>
+    </motion.div>
   );
 };
 
