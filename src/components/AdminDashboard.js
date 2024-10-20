@@ -13,10 +13,10 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const formDataResponse = await axios.get(`http://localhost:8703/api/formdata`);
+        const formDataResponse = await axios.get(`http://localhost:8706/api/formdata`);
         setFormDatas(formDataResponse.data); // Set form data response
 
-        const skillsResponse = await axios.get('http://localhost:8703/api/skills');
+        const skillsResponse = await axios.get('http://localhost:8706/api/skills');
         setSkills(skillsResponse.data); // Set skills response
       } catch (error) {
         setError('Error fetching data');
@@ -39,7 +39,7 @@ const AdminDashboard = () => {
   const handleBlockUser = async (formDataId) => {
     try {
       // Send DELETE request to backend API
-      await axios.delete(`http://localhost:8703/api/formdata/${formDataId}`);
+      await axios.delete(`http://localhost:8706/api/formdata/${formDataId}`);
 
       // Update the frontend state to remove the blocked user
       setFormDatas(formDatas.filter(data => data._id !== formDataId));
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
                     {selectedFormData.roadmapIntroduction && (
                       <div>
                         <a
-                          href={`http://localhost:8703/pdfUploads/${selectedFormData.roadmapIntroduction}`}
+                          href={`http://localhost:8706/pdfUploads/${selectedFormData.roadmapIntroduction}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-cyan-500 underline"
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
                         selectedFormData[chapter] && (
                           <div key={index}>
                             <a
-                              href={`http://localhost:8703/pdfUploads/${selectedFormData[chapter]}`}
+                              href={`http://localhost:8706/pdfUploads/${selectedFormData[chapter]}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-cyan-500 underline"
@@ -122,7 +122,7 @@ const AdminDashboard = () => {
                     <h3 className="font-bold text-lg text-cyan-500">Profile Picture</h3>
                     {selectedFormData.skill.profilePicture && (
                       <img
-                        src={`http://localhost:8703${selectedFormData.skill.profilePicture}`}
+                        src={`http://localhost:8706${selectedFormData.skill.profilePicture}`}
                         alt={selectedFormData.skill.profileName}
                         className="w-24 h-24 object-cover rounded-lg"
                       />
@@ -131,7 +131,7 @@ const AdminDashboard = () => {
                     <h3 className="font-bold text-lg text-cyan-500">Course Image</h3>
                     {selectedFormData.image && (
                       <img
-                        src={`http://localhost:8703/imageUploads/${selectedFormData.image}`}
+                        src={`http://localhost:8706/imageUploads/${selectedFormData.image}`}
                         alt="Course uploaded"
                         className="w-full h-48 object-cover rounded-lg"
                       />

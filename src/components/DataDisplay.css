@@ -106,10 +106,20 @@
 }
 
 .data-display-container {
+  position: fixed; /* Fix the container in place */
+  top: 50%;        /* Center vertically */
+  left: 50%;       /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for the element's own dimensions */
   padding: 20px;
   font-family: 'Arial', sans-serif;
   background-color: #e6f7ff; /* Optional: light background for the container */
+  border-radius: 10px; /* Optional: rounding corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Optional: adding shadow */
+  width: 80%; /* Optional: control width */
+  max-width: 600px; /* Optional: max width */
+  z-index: 1001; /* Ensure it stays above other content */
 }
+
 
 .heading {
   text-align: center;
@@ -241,3 +251,4 @@
 .user-info-section p {
   color: blue; /* Set the paragraph text color to blue */
 }
+

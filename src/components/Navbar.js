@@ -1,79 +1,159 @@
-// import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect, useCallback } from 'react';
 // import { Link, useNavigate } from 'react-router-dom';
 // import './Navbar.css';
-// import axios from 'axios';
-// import logo from '/home/ukijaffna/Documents/october14/swapSmartFrontend/src/assets/a9714e26-a365-405f-8cdb-47df3aeedfb8.webp';
-// import Popup from './Popup';  // Importing the Popup component
+// import logo from '../assets/a9714e26-a365-405f-8cdb-47df3aeedfb8.webp';
+// import Popup from './Popup'; // Import Popup component
+// import CryptoJS from 'crypto-js'; // Import CryptoJS
 
 // const Navbar = () => {
-//   const [isLoggedIn, setIsLoggedIn] = useState(false); // Login status
-//   const [formSubmitted, setFormSubmitted] = useState(false); // Track if the form is already submitted
-//   const [loading, setLoading] = useState(true); // Track loading state
-//   const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [formSubmitted, setFormSubmitted] = useState(false);
+//   const [loading, setLoading] = useState(true);
+//   const [showPopup, setShowPopup] = useState(false);
+//   const [userProfile, setUserProfile] = useState(null);
 //   const navigate = useNavigate();
 
-//   // Check login status and form submission when the component mounts
-//   useEffect(() => {
-//     const token = localStorage.getItem('token'); // Retrieve token from localStorage
-//     const userEmail = localStorage.getItem('userEmail'); // Retrieve user email from localStorage
+//   const decryptEmail = (encryptedEmail) => {
+//     const secretKey = '12345';
+//     const bytes = CryptoJS.AES.decrypt(encryptedEmail, secretKey);
+//     return bytes.toString(CryptoJS.enc.Utf8);
+//   };
 
-//     // If the token and email exist, user is logged in
-//     if (token && userEmail) {
+//   // Memoize the function using useCallback to prevent unnecessary re-renders
+//   const checkLoginStatus = useCallback(() => {
+//     const token = localStorage.getItem('token');
+//     const encryptedUserEmail = localStorage.getItem('userEmail');
+
+//     if (token && encryptedUserEmail) {
+//       setIsLoggedIn(true);
+//       const userEmail = decryptEmail(encryptedUserEmail);
+
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       }
+
+//       fetchUserProfile(userEmail);
+//     }
+//     setLoading(false);
+//   }, []); // No dependencies
+
+//   const fetchUserProfile = async (email) => {
+//     try {
+//       const response = await fetch(`http://localhost:8706/api/skills?email=${email}`);
+//       const data = await response.json();
+//       setUserProfile(data);
+//     } catch (error) {
+//       console.error('Error fetching user profile:', error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     checkLoginStatus();
+
+//     const handleStorageChange = () => {
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       }
+//     };
+
+//     window.addEventListener('storage', handleStorageChange);
+//     window.addEventListener('formSubmitted', handleStorageChange);
+
+//     return () => {
+//       window.removeEventListener('storage', handleStorageChange);
+//       window.removeEventListener('formSubmitted', handleStorageChange);
+//     };
+//   }, [checkLoginStatus]); // Depend on the memoized function
+
+//   useEffect(() => {
+//     if (isLoggedIn) {
+//       const encryptedUserEmail = localStorage.getItem('userEmail');
+//       if (encryptedUserEmail) {
+//         const userEmail = decryptEmail(encryptedUserEmail);
+//         fetchUserProfile(userEmail);
+
+//         const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//         if (localSubmittedStatus !== null) {
+//           setFormSubmitted(JSON.parse(localSubmittedStatus));
+//         }
+//       }
+//     }
+//   }, [isLoggedIn, showPopup]);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem('token');
+//     localStorage.removeItem('userEmail');
+//     localStorage.removeItem('submittedStatus');
+//     localStorage.removeItem('skillId');
+//     setIsLoggedIn(false);
+//     setFormSubmitted(false);
+//     setUserProfile(null);
+//     navigate('/');
+//   };
+
+//   const handleDashboardNavigation = () => {
+//     navigate('/user-dashboard/:id');
+//   };
+
+//   const handleNavigation = () => {
+//     if (!formSubmitted) {
+//       navigate('/skill-form');
+//     } else {
+//       navigate('/additionalInformation');
+//     }
+//   };
+
+//   const handlePopup = () => {
+//     setShowPopup(!showPopup);
+//   };
+
+//   const handlePopupClose = () => {
+//     setShowPopup(false);
+
+//     const encryptedUserEmail = localStorage.getItem('userEmail');
+//     if (encryptedUserEmail) {
+//       const userEmail = decryptEmail(encryptedUserEmail);
 //       setIsLoggedIn(true);
 
-//       // Check if the form is already submitted
-//       const checkFormSubmissionStatus = async () => {
-//         try {
-//           const response = await axios.post('http://localhost:8703/api/skills/check-form', { email: userEmail });
-//           setFormSubmitted(response.data.formSubmitted);
-//         } catch (error) {
-//           console.error('Error checking form submission status:', error);
-//         } finally {
-//           setLoading(false); // Set loading to false when check is complete
-//         }
-//       };
-//       checkFormSubmissionStatus();
-//     } else {
-//       setLoading(false); // Set loading to false if no token or email
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       } else {
+//         const checkFormSubmissionStatus = async () => {
+//           try {
+//             const response = await fetch('http://localhost:8706/api/skills/check-form', {
+//               method: 'POST',
+//               headers: { 'Content-Type': 'application/json' },
+//               body: JSON.stringify({ email: userEmail }),
+//             });
+//             const data = await response.json();
+//             setFormSubmitted(data.formSubmitted);
+//             localStorage.setItem('submittedStatus', data.formSubmitted ? 'true' : 'false');
+//           } catch (error) {
+//             console.error('Error checking form submission status:', error);
+//           }
+//         };
+
+//         checkFormSubmissionStatus();
+//       }
+
+//       fetchUserProfile(userEmail);
 //     }
-//   }, []);
-
-//   // Handle logout functionality
-//   const handleLogout = () => {
-//     localStorage.removeItem('token'); // Remove token from localStorage
-//     localStorage.removeItem('userEmail'); // Optionally remove userEmail from localStorage
-//     setIsLoggedIn(false); // Update login state
-//     navigate('/'); // Navigate to the home page
 //   };
 
-//   // Handle navigation to profile creation page
-//   const handleCreateProfile = () => {
-//     navigate('/skill-form'); // Navigate to the skill form page
-//   };
-
-//   // Handle showing the popup modal
-//   const handlePopup = () => {
-//     setShowPopup(!showPopup);  // Toggle popup visibility
-//   };
-
-//   // While loading, show a loading indicator or nothing
 //   if (loading) {
-//     return <div>Loading...</div>; // Replace with a proper loading spinner if needed
+//     return <div>Loading...</div>;
 //   }
-
-//   // Handle login/register success
-//   const handlePopupClose = () => {
-//     setShowPopup(false);  // Close the popup after successful login or register
-//   };
 
 //   return (
 //     <div>
-//       {/* Display the Navbar only when popup is NOT shown */}
 //       {!showPopup && (
 //         <nav className="main">
 //           <div className="navbar-logo">
 //             <Link to="/">
-//               <img src={logo} alt="Logo" className="logo" /> {/* Add logo */}
+//               <img src={logo} alt="Logo" className="logo" />
 //             </Link>
 //           </div>
 
@@ -84,154 +164,660 @@
 //               </li>
 //             ) : (
 //               <>
-//                 {!formSubmitted && (
-//                   <li>
-//                     <button className="btn" onClick={handleCreateProfile}>
-//                       Create Profile
-//                     </button>
+//                 {userProfile && userProfile.profilePicture && (
+//                   <li className="profile-pic">
+//                     <img
+//                       src={`http://localhost:8706${userProfile.profilePicture}`}
+//                       alt="Profile"
+//                       className="profile-picture"
+//                       onClick={handleDashboardNavigation}
+//                     />
 //                   </li>
 //                 )}
 //                 <li>
-//                   <button className="btn" onClick={handleLogout}>
-//                     Logout
+//                   <button className="btn" onClick={handleNavigation}>
+//                     {!formSubmitted ? 'Create Profile' : 'Create Course'}
 //                   </button>
+//                 </li>
+//                 <li>
+//                   <button className="btn" onClick={handleLogout}>Logout</button>
 //                 </li>
 //               </>
 //             )}
 //           </ul>
 //         </nav>
 //       )}
-
-//       {/* Display the popup and pass the handlePopupClose function */}
-//       {showPopup && <Popup onClose={handlePopupClose} />}  {/* Pass the function to close popup */}
+//       {showPopup && <Popup onClose={handlePopupClose} />}
 //     </div>
 //   );
 // };
 
 // export default Navbar;
+// import React, { useState, useEffect, useCallback } from 'react';
+// import { Link, useNavigate } from 'react-router-dom';
+// import logo from '../assets/a9714e26-a365-405f-8cdb-47df3aeedfb8.webp';
+// import Popup from './Popup'; // Import Popup component
+// import CryptoJS from 'crypto-js'; // Import CryptoJS
 
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css';
-import axios from 'axios';
-import logo from '/home/ukijaffna/Documents/october14/swapSmartFrontend/src/assets/a9714e26-a365-405f-8cdb-47df3aeedfb8.webp';
-import Popup from './Popup';  // Importing the Popup component
+// const Navbar = () => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [formSubmitted, setFormSubmitted] = useState(false);
+//   const [loading, setLoading] = useState(true);
+//   const [showPopup, setShowPopup] = useState(false);
+//   const [userProfile, setUserProfile] = useState(null);
+//   const navigate = useNavigate();
+
+//   const decryptEmail = (encryptedEmail) => {
+//     const secretKey = '12345';
+//     const bytes = CryptoJS.AES.decrypt(encryptedEmail, secretKey);
+//     return bytes.toString(CryptoJS.enc.Utf8);
+//   };
+
+//   const checkLoginStatus = useCallback(() => {
+//     const token = localStorage.getItem('token');
+//     const encryptedUserEmail = localStorage.getItem('userEmail');
+
+//     if (token && encryptedUserEmail) {
+//       setIsLoggedIn(true);
+//       const userEmail = decryptEmail(encryptedUserEmail);
+
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       }
+
+//       fetchUserProfile(userEmail);
+//     }
+//     setLoading(false);
+//   }, []);
+
+//   const fetchUserProfile = async (email) => {
+//     try {
+//       const response = await fetch(`http://localhost:8706/api/skills?email=${email}`);
+//       const data = await response.json();
+//       setUserProfile(data);
+//     } catch (error) {
+//       console.error('Error fetching user profile:', error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     checkLoginStatus();
+
+//     const handleStorageChange = () => {
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       }
+//     };
+
+//     window.addEventListener('storage', handleStorageChange);
+//     window.addEventListener('formSubmitted', handleStorageChange);
+
+//     return () => {
+//       window.removeEventListener('storage', handleStorageChange);
+//       window.removeEventListener('formSubmitted', handleStorageChange);
+//     };
+//   }, [checkLoginStatus]);
+
+//   useEffect(() => {
+//     if (isLoggedIn) {
+//       const encryptedUserEmail = localStorage.getItem('userEmail');
+//       if (encryptedUserEmail) {
+//         const userEmail = decryptEmail(encryptedUserEmail);
+//         fetchUserProfile(userEmail);
+
+//         const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//         if (localSubmittedStatus !== null) {
+//           setFormSubmitted(JSON.parse(localSubmittedStatus));
+//         }
+//       }
+//     }
+//   }, [isLoggedIn, showPopup]);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem('token');
+//     localStorage.removeItem('userEmail');
+//     localStorage.removeItem('submittedStatus');
+//     localStorage.removeItem('skillId');
+//     setIsLoggedIn(false);
+//     setFormSubmitted(false);
+//     setUserProfile(null);
+//     navigate('/');
+//   };
+
+//   const handleDashboardNavigation = () => {
+//     navigate('/user-dashboard/:id');
+//   };
+
+//   const handleNavigation = () => {
+//     if (!formSubmitted) {
+//       navigate('/skill-form');
+//     } else {
+//       navigate('/additionalInformation');
+//     }
+//   };
+
+//   const handlePopup = () => {
+//     setShowPopup(!showPopup);
+//   };
+
+//   const handlePopupClose = () => {
+//     setShowPopup(false);
+//     const encryptedUserEmail = localStorage.getItem('userEmail');
+//     if (encryptedUserEmail) {
+//       const userEmail = decryptEmail(encryptedUserEmail);
+//       setIsLoggedIn(true);
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       } else {
+//         const checkFormSubmissionStatus = async () => {
+//           try {
+//             const response = await fetch('http://localhost:8706/api/skills/check-form', {
+//               method: 'POST',
+//               headers: { 'Content-Type': 'application/json' },
+//               body: JSON.stringify({ email: userEmail }),
+//             });
+//             const data = await response.json();
+//             setFormSubmitted(data.formSubmitted);
+//             localStorage.setItem('submittedStatus', data.formSubmitted ? 'true' : 'false');
+//           } catch (error) {
+//             console.error('Error checking form submission status:', error);
+//           }
+//         };
+//         checkFormSubmissionStatus();
+//       }
+//       fetchUserProfile(userEmail);
+//     }
+//   };
+
+//   if (loading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <div>
+//       {!showPopup && (
+//         <nav className="flex justify-between items-center p-4 bg-gradient-to-r from-cyan-500 to-white fixed top-0 left-0 w-full z-50">
+//           <div className="navbar-logo">
+//             <Link to="/">
+//               <img src={logo} alt="Logo" className="h-12" />
+//             </Link>
+//           </div>
+
+//           <ul className="flex space-x-5">
+//             {!isLoggedIn ? (
+//               <li>
+//                 <button className="bg-black text-white border-2 border-white py-2 px-4 rounded transition-transform duration-300 transform hover:bg-white hover:text-black hover:border-black focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>SETUP</button>
+//               </li>
+//             ) : (
+//               <>
+//                 {userProfile && userProfile.profilePicture && (
+//                   <li className="flex items-center ml-5">
+//                     <img
+//                       src={`http://localhost:8706${userProfile.profilePicture}`}
+//                       alt="Profile"
+//                       className="w-10 h-10 rounded-full cursor-pointer"
+//                       onClick={handleDashboardNavigation}
+//                     />
+//                   </li>
+//                 )}
+//                 <li>
+//                   <button className="bg-black text-white border-2 border-white py-2 px-4 rounded transition-transform duration-300 transform hover:bg-white hover:text-black hover:border-black focus:outline-none focus:ring focus:ring-white" onClick={handleNavigation}>
+//                     {!formSubmitted ? 'Create Profile' : 'Create Course'}
+//                   </button>
+//                 </li>
+//                 <li>
+//                   <button className="bg-black text-white border-2 border-white py-2 px-4 rounded transition-transform duration-300 transform hover:bg-white hover:text-black hover:border-black focus:outline-none focus:ring focus:ring-white" onClick={handleLogout}>Logout</button>
+//                 </li>
+//               </>
+//             )}
+//           </ul>
+//         </nav>
+//       )}
+//       {showPopup && <Popup onClose={handlePopupClose} />}
+//     </div>
+//   );
+// };
+
+// export default Navbar;
+// import React, { useState, useEffect, useCallback } from 'react';
+// import { Link, useNavigate, useLocation } from 'react-router-dom';
+// import logo from '../assets/a9714e26-a365-405f-8cdb-47df3aeedfb8.webp';
+// import Popup from './Popup'; // Import Popup component
+// import CryptoJS from 'crypto-js'; // Import CryptoJS
+
+// const Navbar = () => {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [formSubmitted, setFormSubmitted] = useState(false);
+//   const [loading, setLoading] = useState(true);
+//   const [showPopup, setShowPopup] = useState(false);
+//   const [userProfile, setUserProfile] = useState(null);
+//   const [showSetupButton, setShowSetupButton] = useState(false); // State for setup button visibility
+//   const navigate = useNavigate();
+//   const location = useLocation(); // Get the current location
+
+//   const decryptEmail = (encryptedEmail) => {
+//     const secretKey = '12345';
+//     const bytes = CryptoJS.AES.decrypt(encryptedEmail, secretKey);
+//     return bytes.toString(CryptoJS.enc.Utf8);
+//   };
+
+//   const checkLoginStatus = useCallback(() => {
+//     const token = localStorage.getItem('token');
+//     const encryptedUserEmail = localStorage.getItem('userEmail');
+
+//     if (token && encryptedUserEmail) {
+//       setIsLoggedIn(true);
+//       const userEmail = decryptEmail(encryptedUserEmail);
+
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       }
+
+//       fetchUserProfile(userEmail);
+//     }
+//     setLoading(false);
+//   }, []);
+
+//   const fetchUserProfile = async (email) => {
+//     try {
+//       const response = await fetch(`http://localhost:8706/api/skills?email=${email}`);
+//       const data = await response.json();
+//       setUserProfile(data);
+//     } catch (error) {
+//       console.error('Error fetching user profile:', error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     checkLoginStatus();
+
+//     const handleStorageChange = () => {
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       }
+//     };
+
+//     window.addEventListener('storage', handleStorageChange);
+//     window.addEventListener('formSubmitted', handleStorageChange);
+
+//     return () => {
+//       window.removeEventListener('storage', handleStorageChange);
+//       window.removeEventListener('formSubmitted', handleStorageChange);
+//     };
+//   }, [checkLoginStatus]);
+
+//   useEffect(() => {
+//     if (isLoggedIn) {
+//       const encryptedUserEmail = localStorage.getItem('userEmail');
+//       if (encryptedUserEmail) {
+//         const userEmail = decryptEmail(encryptedUserEmail);
+//         fetchUserProfile(userEmail);
+
+//         const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//         if (localSubmittedStatus !== null) {
+//           setFormSubmitted(JSON.parse(localSubmittedStatus));
+//         }
+//       }
+//     }
+//   }, [isLoggedIn, showPopup]);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem('token');
+//     localStorage.removeItem('userEmail');
+//     localStorage.removeItem('submittedStatus');
+//     localStorage.removeItem('skillId');
+//     setIsLoggedIn(false);
+//     setFormSubmitted(false);
+//     setUserProfile(null);
+//     navigate('/');
+//   };
+
+//   const handleDashboardNavigation = () => {
+//     navigate('/user-dashboard/:id');
+//   };
+
+//   const handleNavigation = () => {
+//     if (!formSubmitted) {
+//       navigate('/skill-form');
+//     } else {
+//       navigate('/additionalInformation');
+//     }
+//   };
+
+//   const handlePopup = () => {
+//     setShowPopup(!showPopup);
+//   };
+
+//   const handlePopupClose = () => {
+//     setShowPopup(false);
+//     const encryptedUserEmail = localStorage.getItem('userEmail');
+//     if (encryptedUserEmail) {
+//       const userEmail = decryptEmail(encryptedUserEmail);
+//       setIsLoggedIn(true);
+//       const localSubmittedStatus = localStorage.getItem('submittedStatus');
+//       if (localSubmittedStatus !== null) {
+//         setFormSubmitted(JSON.parse(localSubmittedStatus));
+//       } else {
+//         const checkFormSubmissionStatus = async () => {
+//           try {
+//             const response = await fetch('http://localhost:8706/api/skills/check-form', {
+//               method: 'POST',
+//               headers: { 'Content-Type': 'application/json' },
+//               body: JSON.stringify({ email: userEmail }),
+//             });
+//             const data = await response.json();
+//             setFormSubmitted(data.formSubmitted);
+//             localStorage.setItem('submittedStatus', data.formSubmitted ? 'true' : 'false');
+//           } catch (error) {
+//             console.error('Error checking form submission status:', error);
+//           }
+//         };
+//         checkFormSubmissionStatus();
+//       }
+//       fetchUserProfile(userEmail);
+//     }
+//   };
+
+//   useEffect(() => {
+//     // Reset button visibility based on location
+//     if (location.pathname === '/') {
+//       setShowSetupButton(true); // Show setup button only on home
+//     } else {
+//       setShowSetupButton(false); // Hide it on other pages
+//     }
+//   }, [location]);
+
+//   if (loading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <div>
+//       {!showPopup && (
+//         <nav className="flex justify-between items-center p-4 bg-gradient-to-r from-cyan-500 to-white fixed top-0 left-0 w-full h-[8%] z-50">
+//           <div className="navbar-logo">
+//             <Link to="/">
+//               <img src={logo} alt="Logo" className="h-12" />
+//             </Link>
+//           </div>
+
+//           <ul className="flex space-x-4">
+//             {location.pathname === '/' ? ( // Only show setup button on home page
+//               <li>
+//                 <button className="bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>SETUP</button>
+//               </li>
+//             ) : (
+//               <>
+//                 {!isLoggedIn ? (
+//                   <li>
+//                     <button className="bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>SETUP</button>
+//                   </li>
+//                 ) : (
+//                   <>
+//                     {userProfile && userProfile.profilePicture && (
+//                       <li className="flex items-center ml-5">
+//                         <img
+//                           src={`http://localhost:8706${userProfile.profilePicture}`}
+//                           alt="Profile"
+//                           className="w-10 h-10 rounded-full cursor-pointer"
+//                           onClick={handleDashboardNavigation}
+//                         />
+//                       </li>
+//                     )}
+//                     <li>
+//                       <button className="bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handleNavigation}>
+//                         {!formSubmitted ? 'Create Profile' : 'Create Course'}
+//                       </button>
+//                     </li>
+//                     <li>
+//                       <button className="bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handleLogout}>Logout</button>
+//                     </li>
+//                   </>
+//                 )}
+//               </>
+//             )}
+//           </ul>
+//         </nav>
+//       )}
+//       {showPopup && <Popup onClose={handlePopupClose} />}
+//     </div>
+//   );
+// };
+
+// export default Navbar;
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { AiOutlineUser, AiOutlineLogout } from 'react-icons/ai'; // Import user and logout icons
+import { FaCog } from 'react-icons/fa'; // Import settings icon
+import logo from '../assets/a9714e26-a365-405f-8cdb-47df3aeedfb8.webp';
+import Popup from './Popup'; // Import Popup component
+import CryptoJS from 'crypto-js'; // Import CryptoJS
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Login status
-  const [formSubmitted, setFormSubmitted] = useState(false); // Track if the form is already submitted
-  const [loading, setLoading] = useState(true); // Track loading state
-  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+  const [showSetupButton, setShowSetupButton] = useState(false); // State for setup button visibility
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location
 
-  // Check login status and form submission when the component mounts
-  useEffect(() => {
-    const token = localStorage.getItem('token'); // Retrieve token from localStorage
-    const userEmail = localStorage.getItem('userEmail'); // Retrieve user email from localStorage
+  const decryptEmail = (encryptedEmail) => {
+    const secretKey = '12345';
+    const bytes = CryptoJS.AES.decrypt(encryptedEmail, secretKey);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  };
 
-    // If the token and email exist, user is logged in
-    if (token && userEmail) {
+  const checkLoginStatus = useCallback(() => {
+    const token = localStorage.getItem('token');
+    const encryptedUserEmail = localStorage.getItem('userEmail');
+
+    if (token && encryptedUserEmail) {
       setIsLoggedIn(true);
+      const userEmail = decryptEmail(encryptedUserEmail);
 
-      // Check form submission status from localStorage
-      const localFormSubmitted = localStorage.getItem(`formSubmitted_${userEmail}`);
-      if (localFormSubmitted === 'true') {
-        setFormSubmitted(true); // Set formSubmitted to true if found in localStorage
+      const localSubmittedStatus = localStorage.getItem('submittedStatus');
+      if (localSubmittedStatus !== null) {
+        setFormSubmitted(JSON.parse(localSubmittedStatus));
       }
 
-      // If not in localStorage, check if the form is already submitted via backend
-      const checkFormSubmissionStatus = async () => {
-        try {
-          const response = await axios.post('http://localhost:8703/api/skills/check-form', { email: userEmail });
-          setFormSubmitted(response.data.formSubmitted); // Update formSubmitted status
-          
-          // Save form submission status in localStorage
-          localStorage.setItem(`formSubmitted_${userEmail}`, response.data.formSubmitted ? 'true' : 'false');
-        } catch (error) {
-          console.error('Error checking form submission status:', error);
-        } finally {
-          setLoading(false); // Set loading to false when check is complete
-        }
-      };
-      
-      if (!localFormSubmitted) {
-        checkFormSubmissionStatus(); // Check with backend if not found in localStorage
-      } else {
-        setLoading(false); // If formSubmitted is already in localStorage, skip backend check
-      }
-    } else {
-      setLoading(false); // Set loading to false if no token or email
+      fetchUserProfile(userEmail);
     }
+    setLoading(false);
   }, []);
 
-  // Handle logout functionality
+  const fetchUserProfile = async (email) => {
+    try {
+      const response = await fetch(`http://localhost:8706/api/skills?email=${email}`);
+      const data = await response.json();
+      setUserProfile(data);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
+
+  useEffect(() => {
+    checkLoginStatus();
+
+    const handleStorageChange = () => {
+      const localSubmittedStatus = localStorage.getItem('submittedStatus');
+      if (localSubmittedStatus !== null) {
+        setFormSubmitted(JSON.parse(localSubmittedStatus));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('formSubmitted', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('formSubmitted', handleStorageChange);
+    };
+  }, [checkLoginStatus]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const encryptedUserEmail = localStorage.getItem('userEmail');
+      if (encryptedUserEmail) {
+        const userEmail = decryptEmail(encryptedUserEmail);
+        fetchUserProfile(userEmail);
+
+        const localSubmittedStatus = localStorage.getItem('submittedStatus');
+        if (localSubmittedStatus !== null) {
+          setFormSubmitted(JSON.parse(localSubmittedStatus));
+        }
+      }
+    }
+  }, [isLoggedIn, showPopup]);
+
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove token from localStorage
-    localStorage.removeItem('userEmail'); // Optionally remove userEmail from localStorage
-    setIsLoggedIn(false); // Update login state
-    navigate('/'); // Navigate to the home page
+    // Email-ஐ localStorage-இல் இருந்து பெறுகிறீர்கள் மற்றும் decrypt செய்கிறீர்கள்
+    const encryptedUserEmail = localStorage.getItem('userEmail');
+    
+    if (encryptedUserEmail) {
+      const email = decryptEmail(encryptedUserEmail); // Decrypt the email from localStorage
+  
+      // Skill ID மற்றும் தொடர்புடைய values-ஐ localStorage-ல் இருந்து அகற்றவும்
+      localStorage.removeItem(`skillId_${email}`);  // Encrypted skillId ஐ அகற்றும்
+    }
+  
+    localStorage.removeItem('token');  // Token ஐ அகற்றும்
+    localStorage.removeItem('userEmail');  // User email ஐ அகற்றும்
+    localStorage.removeItem('submittedStatus');  // Form submitted status ஐ அகற்றும்
+  
+    // State values reset
+    setIsLoggedIn(false);
+    setFormSubmitted(false);
+    setUserProfile(null);
+  
+    // பயனரை login பக்கத்திற்கு மாற்றுதல்
+    navigate('/');
   };
 
-  // Handle navigation to profile creation page
-  const handleCreateProfile = () => {
-    navigate('/skill-form'); // Navigate to the skill form page
+  const handleDashboardNavigation = () => {
+    navigate('/user-dashboard/:id');
   };
 
-  // Handle showing the popup modal
+  const handleNavigation = () => {
+    if (!formSubmitted) {
+      navigate('/skill-form');
+    } else {
+      navigate('/additionalInformation');
+    }
+  };
+
   const handlePopup = () => {
-    setShowPopup(!showPopup);  // Toggle popup visibility
+    setShowPopup(!showPopup);
   };
 
-  // While loading, show a loading indicator or nothing
-  if (loading) {
-    return <div>Loading...</div>; // Replace with a proper loading spinner if needed
-  }
-
-  // Handle login/register success
   const handlePopupClose = () => {
-    setShowPopup(false);  // Close the popup after successful login or register
+    setShowPopup(false);
+    const encryptedUserEmail = localStorage.getItem('userEmail');
+    if (encryptedUserEmail) {
+      const userEmail = decryptEmail(encryptedUserEmail);
+      setIsLoggedIn(true);
+      const localSubmittedStatus = localStorage.getItem('submittedStatus');
+      if (localSubmittedStatus !== null) {
+        setFormSubmitted(JSON.parse(localSubmittedStatus));
+      } else {
+        const checkFormSubmissionStatus = async () => {
+          try {
+            const response = await fetch('http://localhost:8706/api/skills/check-form', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: userEmail }),
+            });
+            const data = await response.json();
+            setFormSubmitted(data.formSubmitted);
+            localStorage.setItem('submittedStatus', data.formSubmitted ? 'true' : 'false');
+          } catch (error) {
+            console.error('Error checking form submission status:', error);
+          }
+        };
+        checkFormSubmissionStatus();
+      }
+      fetchUserProfile(userEmail);
+    }
   };
+
+  useEffect(() => {
+    // Reset button visibility based on location
+    if (location.pathname === '/') {
+      setShowSetupButton(true); // Show setup button only on home
+    } else {
+      setShowSetupButton(false); // Hide it on other pages
+    }
+  }, [location]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      {/* Display the Navbar only when popup is NOT shown */}
       {!showPopup && (
-        <nav className="main">
+        <nav className="flex justify-between items-center p-4 bg-gradient-to-r from-cyan-500 to-white fixed top-0 left-0 w-full h-[8%] z-50">
           <div className="navbar-logo">
             <Link to="/">
-              <img src={logo} alt="Logo" className="logo" /> {/* Add logo */}
+              <img src={logo} alt="Logo" className="h-12" />
             </Link>
           </div>
 
-          <ul>
-            {!isLoggedIn ? (
+          <ul className="flex space-x-4">
+            {location.pathname === '/' ? ( // Only show setup button on home page
               <li>
-                <button className="btn" onClick={handlePopup}>SETUP</button>
+                <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>
+                  <FaCog className="mr-2" />
+                  SETUP
+                </button>
               </li>
             ) : (
               <>
-                {/* If form is not submitted, show Create Profile */}
-                {!formSubmitted && (
+                {!isLoggedIn ? (
                   <li>
-                    <button className="btn" onClick={handleCreateProfile}>
-                      Create Profile
+                    <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>
+                      <FaCog className="mr-2" />
+                      SETUP
                     </button>
                   </li>
+                ) : (
+                  <>
+                    {userProfile && userProfile.profilePicture && (
+                      <li className="flex items-center ml-5">
+                        <img
+                          src={`http://localhost:8706${userProfile.profilePicture}`}
+                          alt="Profile"
+                          className="w-10 h-10 rounded-full cursor-pointer"
+                          onClick={handleDashboardNavigation}
+                        />
+                      </li>
+                    )}
+                    <li>
+                      <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handleNavigation}>
+                        <AiOutlineUser className="mr-2" />
+                        {!formSubmitted ? 'Create Profile' : 'Create Course'}
+                      </button>
+                    </li>
+                    <li>
+                      <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handleLogout}>
+                        <AiOutlineLogout className="mr-2" />
+                        Logout
+                      </button>
+                    </li>
+                  </>
                 )}
-                {/* Show Logout button */}
-                <li>
-                  <button className="btn" onClick={handleLogout}>
-                    Logout
-                  </button>
-                </li>
               </>
             )}
           </ul>
         </nav>
       )}
-
-      {/* Display the popup and pass the handlePopupClose function */}
-      {showPopup && <Popup onClose={handlePopupClose} />}  {/* Pass the function to close popup */}
+      {showPopup && <Popup onClose={handlePopupClose} />}
     </div>
   );
 };

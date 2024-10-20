@@ -18,6 +18,7 @@ import DisplayData from './components/DisplayData';
 // import PaymentSuccess from './components/PaymentSuccess'; 
 import FormDataDetails from './components/FormDataDetails'; 
 import FileDisplay from './components/FileDisplay';  // Import FileDisplay from components folder
+import UserDashboard from './components/UserDashboard';
 
 
 
@@ -47,6 +48,8 @@ function App() {
             {/* <Route path="/paypal-button" element={<PayPalButton />} /> */}
             {/* <Route path="/payment-success" element={<PaymentSuccess />} /> */}
             <Route path="/formdata/:id" component={<FormDataDetails/>} />
+
+            <Route path="/user-dashboard/:id" element={<UserDashboard />} />
 
           </Routes>
         </Router>
