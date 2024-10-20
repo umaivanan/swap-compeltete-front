@@ -26,7 +26,7 @@
 //         const checkFormSubmissionStatus = async () => {
 //           try {
 //             // Send request to backend to check submission status
-//             const response = await axios.post('http://localhost:8706/api/skills/check-form', { email: decryptedEmail });
+//             const response = await axios.post('http://localhost:8707/api/skills/check-form', { email: decryptedEmail });
 //             console.log('Backend Response:', response.data);
 //             if (response.data.formSubmitted) {
 //               // If form is already submitted
@@ -61,7 +61,7 @@
 //     }
 
 //     try {
-//       const response = await axios.post('http://localhost:8706/api/skills', formData, {
+//       const response = await axios.post('http://localhost:8707/api/skills', formData, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data',
 //         },
@@ -70,7 +70,7 @@
 //       const skillId = response.data._id;
 
 //       // Backend update for submittedStatus
-//       await axios.patch(`http://localhost:8706/api/skills/${skillId}`, { submittedStatus: true });
+//       await axios.patch(`http://localhost:8707/api/skills/${skillId}`, { submittedStatus: true });
 
 //       // Redirect after form submission
 //       navigate('/additionalInformation', { state: { skillId: skillId } });
@@ -167,7 +167,7 @@
 //         } else {
 //           const checkFormSubmissionStatus = async () => {
 //             try {
-//               const response = await axios.post('http://localhost:8706/api/skills/check-form', { email: decryptedEmail });
+//               const response = await axios.post('http://localhost:8707/api/skills/check-form', { email: decryptedEmail });
 //               console.log('Backend Response:', response.data);
 //               if (response.data.formSubmitted) {
 //                 // Save the form submission status in localStorage if backend says it's submitted
@@ -204,7 +204,7 @@
 //     }
 
 //     try {
-//       const response = await axios.post('http://localhost:8706/api/skills', formData, {
+//       const response = await axios.post('http://localhost:8707/api/skills', formData, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data',
 //         },
@@ -213,7 +213,7 @@
 //       const skillId = response.data._id;
 
 //       // Backend update for submittedStatus
-//       await axios.patch(`http://localhost:8706/api/skills/${skillId}`, { submittedStatus: true });
+//       await axios.patch(`http://localhost:8707/api/skills/${skillId}`, { submittedStatus: true });
 
 //       // Save the form submission status to localStorage
 //       localStorage.setItem(`formSubmitted_${currentUserEmail}`, 'true');
@@ -314,7 +314,7 @@ const SkillForm = () => {
         } else {
           const checkFormSubmissionStatus = async () => {
             try {
-              const response = await axios.post('http://localhost:8706/api/skills/check-form', { email: decryptedEmail });
+              const response = await axios.post('http://localhost:8707/api/skills/check-form', { email: decryptedEmail });
               console.log('Backend Response:', response.data);
               if (response.data.formSubmitted) {
                 localStorage.setItem(`formSubmitted_${decryptedEmail}`, 'true');
@@ -350,7 +350,7 @@ const SkillForm = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8706/api/skills', formData, {
+      const response = await axios.post('http://localhost:8707/api/skills', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -359,7 +359,7 @@ const SkillForm = () => {
       const skillId = response.data._id;
 
       // Update the submittedStatus in the backend
-      await axios.patch(`http://localhost:8706/api/skills/${skillId}`, { submittedStatus: true });
+      await axios.patch(`http://localhost:8707/api/skills/${skillId}`, { submittedStatus: true });
 
       // Save the form submission status to localStorage
       localStorage.setItem(`formSubmitted_${currentUserEmail}`, 'true');
@@ -378,53 +378,6 @@ const SkillForm = () => {
   };
 
   return (
-    // <form onSubmit={handleSubmit} className="skill-form">
-    //   <div className="form-group">
-    //     <label htmlFor="profileName">Profile Name</label>
-    //     <input
-    //       type="text"
-    //       id="profileName"
-    //       value={profileName}
-    //       onChange={(e) => setProfileName(e.target.value)}
-    //     />
-    //   </div>
-    //   {/* <div className="form-group">
-    //     <label htmlFor="skillCategory">Skill Category</label>
-    //     <input
-    //       type="text"
-    //       id="skillCategory"
-    //       value={skillCategory}
-    //       onChange={(e) => setSkillCategory(e.target.value)}
-    //     />
-    //   </div> */}
-    //   <div className="form-group">
-    //     <label htmlFor="profilePicture">Profile Picture (Optional)</label>
-    //     <input
-    //       type="file"
-    //       id="profilePicture"
-    //       onChange={(e) => setProfilePicture(e.target.files[0])}
-    //     />
-    //   </div>
-    //   <div className="form-group">
-    //     <label htmlFor="preferredLanguage">Preferred Language</label>
-    //     <input
-    //       type="text"
-    //       id="preferredLanguage"
-    //       value={preferredLanguage}
-    //       onChange={(e) => setPreferredLanguage(e.target.value)}
-    //     />
-    //   </div>
-    //   <div className="form-group">
-    //     <label htmlFor="educationalBackground">Educational Background</label>
-    //     <input
-    //       type="text"
-    //       id="educationalBackground"
-    //       value={educationalBackground}
-    //       onChange={(e) => setEducationalBackground(e.target.value)}
-    //     />
-    //   </div>
-    //   <button type="submit">Submit</button>
-    // </form>
     <div className="min-h-screen flex items-center justify-center bg-gray-200">
     {/* Container for form and image */}
     <div className="bg-white rounded-3xl shadow-lg flex overflow-hidden max-w-5xl w-full">
@@ -489,3 +442,63 @@ const SkillForm = () => {
 };
 
 export default SkillForm;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// <form onSubmit={handleSubmit} className="skill-form">
+    //   <div className="form-group">
+    //     <label htmlFor="profileName">Profile Name</label>
+    //     <input
+    //       type="text"
+    //       id="profileName"
+    //       value={profileName}
+    //       onChange={(e) => setProfileName(e.target.value)}
+    //     />
+    //   </div>
+    //   {/* <div className="form-group">
+    //     <label htmlFor="skillCategory">Skill Category</label>
+    //     <input
+    //       type="text"
+    //       id="skillCategory"
+    //       value={skillCategory}
+    //       onChange={(e) => setSkillCategory(e.target.value)}
+    //     />
+    //   </div> */}
+    //   <div className="form-group">
+    //     <label htmlFor="profilePicture">Profile Picture (Optional)</label>
+    //     <input
+    //       type="file"
+    //       id="profilePicture"
+    //       onChange={(e) => setProfilePicture(e.target.files[0])}
+    //     />
+    //   </div>
+    //   <div className="form-group">
+    //     <label htmlFor="preferredLanguage">Preferred Language</label>
+    //     <input
+    //       type="text"
+    //       id="preferredLanguage"
+    //       value={preferredLanguage}
+    //       onChange={(e) => setPreferredLanguage(e.target.value)}
+    //     />
+    //   </div>
+    //   <div className="form-group">
+    //     <label htmlFor="educationalBackground">Educational Background</label>
+    //     <input
+    //       type="text"
+    //       id="educationalBackground"
+    //       value={educationalBackground}
+    //       onChange={(e) => setEducationalBackground(e.target.value)}
+    //     />
+    //   </div>
+    //   <button type="submit">Submit</button>
+    // </form>

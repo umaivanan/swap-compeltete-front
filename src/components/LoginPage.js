@@ -41,7 +41,7 @@
 //     setLoading(true);
 
 //     try {
-//       const response = await fetch('http://localhost:8706/api/auth/login', {
+//       const response = await fetch('http://localhost:8707/api/auth/login', {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
 //         body: JSON.stringify(inputs),
@@ -58,7 +58,7 @@
 //         localStorage.setItem('token', encryptedToken);
 
 //         // Fetch the form submission status after login
-//         const checkFormResponse = await fetch('http://localhost:8706/api/skills/check-form', {
+//         const checkFormResponse = await fetch('http://localhost:8707/api/skills/check-form', {
 //           method: 'POST',
 //           headers: { 'Content-Type': 'application/json' },
 //           body: JSON.stringify({ email: inputs.email }), // Pass the email to check form status
@@ -191,7 +191,7 @@ const LoginPage = ({ onSuccess }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8706/api/auth/login', {
+      const response = await fetch('http://localhost:8707/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(inputs),
@@ -207,7 +207,7 @@ const LoginPage = ({ onSuccess }) => {
         localStorage.setItem('token', encryptedToken);
 
         // Fetch the form submission status after login
-        const checkFormResponse = await fetch('http://localhost:8706/api/skills/check-form', {
+        const checkFormResponse = await fetch('http://localhost:8707/api/skills/check-form', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: inputs.email }),
@@ -221,7 +221,7 @@ const LoginPage = ({ onSuccess }) => {
 
         // Save Skill ID to localStorage if the form was submitted
         if (submittedStatus) {
-          const skillIdResponse = await fetch('http://localhost:8706/api/skills', {
+          const skillIdResponse = await fetch('http://localhost:8707/api/skills', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: inputs.email }),

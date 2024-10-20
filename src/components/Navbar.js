@@ -40,7 +40,7 @@
 
 //   const fetchUserProfile = async (email) => {
 //     try {
-//       const response = await fetch(`http://localhost:8706/api/skills?email=${email}`);
+//       const response = await fetch(`http://localhost:8707/api/skills?email=${email}`);
 //       const data = await response.json();
 //       setUserProfile(data);
 //     } catch (error) {
@@ -123,7 +123,7 @@
 //       } else {
 //         const checkFormSubmissionStatus = async () => {
 //           try {
-//             const response = await fetch('http://localhost:8706/api/skills/check-form', {
+//             const response = await fetch('http://localhost:8707/api/skills/check-form', {
 //               method: 'POST',
 //               headers: { 'Content-Type': 'application/json' },
 //               body: JSON.stringify({ email: userEmail }),
@@ -167,7 +167,7 @@
 //                 {userProfile && userProfile.profilePicture && (
 //                   <li className="profile-pic">
 //                     <img
-//                       src={`http://localhost:8706${userProfile.profilePicture}`}
+//                       src={`http://localhost:8707${userProfile.profilePicture}`}
 //                       alt="Profile"
 //                       className="profile-picture"
 //                       onClick={handleDashboardNavigation}
@@ -233,7 +233,7 @@
 
 //   const fetchUserProfile = async (email) => {
 //     try {
-//       const response = await fetch(`http://localhost:8706/api/skills?email=${email}`);
+//       const response = await fetch(`http://localhost:8707/api/skills?email=${email}`);
 //       const data = await response.json();
 //       setUserProfile(data);
 //     } catch (error) {
@@ -314,7 +314,7 @@
 //       } else {
 //         const checkFormSubmissionStatus = async () => {
 //           try {
-//             const response = await fetch('http://localhost:8706/api/skills/check-form', {
+//             const response = await fetch('http://localhost:8707/api/skills/check-form', {
 //               method: 'POST',
 //               headers: { 'Content-Type': 'application/json' },
 //               body: JSON.stringify({ email: userEmail }),
@@ -356,7 +356,7 @@
 //                 {userProfile && userProfile.profilePicture && (
 //                   <li className="flex items-center ml-5">
 //                     <img
-//                       src={`http://localhost:8706${userProfile.profilePicture}`}
+//                       src={`http://localhost:8707${userProfile.profilePicture}`}
 //                       alt="Profile"
 //                       className="w-10 h-10 rounded-full cursor-pointer"
 //                       onClick={handleDashboardNavigation}
@@ -424,7 +424,7 @@
 
 //   const fetchUserProfile = async (email) => {
 //     try {
-//       const response = await fetch(`http://localhost:8706/api/skills?email=${email}`);
+//       const response = await fetch(`http://localhost:8707/api/skills?email=${email}`);
 //       const data = await response.json();
 //       setUserProfile(data);
 //     } catch (error) {
@@ -505,7 +505,7 @@
 //       } else {
 //         const checkFormSubmissionStatus = async () => {
 //           try {
-//             const response = await fetch('http://localhost:8706/api/skills/check-form', {
+//             const response = await fetch('http://localhost:8707/api/skills/check-form', {
 //               method: 'POST',
 //               headers: { 'Content-Type': 'application/json' },
 //               body: JSON.stringify({ email: userEmail }),
@@ -562,7 +562,7 @@
 //                     {userProfile && userProfile.profilePicture && (
 //                       <li className="flex items-center ml-5">
 //                         <img
-//                           src={`http://localhost:8706${userProfile.profilePicture}`}
+//                           src={`http://localhost:8707${userProfile.profilePicture}`}
 //                           alt="Profile"
 //                           className="w-10 h-10 rounded-full cursor-pointer"
 //                           onClick={handleDashboardNavigation}
@@ -634,7 +634,7 @@ const Navbar = () => {
 
   const fetchUserProfile = async (email) => {
     try {
-      const response = await fetch(`http://localhost:8706/api/skills?email=${email}`);
+      const response = await fetch(`http://localhost:8707/api/skills?email=${email}`);
       const data = await response.json();
       setUserProfile(data);
     } catch (error) {
@@ -728,7 +728,7 @@ const Navbar = () => {
       } else {
         const checkFormSubmissionStatus = async () => {
           try {
-            const response = await fetch('http://localhost:8706/api/skills/check-form', {
+            const response = await fetch('http://localhost:8707/api/skills/check-form', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email: userEmail }),
@@ -791,7 +791,7 @@ const Navbar = () => {
                     {userProfile && userProfile.profilePicture && (
                       <li className="flex items-center ml-5">
                         <img
-                          src={`http://localhost:8706${userProfile.profilePicture}`}
+                          src={`http://localhost:8707${userProfile.profilePicture}`}
                           alt="Profile"
                           className="w-10 h-10 rounded-full cursor-pointer"
                           onClick={handleDashboardNavigation}

@@ -96,15 +96,15 @@
 //                     }
 //                 });
 
-//                 const response = await axios.post('http://localhost:8706/api/formdata', formDataObj, {
+//                 const response = await axios.post('http://localhost:8707/api/formdata', formDataObj, {
 //                     headers: { 'Content-Type': 'multipart/form-data' },
 //                 });
 
 //                 const formDataId = response.data.formData._id;
 
-//                 await axios.patch(`http://localhost:8706/api/skills/${currentSkillId}`, { formDataId });
+//                 await axios.patch(`http://localhost:8707/api/skills/${currentSkillId}`, { formDataId });
 
-//                 const skillResponse = await axios.get(`http://localhost:8706/api/skills/${currentSkillId}`);
+//                 const skillResponse = await axios.get(`http://localhost:8707/api/skills/${currentSkillId}`);
 //                 const submittedStatus = skillResponse.data.submittedStatus;
 
 //                 localStorage.setItem('submittedStatus', submittedStatus);
@@ -223,14 +223,14 @@
 //                         formDataObj.append('skillId', decryptedSkillId);
     
 //                         // formData-ஐ server-க்கு அனுப்புதல்
-//                         const response = await axios.post('http://localhost:8706/api/formdata', formDataObj, {
+//                         const response = await axios.post('http://localhost:8707/api/formdata', formDataObj, {
 //                             headers: { 'Content-Type': 'multipart/form-data' },
 //                         });
     
 //                         const formDataId = response.data.formData._id;
-//                         await axios.patch(`http://localhost:8706/api/skills/${decryptedSkillId}`, { formDataId });
+//                         await axios.patch(`http://localhost:8707/api/skills/${decryptedSkillId}`, { formDataId });
     
-//                         const skillResponse = await axios.get(`http://localhost:8706/api/skills/${decryptedSkillId}`);
+//                         const skillResponse = await axios.get(`http://localhost:8707/api/skills/${decryptedSkillId}`);
 //                         const submittedStatus = skillResponse.data.submittedStatus;
 //                         localStorage.setItem('submittedStatus', submittedStatus);
     
@@ -554,15 +554,15 @@ const AdditionalInformation = () => {
                     }
                 });
 
-                const response = await axios.post('http://localhost:8706/api/formdata', formDataObj, {
+                const response = await axios.post('http://localhost:8707/api/formdata', formDataObj, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
 
                 const formDataId = response.data.formData._id;
 
-                await axios.patch(`http://localhost:8706/api/skills/${currentSkillId}`, { formDataId });
+                await axios.patch(`http://localhost:8707/api/skills/${currentSkillId}`, { formDataId });
 
-                const skillResponse = await axios.get(`http://localhost:8706/api/skills/${currentSkillId}`);
+                const skillResponse = await axios.get(`http://localhost:8707/api/skills/${currentSkillId}`);
                 const submittedStatus = skillResponse.data.submittedStatus;
 
                 localStorage.setItem('submittedStatus', submittedStatus);

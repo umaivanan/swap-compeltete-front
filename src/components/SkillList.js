@@ -12,7 +12,7 @@
 //   useEffect(() => {
 //     const fetchAllData = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:8706/api/formdata');
+//         const response = await axios.get('http://localhost:8707/api/formdata');
 //         setUsersData(response.data);
 //       } catch (error) {
 //         setError('Error fetching users data');
@@ -84,7 +84,7 @@
 //             {/* Display the image (if available) */}
 //             {user.image && (
 //               <img
-//                 src={`http://localhost:8706/imageUploads/${user.image}`}
+//                 src={`http://localhost:8707/imageUploads/${user.image}`}
 //                 alt="Course"
 //                 className="object-cover w-full h-full rounded-lg"
 //               />
@@ -117,7 +117,7 @@ const SkillList = () => {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const response = await axios.get('http://localhost:8706/api/formdata');
+        const response = await axios.get('http://localhost:8707/api/formdata');
         setUsersData(response.data);
       } catch (error) {
         setError('Error fetching users data');
@@ -185,7 +185,7 @@ const SkillList = () => {
             </div>
             {user.image && (
               <img
-                src={`http://localhost:8706/imageUploads/${user.image}`}
+                src={`http://localhost:8707/imageUploads/${user.image}`}
                 alt="Course"
                 className="object-cover w-full h-full rounded-lg"
               />

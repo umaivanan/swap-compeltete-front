@@ -36,7 +36,7 @@ const UserDashboard = () => {
       "Content-Type": "application/json"
     };
 
-    return fetch("http://localhost:8706/payment", {
+    return fetch("http://localhost:8707/payment", {
       method: "POST",
       headers,
       body: JSON.stringify(body)
@@ -77,7 +77,7 @@ const UserDashboard = () => {
     if (id) {  
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://localhost:8706/api/formdata/${id}`);
+          const response = await axios.get(`http://localhost:8707/api/formdata/${id}`);
           setData(response.data);  // Set data retrieved from the API
 
           if (response.data.pdfPrice) {
@@ -105,7 +105,7 @@ const UserDashboard = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get('http://localhost:8706/api/skills'); 
+        const response = await axios.get('http://localhost:8707/api/skills'); 
         setSkills(response.data);  // Update skills in context
       } catch (error) {
         console.error('Error fetching skills:', error);
@@ -134,7 +134,7 @@ const UserDashboard = () => {
             <p><strong>Educational Background:</strong> {userSkill.educationalBackground}</p>  {/* Updated field */}
             {userSkill.profilePicture && (
               <img
-                src={`http://localhost:8706${userSkill.profilePicture}`}
+                src={`http://localhost:8707${userSkill.profilePicture}`}
                 alt={userSkill.profileName}
                 className="profile-picture"
               />
@@ -168,7 +168,7 @@ const UserDashboard = () => {
             <div className="image-section">
               <h3>Course Image</h3>
               <img
-                src={`http://localhost:8706/imageUploads/${data.image}`}
+                src={`http://localhost:8707/imageUploads/${data.image}`}
                 alt="Course uploaded"
                 className="uploaded-image"
               />
@@ -184,7 +184,7 @@ const UserDashboard = () => {
           {data.roadmapIntroduction && (
             <div className="pdf-card">
               <a
-                href={`http://localhost:8706/pdfUploads/${data.roadmapIntroduction}`}
+                href={`http://localhost:8707/pdfUploads/${data.roadmapIntroduction}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -199,7 +199,7 @@ const UserDashboard = () => {
                 {/* Only unlock the last 5 chapters if payment is made */}
                 {index < 3 ? (
                   <a
-                    href={`http://localhost:8706/pdfUploads/${data[chapter]}`}
+                    href={`http://localhost:8707/pdfUploads/${data[chapter]}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

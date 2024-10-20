@@ -36,7 +36,7 @@
 //       "Content-Type": "application/json"
 //     };
 
-//     return fetch("http://localhost:8706/payment", {
+//     return fetch("http://localhost:8707/payment", {
 //       method: "POST",
 //       headers,
 //       body: JSON.stringify(body)
@@ -77,7 +77,7 @@
 //     if (id) {  
 //       const fetchData = async () => {
 //         try {
-//           const response = await axios.get(`http://localhost:8706/api/formdata/${id}`);
+//           const response = await axios.get(`http://localhost:8707/api/formdata/${id}`);
 //           setData(response.data);  // Set data retrieved from the API
 
 //           if (response.data.pdfPrice) {
@@ -105,7 +105,7 @@
 //   useEffect(() => {
 //     const fetchSkills = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:8706/api/skills'); 
+//         const response = await axios.get('http://localhost:8707/api/skills'); 
 //         setSkills(response.data);  // Update skills in context
 //       } catch (error) {
 //         console.error('Error fetching skills:', error);
@@ -134,7 +134,7 @@
 //             <p><strong>Educational Background:</strong> {userSkill.educationalBackground}</p>  {/* Updated field */}
 //             {userSkill.profilePicture && (
 //               <img
-//                 src={`http://localhost:8706${userSkill.profilePicture}`}
+//                 src={`http://localhost:8707${userSkill.profilePicture}`}
 //                 alt={userSkill.profileName}
 //                 className="profile-picture"
 //               />
@@ -168,7 +168,7 @@
 //             <div className="image-section">
 //               <h3>Course Image</h3>
 //               <img
-//                 src={`http://localhost:8706/imageUploads/${data.image}`}
+//                 src={`http://localhost:8707/imageUploads/${data.image}`}
 //                 alt="Course uploaded"
 //                 className="uploaded-image"
 //               />
@@ -184,7 +184,7 @@
 //           {data.roadmapIntroduction && (
 //             <div className="pdf-card">
 //               <a
-//                 href={`http://localhost:8706/pdfUploads/${data.roadmapIntroduction}`}
+//                 href={`http://localhost:8707/pdfUploads/${data.roadmapIntroduction}`}
 //                 target="_blank"
 //                 rel="noopener noreferrer"
 //               >
@@ -199,7 +199,7 @@
 //                 {/* Only unlock the last 5 chapters if payment is made */}
 //                 {index < 3 ? (
 //                   <a
-//                     href={`http://localhost:8706/pdfUploads/${data[chapter]}`}
+//                     href={`http://localhost:8707/pdfUploads/${data[chapter]}`}
 //                     target="_blank"
 //                     rel="noopener noreferrer"
 //                   >
@@ -279,7 +279,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
       "Content-Type": "application/json"
     };
 
-    return fetch("http://localhost:8706/payment", {
+    return fetch("http://localhost:8707/payment", {
       method: "POST",
       headers,
       body: JSON.stringify(body)
@@ -320,7 +320,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
     if (id) {  
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://localhost:8706/api/formdata/${id}`);
+          const response = await axios.get(`http://localhost:8707/api/formdata/${id}`);
           setData(response.data);  // Set data retrieved from the API
 
           if (response.data.pdfPrice) {
@@ -348,7 +348,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get('http://localhost:8706/api/skills'); 
+        const response = await axios.get('http://localhost:8707/api/skills'); 
         setSkills(response.data);  // Update skills in context
       } catch (error) {
         console.error('Error fetching skills:', error);
@@ -379,7 +379,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
     //           <p><strong>Educational Background:</strong> {userSkill.educationalBackground}</p>
     //           {userSkill.profilePicture && (
     //             <img
-    //               src={`http://localhost:8706${userSkill.profilePicture}`}
+    //               src={`http://localhost:8707${userSkill.profilePicture}`}
     //               alt={userSkill.profileName}
     //               className="profile-picture"
     //             />
@@ -413,7 +413,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
     //           <div className="image-section">
     //             <h3>Course Image</h3>
     //             <img
-    //               src={`http://localhost:8706/imageUploads/${data.image}`}
+    //               src={`http://localhost:8707/imageUploads/${data.image}`}
     //               alt="Course uploaded"
     //               className="uploaded-image"
     //             />
@@ -428,7 +428,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
     //         {data.roadmapIntroduction && (
     //           <div className="pdf-card">
     //             <a
-    //               href={`http://localhost:8706/pdfUploads/${data.roadmapIntroduction}`}
+    //               href={`http://localhost:8707/pdfUploads/${data.roadmapIntroduction}`}
     //               target="_blank"
     //               rel="noopener noreferrer"
     //             >
@@ -442,7 +442,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
     //             <div className="pdf-card" key={index}>
     //               {index < 3 ? (
     //                 <a
-    //                   href={`http://localhost:8706/pdfUploads/${data[chapter]}`}
+    //                   href={`http://localhost:8707/pdfUploads/${data[chapter]}`}
     //                   target="_blank"
     //                   rel="noopener noreferrer"
     //                 >
@@ -492,7 +492,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
                 <p><strong>Educational Background:</strong> {userSkill.educationalBackground}</p>
                 {userSkill.profilePicture && (
                   <img
-                    src={`http://localhost:8706${userSkill.profilePicture}`}
+                    src={`http://localhost:8707${userSkill.profilePicture}`}
                     alt={userSkill.profileName}
                     className="rounded-full mt-4 w-40 h-40 object-cover"
                   />
@@ -516,7 +516,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
               <div className="image-section mt-4">
                 <h3>Course Image</h3>
                 <img
-                  src={`http://localhost:8706/imageUploads/${data.image}`}
+                  src={`http://localhost:8707/imageUploads/${data.image}`}
                   alt="Course uploaded"
                   className="rounded-lg w-full h-60 object-cover"
                 />
@@ -533,7 +533,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
             {data.roadmapIntroduction && (
               <div className="pdf-card mb-4">
                 <a
-                  href={`http://localhost:8706/pdfUploads/${data.roadmapIntroduction}`}
+                  href={`http://localhost:8707/pdfUploads/${data.roadmapIntroduction}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-500 text-white p-2 rounded block text-center"
@@ -549,7 +549,7 @@ const DisplayData = ({ id, onClose }) => {  // id is passed as a prop, along wit
                 <div className="pdf-card mb-4" key={index}>
                   {index < 3 ? (
                     <a
-                      href={`http://localhost:8706/pdfUploads/${data[chapter]}`}
+                      href={`http://localhost:8707/pdfUploads/${data[chapter]}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-green-500 text-white p-2 rounded block text-center"
