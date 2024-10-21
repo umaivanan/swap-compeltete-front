@@ -594,7 +594,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineLogout } from 'react-icons/ai'; // Import user and logout icons
 import { FaCog } from 'react-icons/fa'; // Import settings icon
-import logo from '../assets/a9714e26-a365-405f-8cdb-47df3aeedfb8.webp';
+import logo from '/home/ukijaffna/um/swapSmartFrontend/src/assets/DALL·E 2024-10-20 22.16.59 - An abstract geometric logo design, similar to the uploaded image, featuring a complex diamond pattern with directional arrows. Replace the green tones.webp';
 import Popup from './Popup'; // Import Popup component
 import CryptoJS from 'crypto-js'; // Import CryptoJS
 
@@ -760,65 +760,125 @@ const Navbar = () => {
   }
 
   return (
-    <div>
-      {!showPopup && (
-        <nav className="flex justify-between items-center p-4 bg-gradient-to-r from-cyan-500 to-white fixed top-0 left-0 w-full h-[8%] z-50">
-          <div className="navbar-logo">
-            <Link to="/">
-              <img src={logo} alt="Logo" className="h-12" />
-            </Link>
-          </div>
+    // <div>
+    //   {!showPopup && (
+    //     <nav className="flex justify-between items-center p-4 bg-gradient-to-r from-cyan-500 to-white fixed top-0 left-0 w-full h-[8%] z-50">
+    //       <div className="navbar-logo">
+    //         <Link to="/">
+    //           <img src={logo} alt="Logo" className="h-12" />
+    //         </Link>
+    //       </div>
 
-          <ul className="flex space-x-4">
-            {location.pathname === '/' ? ( // Only show setup button on home page
+    //       <ul className="flex space-x-4">
+    //         {location.pathname === '/' ? ( // Only show setup button on home page
+    //           <li>
+    //             <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>
+    //               <FaCog className="mr-2" />
+    //               SETUP
+    //             </button>
+    //           </li>
+    //         ) : (
+    //           <>
+    //             {!isLoggedIn ? (
+    //               <li>
+    //                 <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>
+    //                   <FaCog className="mr-2" />
+    //                   SETUP
+    //                 </button>
+    //               </li>
+    //             ) : (
+    //               <>
+    //                 {userProfile && userProfile.profilePicture && (
+    //                   <li className="flex items-center ml-5">
+    //                     <img
+    //                       src={`http://localhost:8707${userProfile.profilePicture}`}
+    //                       alt="Profile"
+    //                       className="w-10 h-10 rounded-full cursor-pointer"
+    //                       onClick={handleDashboardNavigation}
+    //                     />
+    //                   </li>
+    //                 )}
+    //                 <li>
+    //                   <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handleNavigation}>
+    //                     <AiOutlineUser className="mr-2" />
+    //                     {!formSubmitted ? 'Create Profile' : 'Create Course'}
+    //                   </button>
+    //                 </li>
+    //                 <li>
+    //                   <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handleLogout}>
+    //                     <AiOutlineLogout className="mr-2" />
+    //                     Logout
+    //                   </button>
+    //                 </li>
+    //               </>
+    //             )}
+    //           </>
+    //         )}
+    //       </ul>
+    //     </nav>
+    //   )}
+    //   {showPopup && <Popup onClose={handlePopupClose} />}
+    // </div>
+    <div>
+  {!showPopup && (
+    <nav className="flex justify-between items-center p-4 bg-white fixed top-0 left-0 w-full h-[8%] z-50">
+      <div className="navbar-logo">
+        <Link to="/">
+          <img src={logo} alt="Logo" className="h-12" />
+        </Link>
+      </div>
+
+      <ul className="flex space-x-4">
+        {location.pathname === '/' ? ( // Only show setup button on home page
+          <li>
+            <button className="flex items-center bg-purple-900 text-white border-2 border-purple-900 py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-purple-700 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>
+              <FaCog className="mr-2" />
+              SETUP
+            </button>
+          </li>
+        ) : (
+          <>
+            {!isLoggedIn ? (
               <li>
-                <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>
+                <button className="flex items-center bg-purple-900 text-white border-2 border-purple-900 py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-purple-700 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>
                   <FaCog className="mr-2" />
                   SETUP
                 </button>
               </li>
             ) : (
               <>
-                {!isLoggedIn ? (
-                  <li>
-                    <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handlePopup}>
-                      <FaCog className="mr-2" />
-                      SETUP
-                    </button>
+                {userProfile && userProfile.profilePicture && (
+                  <li className="flex items-center ml-5">
+                    <img
+                      src={`http://localhost:8707${userProfile.profilePicture}`}
+                      alt="Profile"
+                      className="w-10 h-10 rounded-full cursor-pointer"
+                      onClick={handleDashboardNavigation}
+                    />
                   </li>
-                ) : (
-                  <>
-                    {userProfile && userProfile.profilePicture && (
-                      <li className="flex items-center ml-5">
-                        <img
-                          src={`http://localhost:8707${userProfile.profilePicture}`}
-                          alt="Profile"
-                          className="w-10 h-10 rounded-full cursor-pointer"
-                          onClick={handleDashboardNavigation}
-                        />
-                      </li>
-                    )}
-                    <li>
-                      <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handleNavigation}>
-                        <AiOutlineUser className="mr-2" />
-                        {!formSubmitted ? 'Create Profile' : 'Create Course'}
-                      </button>
-                    </li>
-                    <li>
-                      <button className="flex items-center bg-[#161D6F] text-white border-2 border-[#161D6F] py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-blue-800 focus:outline-none focus:ring focus:ring-white" onClick={handleLogout}>
-                        <AiOutlineLogout className="mr-2" />
-                        Logout
-                      </button>
-                    </li>
-                  </>
                 )}
+                <li>
+                  <button className="flex items-center bg-purple-900 text-white border-2 border-purple-900 py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-purple-700 focus:outline-none focus:ring focus:ring-white" onClick={handleNavigation}>
+                    <AiOutlineUser className="mr-2" />
+                    {!formSubmitted ? 'Create Profile' : 'Create Course'}
+                  </button>
+                </li>
+                <li>
+                  <button className="flex items-center bg-purple-900 text-white border-2 border-purple-900 py-3 px-6 rounded-full transition-transform duration-300 transform hover:bg-purple-700 focus:outline-none focus:ring focus:ring-white" onClick={handleLogout}>
+                    <AiOutlineLogout className="mr-2" />
+                    Logout
+                  </button>
+                </li>
               </>
             )}
-          </ul>
-        </nav>
-      )}
-      {showPopup && <Popup onClose={handlePopupClose} />}
-    </div>
+          </>
+        )}
+      </ul>
+    </nav>
+  )}
+  {showPopup && <Popup onClose={handlePopupClose} />}
+</div>
+
   );
 };
 

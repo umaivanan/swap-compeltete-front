@@ -103,7 +103,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DisplayData from './DisplayData'; // Import DisplayData component
-import './SkillList.css';
+// import './SkillList.css';
 
 
 const SkillList = () => {
