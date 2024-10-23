@@ -285,6 +285,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './SkillForm.css';
 import CryptoJS from 'crypto-js';
+import bookImage from '../assets/a-man-reads-a-book-1024x683.jpg'; // Import the image
+
 
 
 
@@ -378,12 +380,14 @@ const SkillForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200">
+    <div className="min-h-screen flex items-center justify-center bg-white hover:bg-purple-600 transition-colors duration-300">
+
     {/* Container for form and image */}
     <div className="bg-white rounded-3xl shadow-lg flex overflow-hidden max-w-5xl w-full">
       
       {/* Left Side: Image Section */}
-      <div className="w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/your-image-path.jpg')" }}>
+      <div className="w-1/2 bg-cover bg-center" style={{ backgroundImage: `url(${bookImage})` }}>
+
         {/* You can replace 'your-image-path.jpg' with the path to your background image */}
       </div>
 

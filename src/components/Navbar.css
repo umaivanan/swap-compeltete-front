@@ -8,13 +8,13 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 50%;
     z-index: 1000; /* Ensures the Navbar stays above other content */
 }
 
 /* Logo styling */
 .logo {
-    height: 50px;
+    height: 100px;
 }
 
 /* Navbar items */

@@ -455,7 +455,7 @@ import {
     faLanguage, faDollarSign, faImage,faPlus
 } from '@fortawesome/free-solid-svg-icons';
 
-import backgroundImage from '/home/ukijaffna/um/swapSmartFrontend/src/assets/DALL·E 2024-10-12 08.42.43 - A visually engaging image illustrating the concept of a journey of learning and skill development through structured use of PDFs. The scene features a.webp';  // Import the background image
+import backgroundImage from '../assets/a-man-reads-a-book-1024x683.jpg';  // Import the background image
 
 
 const AdditionalInformation = () => {
@@ -584,16 +584,16 @@ return (
   <div
   className="min-h-screen flex items-center justify-center bg-gray-100"
   style={{
-    backgroundImage: `url(${backgroundImage})`, // Set the background image
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat', // Prevent repeating the image
-    height: '100vh', // Ensure the background covers the full viewport height
-    width: '100vw', // Ensure the background covers the full viewport width
-    position: 'relative',
+    backgroundImage: `url(${backgroundImage})`, // Use the imported image
+    backgroundSize: 'cover', // Ensures the image covers the entire container
+    backgroundPosition: 'center', // Center the background image
+    backgroundRepeat: 'no-repeat', // Prevent the image from repeating
+    height: '100vh', // Ensure full viewport height
+    width: '100vw', // Ensure full viewport width
+    position: 'relative', // Ensures the image maintains relative positioning
   }}
 >
-  <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-3xl bg-opacity-90">
+  <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-3xl mt-[8%] bg-opacity-90">
     <form className="space-y-6" onSubmit={handleSubmit}>
       {/* Form Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -754,12 +754,13 @@ return (
       </div>
 
       <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-      >
-        {isLoading ? 'Submitting...' : 'Submit'}
-      </button>
+  type="submit"
+  disabled={isLoading}
+  className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition duration-300"
+>
+  {isLoading ? 'Submitting...' : 'Submit'}
+</button>
+g
     </form>
   </div>
 </div>

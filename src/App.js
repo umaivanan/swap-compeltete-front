@@ -49,7 +49,7 @@ function App() {
             {/* <Route path="/payment-success" element={<PaymentSuccess />} /> */}
             <Route path="/formdata/:id" component={<FormDataDetails/>} />
 
-            <Route path="/user-dashboard/:id" element={<UserDashboard />} />
+            <Route path="/user-dashboard" element={<UserDashboard />} />
 
           </Routes>
         </Router>

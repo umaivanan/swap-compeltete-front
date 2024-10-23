@@ -76,61 +76,125 @@ const RegisterPage = ({ onSuccess }) => {
   };
 
   return (
+    // <motion.div
+    //   className="flex justify-center items-center h-auto bg-white" // Changed h-screen to h-auto
+    //   initial={{ opacity: 0, scale: 0.9 }}
+    //   animate={{ opacity: 1, scale: 1 }}
+    //   exit={{ opacity: 0, scale: 0.9 }}
+    //   transition={{ duration: 0.5 }}
+    // >
+    //   <div className="max-w-lg w-full h-auto  p-6 rounded-xl shadow-lg">
+    //     <h2 className="text-10xl text-cyan-500 mb-6 text-center">Register</h2>
+    //     <form className="w-full" onSubmit={handleSubmit}>
+    //       <div className="mb-4">
+    //         <label className="block text-cyan-500">Name</label>
+    //         <input
+    //           type="text"
+    //           name="name"
+    //           value={inputs.name}
+    //           onChange={handleInput}
+    //           className="form-control w-full p-3 border rounded border-gray-300"
+    //         />
+    //         {errors.name.required && <span className="text-red-500">Name is required.</span>}
+    //       </div>
+    //       <div className="mb-4">
+    //         <label className="block text-cyan-500">Email</label>
+    //         <input
+    //           type="email"
+    //           name="email"
+    //           value={inputs.email}
+    //           onChange={handleInput}
+    //           className="form-control w-full p-3 border rounded border-gray-300"
+    //         />
+    //         {errors.email.required && <span className="text-red-500">Email is required.</span>}
+    //       </div>
+    //       <div className="mb-4">
+    //         <label className="block text-cyan-500">Password</label>
+    //         <input
+    //           type="password"
+    //           name="password"
+    //           value={inputs.password}
+    //           onChange={handleInput}
+    //           className="form-control w-full p-3 border rounded border-gray-300"
+    //         />
+    //         {errors.password.required && <span className="text-red-500">Password is required.</span>}
+    //       </div>
+    //       {errors.custom_error && <span className="text-red-500">{errors.custom_error}</span>}
+    //       {loading ? <div className="text-center">Loading...</div> : null}
+    //       <button
+    //         type="submit"
+    //         disabled={loading}
+    //         className="w-full bg-cyan-500 text-white py-2 mt-4 rounded-lg hover:bg-cyan-600 transition duration-300"
+    //       >
+    //         Register
+    //       </button>
+    //     </form>
+    //   </div>
+    // </motion.div> 
     <motion.div
-      className="flex justify-center items-center h-auto bg-white" // Changed h-screen to h-auto
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="max-w-lg w-full h-auto  p-6 rounded-xl shadow-lg">
-        <h2 className="text-10xl text-cyan-500 mb-6 text-center">Register</h2>
-        <form className="w-full" onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-cyan-500">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={inputs.name}
-              onChange={handleInput}
-              className="form-control w-full p-3 border rounded border-gray-300"
-            />
-            {errors.name.required && <span className="text-red-500">Name is required.</span>}
-          </div>
-          <div className="mb-4">
-            <label className="block text-cyan-500">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={inputs.email}
-              onChange={handleInput}
-              className="form-control w-full p-3 border rounded border-gray-300"
-            />
-            {errors.email.required && <span className="text-red-500">Email is required.</span>}
-          </div>
-          <div className="mb-4">
-            <label className="block text-cyan-500">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={inputs.password}
-              onChange={handleInput}
-              className="form-control w-full p-3 border rounded border-gray-300"
-            />
-            {errors.password.required && <span className="text-red-500">Password is required.</span>}
-          </div>
-          {errors.custom_error && <span className="text-red-500">{errors.custom_error}</span>}
-          {loading ? <div className="text-center">Loading...</div> : null}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-cyan-500 text-white py-2 mt-4 rounded-lg hover:bg-cyan-600 transition duration-300"
-          >
-            Register
-          </button>
-        </form>
+  className="flex justify-center items-center h-auto bg-white"
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  exit={{ opacity: 0, scale: 0.9 }}
+  transition={{ duration: 0.5 }}
+>
+  <div className="max-w-md w-full h-auto p-6 rounded-xl shadow-lg">
+    <h2 className="text-4xl text-purple-600 mb-6 text-center font-bold">Register</h2>
+    <form className="w-full" onSubmit={handleSubmit}>
+      <div className="mb-6">
+        <label className="block text-purple-600 text-lg mb-2">Name</label>
+        <input
+          type="text"
+          name="name"
+          value={inputs.name}
+          onChange={handleInput}
+          className="w-full h-12 p-4 border border-gray-300 rounded-md"
+        />
+        {errors.name.required && <span className="text-red-500 text-sm">Name is required.</span>}
       </div>
-    </motion.div>
+      <div className="mb-6">
+        <label className="block text-purple-600 text-lg mb-2">Email</label>
+        <input
+          type="email"
+          name="email"
+          value={inputs.email}
+          onChange={handleInput}
+          className="w-full h-12 p-4 border border-gray-300 rounded-md"
+        />
+        {errors.email.required && <span className="text-red-500 text-sm">Email is required.</span>}
+      </div>
+      <div className="mb-6">
+        <label className="block text-purple-600 text-lg mb-2">Password</label>
+        <input
+          type="password"
+          name="password"
+          value={inputs.password}
+          onChange={handleInput}
+          className="w-full h-12 p-4 border border-gray-300 rounded-md"
+        />
+        {errors.password.required && <span className="text-red-500 text-sm">Password is required.</span>}
+      </div>
+      {errors.custom_error && <span className="text-red-500 text-sm">{errors.custom_error}</span>}
+      {loading ? <div className="text-center text-purple-600">Loading...</div> : null}
+      {/* <button
+        type="submit"
+        disabled={loading}
+        className="w-full h-12 bg-white text-purple-600 border border-purple-600 py-2 mt-6 rounded-lg hover:bg-purple-600 hover:text-white transition duration-300"
+      >
+        Register
+      </button> */}
+      <button
+  type="submit"
+  disabled={loading}
+  className="w-full h-12 bg-purple-600 text-white border border-purple-600 py-2 mt-6 rounded-lg hover:bg-white hover:text-purple-600 transition duration-300"
+>
+  Register
+</button>
+
+    </form>
+  </div>
+</motion.div>
+
   );
 };
 

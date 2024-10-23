@@ -1,233 +1,259 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
-// import './UserDashboard.css'; // Custom CSS for card design
-import { SkillContext } from '../context/SkillContext';
-import logo from '../assets/lo2.jpg';  // Import the logo image
-import lockIcon from '../assets/lo2.jpg'; // Add your lock icon image path here
-import CryptoJS from 'crypto-js';
-import StripeCheckout from "react-stripe-checkout";
 
 const UserDashboard = () => {
-  const [data, setData] = useState({});
+  const [skillData, setSkillData] = useState(null);
+  const [formData, setFormData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const { id } = useParams();  // Extract user ID from the URL
-  const [loggedInEmail, setLoggedInEmail] = useState("");  // Save logged-in email
-  
-  const { skills, setSkills } = useContext(SkillContext); // Get and set skills from context
-  const userSkill = skills ? skills.find(skill => skill.formDataId === id) : null;
+  const [error, setError] = useState(null);
+  const [profileName, setProfileName] = useState('');
+  const [preferredLanguage, setPreferredLanguage] = useState('');
+  const [educationalBackground, setEducationalBackground] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
+  const [updatedForm, setUpdatedForm] = useState({});
+  const skillId = localStorage.getItem('skillId');
 
-  const [product, setProduct] = useState({
-    name: "buying pdf",
-    price: 0,
-    productBy: "instructors"
-  });
+  const fetchSkill = async () => {
+    if (!skillId) {
+      setError(new Error('No skill ID found in local storage.'));
+      setLoading(false);
+      return;
+    }
 
-  const makePayment = (token) => {
-    const body = {
-      token,
-      product,
-      payer: loggedInEmail,  // Current logged-in user's email (payer)
-      payingTo: userSkill ? userSkill.email : "Unknown",  // Instructor's email (payingTo)
-    };
-
-    const headers = {
-      "Content-Type": "application/json"
-    };
-
-    return fetch("http://localhost:8707/payment", {
-      method: "POST",
-      headers,
-      body: JSON.stringify(body)
-    })
-      .then((response) => {
-        console.log("Payment response:", response);
-        console.log("Payer (User):", loggedInEmail);  // Display payer's email
-        console.log("Paying To (Instructor):", userSkill ? userSkill.email : "No Instructor email found");
-      })
-      .catch((err) => {
-        console.log("Payment error:", err);
-      });
+    try {
+      const response = await axios.get(`http://localhost:8707/api/skills/${skillId}`);
+      setSkillData(response.data);
+      setProfileName(response.data.profileName);
+      setPreferredLanguage(response.data.preferredLanguage);
+      setEducationalBackground(response.data.educationalBackground);
+      setProfilePicture(response.data.profilePicture); // Set profile picture URL
+    } catch (err) {
+      console.error('Error fetching skill data:', err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Current logged-in user's email logic (from authentication system)
-  useEffect(() => {
-    const fetchUserEmail = async () => {
-      const encryptedEmail = localStorage.getItem("userEmail"); 
-  
-      if (encryptedEmail) {
-        try {
-          const secretKey = '12345';  // Ensure this matches the encryption key used during encryption
-          const decryptedBytes = CryptoJS.AES.decrypt(encryptedEmail, secretKey);
-          const decryptedEmail = decryptedBytes.toString(CryptoJS.enc.Utf8); 
-          setLoggedInEmail(decryptedEmail); 
-        } catch (error) {
-          console.error("Error decrypting email:", error);
-        }
-      } else {
-        console.error("No encrypted email found in localStorage");
-      }
-    };
-    fetchUserEmail();
-  }, []);
+  const fetchFormData = async () => {
+    if (!skillId) return;
 
-  // Fetch form data
-  useEffect(() => {
-    if (id) {  
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`http://localhost:8707/api/formdata/${id}`);
-          setData(response.data);  // Set data retrieved from the API
-
-          if (response.data.pdfPrice) {
-            setProduct({
-              name: "buying pdf",
-              price: response.data.pdfPrice * 100, // Convert price to cents for Stripe
-              productBy: "instructors"
-            });
-          }
-  
-        } catch (error) {
-          setError('Error fetching data');
-          console.error(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchData();
-    } else {
-      setError("Invalid ID or ID not found");
+    try {
+      const response = await axios.get(`http://localhost:8707/api/formdata`);
+      setFormData(response.data); // Set all form data related to skillId
+    } catch (err) {
+      console.error('Error fetching form data:', err);
+      setError(err);
     }
-  }, [id]);
+  };
 
-  // Fetch skills data
-  useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const response = await axios.get('http://localhost:8707/api/skills'); 
-        setSkills(response.data);  // Update skills in context
-      } catch (error) {
-        console.error('Error fetching skills:', error);
+  const handleFormChange = (e, fieldName) => {
+    setUpdatedForm({
+      ...updatedForm,
+      [fieldName]: e.target.value,
+    });
+  };
+
+  const handleFileChange = (e, fieldName) => {
+    setUpdatedForm({
+      ...updatedForm,
+      [fieldName]: e.target.files[0], // Handle file input
+    });
+  };
+
+  const updateFormData = async (id) => {
+    const formDataObj = new FormData();
+  
+    // Append non-file fields
+    Object.keys(updatedForm).forEach((key) => {
+      if (key !== 'image') {
+        formDataObj.append(key, updatedForm[key]);
       }
-    };
-    fetchSkills();
-  }, [setSkills]);
+    });
+  
+    // Only append the image field if a new file has been uploaded
+    if (updatedForm.image && updatedForm.image instanceof File) {
+      formDataObj.append('image', updatedForm.image);
+    }
+  
+    try {
+      const response = await axios.patch(`http://localhost:8707/api/formdata/${id}`, formDataObj, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      if (response.status === 200) {
+        alert('Form data updated successfully');
+        setFormData((prevFormData) =>
+          prevFormData.map((form) => (form._id === id ? response.data.formData : form))
+        );
+        // Fetch form data again to refresh the UI
+        fetchFormData();
+      } else {
+        alert('Failed to update form data. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error updating form data:', err);
+      setError(err);
+      alert('An error occurred while updating the form data.');
+    }
+  };
+  
 
-  // If the data is loading, show a loading message
-  if (loading) return <p className="loading">Loading...</p>;
-  if (error) return <p className="error">{error}</p>;
+  const updateSkill = async (e) => {
+    e.preventDefault();
 
-  const isAuthorizedUser = userSkill && userSkill.email === loggedInEmail && userSkill.formDataId === data._id;
+    const formData = new FormData(); // Use FormData to handle file uploads
+    formData.append('profileName', profileName);
+    formData.append('preferredLanguage', preferredLanguage);
+    formData.append('educationalBackground', educationalBackground);
+    if (profilePicture) {
+      formData.append('profilePicture', profilePicture);
+    }
+
+    try {
+      const response = await axios.patch(`http://localhost:8707/api/skills/${skillId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Ensure the correct content type
+        },
+      });
+
+      if (response.status === 200) {
+        alert('Skill updated successfully');
+        setSkillData(response.data);
+        setProfilePicture(response.data.profilePicture);
+      } else {
+        alert('Failed to update skill. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error updating skill:', err);
+      setError(err);
+      alert('An error occurred while updating the skill.');
+    }
+  };
+
+  useEffect(() => {
+    fetchSkill();
+    fetchFormData();
+  }, [skillId]);
+
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-10">Error: {error.message}</div>;
+  }
+
+  // Filter formData to only include entries that match the skillId
+  const filteredFormData = formData.filter((form) => form.skill._id === skillId);
 
   return (
-    <div className="data-display-container">
-      <h1 className="heading">Form Data Display for User {id}</h1>
-
-      <div className="three-section-container">
-        {/* Profile Information */}
-        {userSkill && (
-          <div className="profile-section">
-            <h2>Profile Information</h2>
-            <p><strong>Profile Name:</strong> {userSkill.profileName}</p>
-            <p><strong>Preferred Language:</strong> {userSkill.preferredLanguage}</p>  {/* Updated field */}
-            <p><strong>Educational Background:</strong> {userSkill.educationalBackground}</p>  {/* Updated field */}
-            {userSkill.profilePicture && (
-              <img
-                src={`http://localhost:8707${userSkill.profilePicture}`}
-                alt={userSkill.profileName}
-                className="profile-picture"
-              />
-            )}
-            {isAuthorizedUser && (
-              <Link to={`/update-info/${id}`}>
-                <img src={logo} alt="Update Info" className="update-logo" />
-              </Link>
-            )}
-          </div>
-        )}
-
-        {/* Course Information */}
-        <div className="user-info-section">
-          <h2>Course Information</h2>
-          <p><strong>Course Description:</strong> {data.courseDescription}</p>
-          <p><strong>Course Duration:</strong> {data.courseDuration}</p>
-          <p><strong>Target Audience:</strong> {data.targetAudience}</p>
-          <p><strong>Course Category:</strong> {data.courseCategory}</p>
-          <p><strong>Languages:</strong> {data.languages}</p>
-          <p><strong>PDF Price:</strong> ${data.pdfPrice}</p>  {/* Displaying the PDF price */}
-
-          {isAuthorizedUser && (
-            <Link to={`/update-info/${id}`}>
-              <img src={logo} alt="Update Info" className="update-logo" />
-            </Link>
-          )}
-
-          {/* Display the image (if available) */}
-          {data.image && (
-            <div className="image-section">
-              <h3>Course Image</h3>
-              <img
-                src={`http://localhost:8707/imageUploads/${data.image}`}
-                alt="Course uploaded"
-                className="uploaded-image"
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <h1 className="text-3xl font-semibold text-center">User Dashboard</h1>
+      {skillData && (
+        <div className="skill-info mt-6">
+          <h2 className="text-2xl font-semibold mb-4">Skill Information</h2>
+          <img
+            src={`http://localhost:8707${profilePicture}` || 'default_profile_picture_url.jpg'}
+            alt="Profile"
+            className="w-32 h-32 rounded-full mb-4"
+          />
+          <form onSubmit={updateSkill} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Profile Name:</label>
+              <input
+                type="text"
+                value={profileName}
+                onChange={(e) => setProfileName(e.target.value)}
+                required
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-300"
               />
             </div>
-          )}
-        </div>
-
-        {/* PDF Links */}
-        <div className="pdf-links-section">
-          <h2>PDF Links</h2>
-
-          {/* Add PDF chapters one by one */}
-          {data.roadmapIntroduction && (
-            <div className="pdf-card">
-              <a
-                href={`http://localhost:8707/pdfUploads/${data.roadmapIntroduction}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Roadmap Introduction
-              </a>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Preferred Language:</label>
+              <input
+                type="text"
+                value={preferredLanguage}
+                onChange={(e) => setPreferredLanguage(e.target.value)}
+                required
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-300"
+              />
             </div>
-          )}
-          {['firstChapter', 'secondChapter', 'thirdChapter', 'fourthChapter', 'fifthChapter', 
-            'sixthChapter', 'seventhChapter', 'eighthChapter', 'ninthChapter', 'tenthChapter'].map((chapter, index) => (
-            data[chapter] && (
-              <div className="pdf-card" key={index}>
-                {/* Only unlock the last 5 chapters if payment is made */}
-                {index < 3 ? (
-                  <a
-                    href={`http://localhost:8707/pdfUploads/${data[chapter]}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View {chapter.replace('Chapter', ' Chapter ')}
-                  </a>
-                ) : (
-                  <div className="locked-chapter">
-                    <img src={lockIcon} alt="Locked" className="lock-icon" />
-                    <p>Locked</p>
-                  </div>
-                )}
-              </div>
-            )
-          ))}
-
-          {/* Payment button to unlock the last 5 PDFs */}
-          <StripeCheckout
-            name="Buying PDF"
-            amount={product.price}
-            stripeKey="pk_test_51Q0z3OIDR6fHncujf4V778OtQb2gJHqfP54FvBGnuvugIcT4fSmXMDSn4qIkkKJ5pw6aGRdwyluYJsGGsH1kLN9s00c1SapMSi"
-            token={makePayment}
-          >
-            <button className="payment-button">
-              Make Payment to Unlock PDFs ${data.pdfPrice}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Educational Background:</label>
+              <input
+                type="text"
+                value={educationalBackground}
+                onChange={(e) => setEducationalBackground(e.target.value)}
+                required
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-300"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Profile Picture:</label>
+              <input
+                type="file"
+                onChange={(e) => setProfilePicture(e.target.files[0])}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-300"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-200"
+            >
+              Update Skill
             </button>
-          </StripeCheckout>
+          </form>
         </div>
-      </div>
+      )}
+      {filteredFormData.length > 0 && (
+        <div className="form-data mt-6">
+          <h2 className="text-2xl font-semibold mb-4">Form Data</h2>
+          {filteredFormData.map((form) => (
+            <div key={form._id} className="p-4 bg-gray-100 rounded-md shadow-sm mb-4">
+              {Object.keys(form).map((key) => (
+                key !== '_id' && key !== 'skill' && (
+                  <div key={key} className="mb-2">
+                    <label className="block text-sm font-medium text-gray-700 capitalize">{key}:</label>
+                    {key.includes('Chapter') || key.includes('image') ? (
+                      <>
+                        {/* Display the image if it's an image field */}
+                        {form[key] && (
+                          <img
+                            src={`http://localhost:8707/imageUploads/${form.image}`}
+                            alt="Formdataimage"
+                            className="w-32 h-32 rounded-md mb-4"
+                          />
+                        )}
+                        <input
+                          type="file"
+                          onChange={(e) => handleFileChange(e, key)}
+                          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-300"
+                        />
+                      </>
+                    ) : (
+                      <input
+                        type="text"
+                        value={updatedForm[key] || form[key]}
+                        onChange={(e) => handleFormChange(e, key)}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-300"
+                      />
+                    )}
+                  </div>
+                )
+              ))}
+              <button
+                onClick={() => updateFormData(form._id)}
+                className="w-full py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-200"
+              >
+                Update Form
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

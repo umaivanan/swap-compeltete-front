@@ -467,7 +467,7 @@ const Hero = () => {
         <h3 className="text-white font-semibold text-lg mb-2">Location</h3>
         <p className="text-white text-center font-Demographics">
           Sunshine Business Park <br />
-          Sector-9A, Poland
+          Srilanka, jaffna
         </p>
       </div>
 
@@ -486,8 +486,8 @@ const Hero = () => {
         <FaEnvelope className="text-white text-4xl mb-4" />
         <h3 className="text-white font-semibold text-lg mb-2">Email</h3>
         <p className="text-white text-center font-Demographics">
-          Techco@example.com <br />
-          gmail@example.com
+          swapsmart@gmail.com<br />
+          smartswap@gmail.com
         </p>
       </div>
 

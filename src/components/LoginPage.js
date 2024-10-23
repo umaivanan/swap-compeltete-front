@@ -247,55 +247,100 @@ const LoginPage = ({ onSuccess }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-auto w-[500px] bg-white">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex flex-col max-w-md w-full h-auto p-8 rounded-xl shadow-lg bg-opacity-500 backdrop-blur-md"
+    // <div className="flex justify-center items-center h-auto w-[500px] bg-white">
+    //   <motion.div
+    //     initial={{ opacity: 0, y: -20 }}
+    //     animate={{ opacity: 1, y: 0 }}
+    //     transition={{ duration: 0.5 }}
+    //     className="flex flex-col max-w-md w-full h-auto p-8 rounded-xl shadow-lg bg-opacity-500 backdrop-blur-md"
+    //   >
+    //     <h2 className="text-4xl text-cyan-500 mb-6 text-center font-bold">Login</h2>
+    //     <form className="w-full" onSubmit={handleSubmit}>
+    //       <div className="mb-4">
+    //         <label className="block text-cyan-500 text-lg mb-1">Email</label>
+    //         <input
+    //           type="email"
+    //           name="email"
+    //           value={inputs.email}
+    //           onChange={handleInput}
+    //           className={`w-full p-4 text-lg bg-gray-100 rounded-md ${errors.email.required ? 'border border-red-500' : ''}`}
+    //         />
+    //         {errors.email.required && (
+    //           <span className="text-red-500 text-sm">Email is required.</span>
+    //         )}
+    //       </div>
+    //       <div className="mb-4">
+    //         <label className="block text-cyan-500 text-lg mb-1">Password</label>
+    //         <input
+    //           type="password"
+    //           name="password"
+    //           value={inputs.password}
+    //           onChange={handleInput}
+    //           className={`w-full p-4 text-lg bg-gray-100 rounded-md ${errors.password.required ? 'border border-red-500' : ''}`}
+    //         />
+    //         {errors.password.required && (
+    //           <span className="text-red-500 text-sm">Password is required.</span>
+    //         )}
+    //       </div>
+    //       {errors.custom_error && (
+    //         <span className="text-red-500 text-sm">{errors.custom_error}</span>
+    //       )}
+    //       {loading ? <div className="text-center text-lg text-cyan-500">Loading...</div> : null}
+    //       <button
+    //         type="submit"
+    //         disabled={loading}
+    //         className="w-full mt-4 py-4 bg-cyan-500 text-lg font-semibold text-black rounded-md hover:bg-cyan-400 transition duration-300"
+    //       >
+    //         Login
+    //       </button>
+    //     </form>
+    //   </motion.div>
+    // </div>
+    <div className="flex justify-center items-center h-auto w-[500px] bg-transparent">
+  <div className="flex flex-col max-w-md w-full h-auto p-8 rounded-xl shadow-lg bg-white bg-opacity-70 backdrop-blur-md">
+    <h2 className="text-4xl text-purple-600 mb-6 text-center font-bold">Login</h2>
+    <form className="w-full" onSubmit={handleSubmit}>
+      <div className="mb-4">
+        <label className="block text-purple-600 text-lg mb-1">Email</label>
+        <input
+          type="email"
+          name="email"
+          value={inputs.email}
+          onChange={handleInput}
+          className={`w-full p-4 text-lg bg-gray-100 rounded-md ${errors.email.required ? 'border border-red-500' : ''}`}
+        />
+        {errors.email.required && (
+          <span className="text-red-500 text-sm">Email is required.</span>
+        )}
+      </div>
+      <div className="mb-4">
+        <label className="block text-purple-600 text-lg mb-1">Password</label>
+        <input
+          type="password"
+          name="password"
+          value={inputs.password}
+          onChange={handleInput}
+          className={`w-full p-4 text-lg bg-gray-100 rounded-md ${errors.password.required ? 'border border-red-500' : ''}`}
+        />
+        {errors.password.required && (
+          <span className="text-red-500 text-sm">Password is required.</span>
+        )}
+      </div>
+      {errors.custom_error && (
+        <span className="text-red-500 text-sm">{errors.custom_error}</span>
+      )}
+      {loading ? <div className="text-center text-lg text-purple-600">Loading...</div> : null}
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full mt-4 py-4 bg-purple-600 text-white text-lg font-semibold rounded-md hover:bg-purple-500 transition duration-300"
       >
-        <h2 className="text-4xl text-cyan-500 mb-6 text-center font-bold">Login</h2>
-        <form className="w-full" onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-cyan-500 text-lg mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={inputs.email}
-              onChange={handleInput}
-              className={`w-full p-4 text-lg bg-gray-100 rounded-md ${errors.email.required ? 'border border-red-500' : ''}`}
-            />
-            {errors.email.required && (
-              <span className="text-red-500 text-sm">Email is required.</span>
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-cyan-500 text-lg mb-1">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={inputs.password}
-              onChange={handleInput}
-              className={`w-full p-4 text-lg bg-gray-100 rounded-md ${errors.password.required ? 'border border-red-500' : ''}`}
-            />
-            {errors.password.required && (
-              <span className="text-red-500 text-sm">Password is required.</span>
-            )}
-          </div>
-          {errors.custom_error && (
-            <span className="text-red-500 text-sm">{errors.custom_error}</span>
-          )}
-          {loading ? <div className="text-center text-lg text-cyan-500">Loading...</div> : null}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full mt-4 py-4 bg-cyan-500 text-lg font-semibold text-black rounded-md hover:bg-cyan-400 transition duration-300"
-          >
-            Login
-          </button>
-        </form>
-      </motion.div>
-    </div>
+        Login
+      </button>
+    </form>
+  </div>
+</div>
+
   );
 };
 

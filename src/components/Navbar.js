@@ -701,7 +701,7 @@ const Navbar = () => {
   };
 
   const handleDashboardNavigation = () => {
-    navigate('/user-dashboard/:id');
+    navigate('/user-dashboard');
   };
 
   const handleNavigation = () => {
